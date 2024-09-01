@@ -1,0 +1,31 @@
+.item-component {
+  display: flex;
+  padding: 12px;
+  border: 1px dashed white;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+  box-sizing: border-box;
+
+  &__icon {
+    border-radius: 100%;
+    border: 1px solid white;
+    width: 24px;
+    height: 24px;
+  }
+
+  &__text {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    flex-grow: 1;
+  }
+
+  &__menu {
+    width: 24px;
+    height: 24px;
+    border: 1px solid white;
+  }
+}

@@ -1,0 +1,45 @@
+.prompt-component {
+  &__wrapper {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #333333ef;
+    width: 100%;
+    padding: 24px;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    background: #333;
+    padding: 24px;
+    border: 1px dashed white;
+    gap: 24px;
+    width: 100%;
+  }
+
+  &__title,
+  &__description {
+    padding: 0;
+    margin: 0;
+  }
+
+  &__description {
+    font-size: 16px;
+  }
+
+  &__input {
+    background: none;
+    border: 1px solid white;
+    min-height: 80px;
+    color: white;
+    font-size: 16px;
+    font-family: monospace;
+    padding: 12px;
+  }
+}
