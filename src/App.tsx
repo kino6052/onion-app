@@ -30,26 +30,35 @@ const update = (nextProps: Partial<TAppProps<EPage>>, subject: TSubject) => {
   subject.next(nextProps);
 };
 
-const createElement = (childId: string, parentId: string, subject: TSubject) =>
-  produce(subject.getValue(), (_state) => {
-    const tree = (_state.pageProps as TOntologyProps).tree;
+const getDispatch =
+  (subject: TSubject) =>
+  (cb: (subject: TSubject) => Partial<TAppProps<EPage>>) => {
+    subject.next(cb(subject));
+  };
 
-    const parentNode = tree[parentId];
+const createElement =
+  (childId: string, parentId: string) => (subject: TSubject) =>
+    produce(subject.getValue(), (_state) => {
+      const tree = (_state.pageProps as TOntologyProps).tree;
 
-    parentNode.isCollapsed = false;
-    parentNode.successors.push(childId);
+      const parentNode = tree[parentId];
 
-    tree[childId] = {
-      id: childId,
-      indent: (parentNode.indent += 1),
-      isCollapsed: true,
-      successors: [],
-      text: "New Node",
-    };
-  });
+      parentNode.isCollapsed = false;
+      parentNode.successors.push(childId);
 
-const navigateToOntology = (subject: TSubject) =>
-  produce(subject.getValue(), (_state) => {
+      tree[childId] = {
+        id: childId,
+        indent: (parentNode.indent += 1),
+        isCollapsed: true,
+        successors: [],
+        text: "New Node",
+      };
+    });
+
+const navigateToOntology = (subject: TSubject) => {
+  const dispatch = getDispatch(subject);
+
+  return produce(subject.getValue(), (_state) => {
     _state.page = EPage.Ontology;
     _state.pageProps = {
       menuProps: {
@@ -61,25 +70,28 @@ const navigateToOntology = (subject: TSubject) =>
           text: "Root",
           successors: [],
           onClick: () => {
-            alert("Click");
-            update(createElement("new", EConstant.Root, subject), subject);
+            dispatch(createElement("new", EConstant.Root));
           },
         },
       },
     } as TOntologyProps;
   });
+};
 
-const initializeProps =
-  (subject: BehaviorSubject<Partial<TAppProps<EPage>>>) =>
-  (state: Partial<TAppProps<EPage>>) =>
-    produce(state, (_state) => {
-      if (_state.page === EPage.Login) {
-        const props = _state.pageProps as TLoginProps;
-        props.buttonProps.onClick = () => {
-          update(navigateToOntology(subject), subject);
-        };
-      }
-    });
+const initializeProps = (
+  subject: BehaviorSubject<Partial<TAppProps<EPage>>>
+) => {
+  const dispatch = getDispatch(subject);
+
+  return produce(subject.getValue(), (_state) => {
+    if (_state.page === EPage.Login) {
+      const props = _state.pageProps as TLoginProps;
+      props.buttonProps.onClick = () => {
+        dispatch(navigateToOntology);
+      };
+    }
+  });
+};
 
 const map = {
   [EPage.Login]: LoginPage,
@@ -88,7 +100,7 @@ const map = {
 };
 
 // TODO: Move to composition root initialization
-update(initializeProps(stateSubject)(initialProps), stateSubject);
+update(initializeProps(stateSubject), stateSubject);
 
 export const App: React.FC<TAppProps<EPage>> = withState(stateSubject)(({
   page,
