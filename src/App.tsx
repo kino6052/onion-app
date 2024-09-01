@@ -100,7 +100,8 @@ const map = {
 };
 
 // TODO: Move to composition root initialization
-update(initializeProps(stateSubject), stateSubject);
+const dispatch = getDispatch(stateSubject);
+dispatch(initializeProps);
 
 export const App: React.FC<TAppProps<EPage>> = withState(stateSubject)(({
   page,
