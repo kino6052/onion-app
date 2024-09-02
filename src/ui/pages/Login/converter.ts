@@ -1,11 +1,7 @@
-import { produce } from "immer";
 import { TStateSubject } from "../../../services/StateSubject/types";
 import { TButtonProps } from "../../components/Button/types";
 import { TAppProps } from "../../types";
-
-function getUpdateState<T extends Record<string, unknown>>(state: T) {
-  return (converter: (state: T) => void) => produce(state, converter);
-}
+import { getUpdateState } from "../../utils";
 
 export const getConverter =
   ({ stateSubject }: { stateSubject: TStateSubject }) =>
