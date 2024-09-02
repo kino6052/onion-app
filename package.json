@@ -9,7 +9,9 @@
   ],
   "main": "src/index.tsx",
   "dependencies": {
+    "@types/compose-function": "^0.0.33",
     "classnames": "2.5.1",
+    "compose-function": "^3.0.3",
     "immer": "^10.1.1",
     "loader-utils": "3.2.1",
     "react": "18.2.0",

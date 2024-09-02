@@ -3,7 +3,7 @@ import { Item } from "../../components/Item";
 import { Typography } from "../../components/Typography";
 import { ETypographyType } from "../../components/Typography/constants";
 import { Word } from "../../components/Word";
-import { EConstant } from "../../constants";
+import { EConstant } from "../../../constants";
 import { composeTree } from "../../utils";
 import "./styles.scss";
 

@@ -3,6 +3,19 @@ import { Typography } from "../../components/Typography";
 import { ETypographyType } from "../../components/Typography/constants";
 import "./styles.scss";
 import { TLoginProps } from "./types";
+import { withDataConverter } from "../../utils/withConverter";
+import compose from "compose-function";
+import { getConverter } from "./converter";
+import { getStateSubject } from "../../../services/StateSubject";
+import { TButtonProps } from "../../components/Button/types";
+
+const converter = getConverter({
+  stateSubject: getStateSubject(),
+});
+
+const EnhancedButton = compose<React.FC<TButtonProps>>(
+  withDataConverter(converter)
+)(Button);
 
 export const LoginPage: React.FC<TLoginProps> = ({ buttonProps }) => {
   return (
@@ -15,9 +28,9 @@ export const LoginPage: React.FC<TLoginProps> = ({ buttonProps }) => {
       </div>
       <div className="login-page__buttons">
         <Typography type={ETypographyType.Label}>Login options</Typography>
-        <Button {...buttonProps} hasIcon>
-          Login with Github
-        </Button>
+        <EnhancedButton {...buttonProps} hasIcon>
+          {buttonProps?.children ?? "Login with Github"}
+        </EnhancedButton>
       </div>
     </div>
   );

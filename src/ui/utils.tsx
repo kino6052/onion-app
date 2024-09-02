@@ -1,5 +1,5 @@
 import { TItemProps } from "./components/Item/types";
-import { EConstant } from "./constants";
+import { EConstant } from "../constants";
 import { Item } from "./components/Item";
 
 export const composeTree = (
