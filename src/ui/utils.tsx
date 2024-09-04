@@ -1,31 +1,11 @@
-import { TItemProps } from "./components/Item/types";
-import { EConstant } from "../constants";
-import { Item } from "./components/Item";
 import { produce } from "immer";
+import { Observable, filter, lastValueFrom, take } from "rxjs";
+import { EConstant } from "../constants";
+import { HierarchicalItem } from "./components/Item";
+import { THierarchicalItemProps } from "./components/Item/types";
 
-export const composeTree = (
-  items: Record<string, TItemProps>,
-  id: string = EConstant.Root,
-  indent = 0
-) => {
-  const item = items[id];
-
-  if (!item) return null;
-
-  return (
-    <Item id={id} text={item.text} indent={indent} onClick={item.onClick}>
-      {!item.isCollapsed &&
-        item.successors.map((_id) => {
-          const C = composeTree(items, _id, indent + 1);
-
-          return <span key={_id}>{C}</span>;
-        })}
-    </Item>
-  );
-};
-
-export function findFirst<T extends unknown>(arr: T[]) {
-  return arr.find(Boolean) as T | undefined;
+export function findFirst<T extends unknown>(arr: T[], fallback: T) {
+  return (arr.find(Boolean) || fallback) as Exclude<T, false>;
 }
 
 export function getUpdateState<T extends Record<string, unknown>>(state: T) {
@@ -35,3 +15,10 @@ export function getUpdateState<T extends Record<string, unknown>>(state: T) {
 export const noop = () => {
   throw Error("Not implemented");
 };
+
+export function checkEventual<T extends Record<string, unknown>>(
+  predicate: (result: T | undefined) => boolean,
+  observable: Observable<T | undefined>
+) {
+  return lastValueFrom(observable.pipe(filter(predicate), take(1)));
+}
