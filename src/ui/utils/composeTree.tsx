@@ -1,9 +1,10 @@
 import { EConstant } from "../../constants";
 import { HierarchicalItem } from "../components/Item";
-import { THierarchicalItemProps } from "../components/Item/types";
+import { THierarchicalItem } from "../components/Item/types";
+import { noop } from "../utils";
 
 export const composeTree = (
-  items: Record<string, THierarchicalItemProps>,
+  items: Record<string, THierarchicalItem>,
   id: string = EConstant.Root,
   indent = 0
 ) => {
@@ -12,7 +13,7 @@ export const composeTree = (
   if (!item) return null;
 
   return (
-    <HierarchicalItem {...item} id={id}>
+    <HierarchicalItem {...item} onClick={noop} onMenuClick={noop} id={id}>
       {!item.isCollapsed &&
         item.successors.map((_id) => {
           const C = composeTree(items, _id, indent + 1);
