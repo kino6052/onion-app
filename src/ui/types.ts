@@ -1,13 +1,17 @@
+import { TLoginProps } from "./pages/Login/types";
+import { TOntologyProps } from "./pages/Ontology/types";
+
 export enum EPage {
   Login = "Login",
   Ontology = "Ontology",
   Note = "Note",
 }
 
-export type TAppProps = {
-  page: EPage;
-  pageProps: Record<string, unknown>;
+export type TWithPageType<T, TPageType extends EPage> = T & {
+  pageType: TPageType;
 };
+
+export type TAppProps = TLoginProps | TOntologyProps;
 
 type OmitNullish<T> = {
   [K in keyof T as T[K] extends NonNullable<T[K]> ? K : never]: T[K];

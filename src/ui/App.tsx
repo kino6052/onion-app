@@ -1,16 +1,11 @@
 import { LoginPage } from "./pages/Login";
-import { NotePage } from "./pages/Note";
 import { OntologyPage } from "./pages/Ontology";
 import { EPage, TAppProps } from "./types";
+import { findFirst } from "./utils";
 
-const map = {
-  [EPage.Login]: LoginPage,
-  [EPage.Note]: NotePage,
-  [EPage.Ontology]: OntologyPage,
-};
-
-export const App: React.FC<TAppProps<EPage>> = ({ page, pageProps }) => {
-  const Component = map[page];
-
-  return <Component {...pageProps} />;
-};
+export const App: React.FC<TAppProps> = (pageProps) =>
+  findFirst([
+    pageProps.pageType === EPage.Login && <LoginPage {...pageProps} />,
+    pageProps.pageType === EPage.Ontology && <OntologyPage {...pageProps} />,
+    null,
+  ]);

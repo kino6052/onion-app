@@ -1,5 +1,9 @@
 import { TButtonProps } from "../../components/Button/types";
+import { EPage, TWithPageType } from "../../types";
 
-export type TLoginProps = {
-  buttonProps: TButtonProps;
-};
+export type TLoginProps = TWithPageType<
+  {
+    buttonProps: TButtonProps;
+  },
+  EPage.Login
+>;

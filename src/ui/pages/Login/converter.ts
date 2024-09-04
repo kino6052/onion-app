@@ -1,6 +1,6 @@
 import { TStateSubject } from "../../../services/StateSubject/types";
 import { TButtonProps } from "../../components/Button/types";
-import { TAppProps } from "../../types";
+import { EPage, TAppProps } from "../../types";
 import { getUpdateState } from "../../utils";
 
 export const getConverter =
@@ -10,11 +10,14 @@ export const getConverter =
 
     return updateProps((_props) => {
       _props.onClick = () => {
-        stateSubject.next(
-          getUpdateState<TAppProps>(stateSubject.getValue())((_state) => {
-            _state.pageProps.buttonProps.children = "Test";
-          })
-        );
+        const currentState = stateSubject.getValue();
+        const nextState = getUpdateState<TAppProps>(currentState)((_state) => {
+          if (_state.pageType !== EPage.Login) return;
+
+          _state.buttonProps.children = "Test";
+        });
+
+        stateSubject.next(nextState);
       };
     });
   };
