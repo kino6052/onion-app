@@ -4,6 +4,7 @@ import { EPage, TAppProps } from "../../types";
 import { findFirst, getUpdateState } from "../../utils";
 import { TStateSubject } from "../../view-model/StateSubject/types";
 import { getInitialOntologyState } from "../Ontology/utils";
+import { updateLoginErrorState, updateOntologyState } from "./logic";
 
 type TLoginResponse = {
   isSuccessful: boolean;
@@ -16,35 +17,6 @@ type TLoginConverter = {
   getTree: () => Promise<Record<string, THierarchicalItem> | undefined>;
   getErrorText: () => Promise<string>;
 };
-
-const updateOntologyState =
-  ({
-    tree,
-    errorText,
-  }: {
-    tree: Record<string, THierarchicalItem> | undefined;
-    errorText: string;
-  }) =>
-  (_state: TAppProps) => {
-    if (_state.pageType !== EPage.Ontology) return;
-
-    _state.isLoading = false;
-
-    if (!tree) {
-      _state.error = errorText;
-      return;
-    }
-
-    _state.tree = tree;
-  };
-
-const updateLoginErrorState =
-  ({ message }: { message: string | undefined }) =>
-  (_state: TAppProps) => {
-    if (_state.pageType !== EPage.Login) return;
-
-    _state.message = message;
-  };
 
 export const getConverter =
   ({ stateSubject, login, getTree, getErrorText }: TLoginConverter) =>

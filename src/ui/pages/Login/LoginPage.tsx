@@ -8,9 +8,16 @@ import compose from "compose-function";
 import { getConverter } from "./converter";
 import { getStateSubject } from "../../view-model/StateSubject";
 import { TButtonProps } from "../../components/Button/types";
+import { getInitialOntologyTree } from "../Ontology/utils";
 
 const converter = getConverter({
   stateSubject: getStateSubject(),
+  getErrorText: () => Promise.resolve("Error"),
+  getTree: () => Promise.resolve(getInitialOntologyTree()),
+  login: () =>
+    Promise.resolve({
+      isSuccessful: true,
+    }),
 });
 
 const EnhancedButton = compose<React.FC<TButtonProps>>(
