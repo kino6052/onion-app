@@ -8,7 +8,7 @@ import {
   getDisabledButtonState,
   updateLoginErrorState,
   updateOntologyState,
-} from "./logic";
+} from "./actions";
 import { TLoginProps } from "./types";
 
 type TLoginResponse = {

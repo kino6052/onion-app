@@ -1,10 +1,10 @@
 import { EConstant } from "../../../../constants";
-import { THierarchicalItem } from "../../../components/Item/types";
+import { THierarchicalItemProps } from "../../../components/Item/types";
 import { noop } from "../../../utils";
 import { HierarchicalItem } from "../components/HierarchicalItem";
 
 export const composeTree = (
-  items: Record<string, THierarchicalItem>,
+  items: Record<string, THierarchicalItemProps>,
   id: string = EConstant.Root,
   indent = 0
 ) => {

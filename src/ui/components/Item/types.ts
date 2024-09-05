@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+import { TMenuProps } from "../Menu/types";
 
 type THandlers = {
   onClick: () => void;
@@ -7,7 +8,7 @@ type THandlers = {
 
 export type TItemProps = TItem & THandlers;
 export type THierarchicalItemProps = PropsWithChildren<
-  THierarchicalItem & THandlers
+  THierarchicalItem & THandlers & { menuProps: TMenuProps }
 >;
 
 export type TItem = {

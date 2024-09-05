@@ -2,6 +2,7 @@ import { THierarchicalItemProps } from "../../../../components/Item/types";
 import { EPage } from "../../../../types";
 import { getUpdateState } from "../../../../utils";
 import { TStateSubject } from "../../../../view-model/StateSubject/types";
+import { addNewItem, toggleCollapseItem } from "./actions";
 
 type TOntologyConverter = {
   stateSubject: TStateSubject;
@@ -16,12 +17,7 @@ export const getConverter =
     return getUpdateState(props)((_props) => {
       _props.onClick = async () => {
         stateSubject.next(
-          getUpdateState(stateSubject.getValue())((_state) => {
-            if (_state.pageType !== EPage.Ontology) return;
-            const node = _state.tree[id];
-            const isCollapsed = node.isCollapsed;
-            node.isCollapsed = !isCollapsed;
-          })
+          getUpdateState(stateSubject.getValue())(toggleCollapseItem(id))
         );
       };
 
@@ -29,20 +25,10 @@ export const getConverter =
         stateSubject.next(
           getUpdateState(stateSubject.getValue())((_state) => {
             if (_state.pageType !== EPage.Ontology) return;
+
             const node = _state.tree[id];
-            node.isCollapsed = false;
 
-            const newId = getUniqueId();
-
-            _state.tree[newId] = {
-              id: newId,
-              indent: node.indent + 1,
-              isCollapsed: false,
-              successors: [],
-              text: "New Item",
-            };
-
-            _state.tree[id].successors.push(newId);
+            node.menuProps.isOpen = true;
           })
         );
       };

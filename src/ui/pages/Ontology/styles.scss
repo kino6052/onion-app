@@ -6,10 +6,13 @@
   height: 100vh;
   margin: 0;
   box-sizing: border-box;
+  width: 100%;
+  min-width: 400px;
 
   &__content {
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow: scroll;
   }
 }

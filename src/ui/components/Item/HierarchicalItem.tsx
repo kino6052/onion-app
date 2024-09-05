@@ -1,13 +1,35 @@
-import React, { PropsWithChildren } from "react";
-import "./styles.scss";
-import { THierarchicalItemProps, TItemProps } from "./types";
+import React, { PropsWithChildren, useEffect, useRef } from "react";
 import { findFirst } from "../../utils";
+import { Menu } from "../Menu";
 import { Typography } from "../Typography";
 import { ETypographyType } from "../Typography/constants";
+import "./styles.scss";
+import { THierarchicalItemProps } from "./types";
 
 export const HierarchicalItem: React.FC<
   PropsWithChildren<Omit<THierarchicalItemProps, "successors">>
-> = ({ text, onClick, onMenuClick, indent, children, isCollapsed }) => {
+> = ({
+  text,
+  onClick,
+  onMenuClick,
+  indent,
+  children,
+  isCollapsed,
+  menuProps,
+}) => {
+  const menuRef = useRef<HTMLDivElement>(null);
+  const itemRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (menuRef.current && itemRef.current) {
+      const position = itemRef.current.getBoundingClientRect();
+      const style = menuRef.current.style;
+      style.position = "absolute";
+      style.left = `${Math.min(window.screen.width - position.x, window.screen.width - position.width)}px`;
+      style.top = `${position.y}px`;
+    }
+  }, [menuRef, itemRef]);
+
   return (
     <div
       className="item-component-wrapper"
@@ -16,6 +38,7 @@ export const HierarchicalItem: React.FC<
         undefined
       )}
     >
+      {menuProps.isOpen && <Menu {...menuProps} ref={menuRef} />}
       <div className="item-component" onClick={onClick}>
         <span className="item-component__icon"></span>
         <Typography type={ETypographyType.Regular}>{text}</Typography>
@@ -25,6 +48,7 @@ export const HierarchicalItem: React.FC<
             e.stopPropagation();
             onMenuClick();
           }}
+          ref={itemRef}
         ></span>
       </div>
       {findFirst([!isCollapsed && children, null])}
