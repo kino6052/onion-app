@@ -1,7 +1,7 @@
-import { EConstant } from "../../../constants";
-import { EPage } from "../../types";
-import { noop } from "../../utils";
-import { TOntologyProps } from "./types";
+import { EConstant } from "../../../../constants";
+import { EPage } from "../../../types";
+import { noop } from "../../../utils";
+import { TOntologyProps } from "../types";
 
 export const getInitialOntologyTree = () => ({
   [EConstant.Root]: {

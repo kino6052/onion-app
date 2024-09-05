@@ -1,5 +1,5 @@
 import { Item } from "../../components/Item";
-import { composeTree } from "../../utils/composeTree";
+import { composeTree } from "./utils/tree";
 import "./styles.scss";
 import { TOntologyProps } from "./types";
 

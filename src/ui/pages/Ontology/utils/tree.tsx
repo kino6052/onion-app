@@ -1,7 +1,7 @@
-import { EConstant } from "../../constants";
-import { HierarchicalItem } from "../components/Item";
-import { THierarchicalItem } from "../components/Item/types";
-import { noop } from "../utils";
+import { EConstant } from "../../../../constants";
+import { THierarchicalItem } from "../../../components/Item/types";
+import { noop } from "../../../utils";
+import { HierarchicalItem } from "../components/HierarchicalItem";
 
 export const composeTree = (
   items: Record<string, THierarchicalItem>,

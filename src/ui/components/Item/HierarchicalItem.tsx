@@ -7,7 +7,7 @@ import { ETypographyType } from "../Typography/constants";
 
 export const HierarchicalItem: React.FC<
   PropsWithChildren<Omit<THierarchicalItemProps, "successors">>
-> = ({ text, onClick, onMenuClick, indent, children }) => {
+> = ({ text, onClick, onMenuClick, indent, children, isCollapsed }) => {
   return (
     <div
       className="item-component-wrapper"
@@ -19,9 +19,15 @@ export const HierarchicalItem: React.FC<
       <div className="item-component" onClick={onClick}>
         <span className="item-component__icon"></span>
         <Typography type={ETypographyType.Regular}>{text}</Typography>
-        <span className="item-component__menu" onClick={onMenuClick}></span>
+        <span
+          className="item-component__menu"
+          onClick={(e) => {
+            e.stopPropagation();
+            onMenuClick();
+          }}
+        ></span>
       </div>
-      {children}
+      {findFirst([!isCollapsed && children, null])}
     </div>
   );
 };
