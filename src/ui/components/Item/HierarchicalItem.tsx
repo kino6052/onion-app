@@ -20,6 +20,7 @@ export const HierarchicalItem: React.FC<
   const menuRef = useRef<HTMLDivElement>(null);
   const itemRef = useRef<HTMLDivElement>(null);
 
+  // TODO: Move into a HOC
   useEffect(() => {
     if (menuRef.current && itemRef.current) {
       const position = itemRef.current.getBoundingClientRect();
