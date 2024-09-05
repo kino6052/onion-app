@@ -1,6 +1,13 @@
 import { THierarchicalItem } from "../../components/Item/types";
 import { EPage, TAppProps } from "../../types";
 
+export const getDisabledButtonState =
+  (isDisabled: boolean) => (_state: TAppProps) => {
+    if (_state.pageType !== EPage.Login) return;
+
+    _state.buttonProps.isDisabled = isDisabled;
+  };
+
 export const updateOntologyState =
   ({
     tree,

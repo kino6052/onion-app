@@ -4,7 +4,12 @@ import { EPage, TAppProps } from "../../types";
 import { findFirst, getUpdateState } from "../../utils";
 import { TStateSubject } from "../../view-model/StateSubject/types";
 import { getInitialOntologyState } from "../Ontology/utils";
-import { updateLoginErrorState, updateOntologyState } from "./logic";
+import {
+  getDisabledButtonState,
+  updateLoginErrorState,
+  updateOntologyState,
+} from "./logic";
+import { TLoginProps } from "./types";
 
 type TLoginResponse = {
   isSuccessful: boolean;
@@ -23,28 +28,38 @@ export const getConverter =
   (props: TButtonProps) => {
     return getUpdateState(props)((_props) => {
       _props.onClick = async () => {
-        const { isSuccessful, message } = await login();
-
-        const currentState = stateSubject.getValue();
-
-        const nextState =
-          findFirst([isSuccessful && getInitialOntologyState()]) ||
-          getUpdateState<TAppProps>(currentState)(
-            updateLoginErrorState({ message })
-          );
-
-        stateSubject.next(nextState);
-
-        if (nextState.pageType !== EPage.Ontology) return;
-
-        const tree = await getTree();
-        const errorText = await getErrorText();
-
-        const _nextState = getUpdateState(stateSubject.getValue())(
-          updateOntologyState({ tree, errorText })
+        stateSubject.next(
+          getUpdateState(stateSubject.getValue())(getDisabledButtonState(true))
         );
 
-        stateSubject.next(_nextState);
+        try {
+          const { isSuccessful, message } = await login();
+
+          const nextState =
+            findFirst([isSuccessful && getInitialOntologyState()]) ||
+            getUpdateState<TAppProps>(stateSubject.getValue())(
+              updateLoginErrorState({ message })
+            );
+
+          stateSubject.next(nextState);
+
+          if (nextState.pageType !== EPage.Ontology) return;
+
+          const tree = await getTree();
+          const errorText = await getErrorText();
+
+          const _nextState = getUpdateState(stateSubject.getValue())(
+            updateOntologyState({ tree, errorText })
+          );
+
+          stateSubject.next(_nextState);
+        } finally {
+          stateSubject.next(
+            getUpdateState(stateSubject.getValue())(
+              getDisabledButtonState(false)
+            )
+          );
+        }
       };
     });
   };
