@@ -1,10 +1,10 @@
-import { forwardRef, PropsWithRef } from "react";
+import { forwardRef } from "react";
+import { createPortal } from "react-dom";
 import { Item } from "../Item";
 import "./styles.scss";
 import { TMenuProps } from "./types";
-import { createPortal } from "react-dom";
 
-export const Menu: React.FC<PropsWithRef<TMenuProps>> = forwardRef(
+export const Menu = forwardRef<HTMLDivElement, TMenuProps>(
   ({ itemsProps, onBackgroundClick }, ref) => {
     return createPortal(
       <div className={"menu-component__wrapper"} onClick={onBackgroundClick}>
