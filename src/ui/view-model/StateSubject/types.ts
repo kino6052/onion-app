@@ -1,4 +1,4 @@
 import { BehaviorSubject } from "rxjs";
-import { TAppProps } from "../../ui/types";
+import { TAppProps } from "../../types";
 
 export type TStateSubject = BehaviorSubject<TAppProps>;

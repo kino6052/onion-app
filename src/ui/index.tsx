@@ -1,7 +1,7 @@
 import compose from "compose-function";
 import { App as _App } from "./App";
 import { withState } from "./utils/withState";
-import { getStateSubject } from "../services/StateSubject";
+import { getStateSubject } from "./view-model/StateSubject";
 import { tap } from "rxjs";
 
 const stateSubject = getStateSubject();

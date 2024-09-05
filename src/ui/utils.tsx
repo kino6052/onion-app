@@ -1,10 +1,7 @@
 import { produce } from "immer";
 import { Observable, filter, lastValueFrom, take } from "rxjs";
-import { EConstant } from "../constants";
-import { HierarchicalItem } from "./components/Item";
-import { THierarchicalItemProps } from "./components/Item/types";
 
-export function findFirst<T extends unknown>(arr: T[], fallback: T) {
+export function findFirst<T extends unknown>(arr: T[], fallback?: T) {
   return (arr.find(Boolean) || fallback) as Exclude<T, false>;
 }
 

@@ -1,15 +1,15 @@
-import { getStateSubject } from "../../../../services/StateSubject";
+import { getStateSubject } from "../../../view-model/StateSubject";
 import { EPage } from "../../../types";
 import { checkEventual } from "../../../utils";
 import { getInitialOntologyTree } from "../../Ontology/utils";
 import { getConverter } from "../converter";
 
 describe("Login", () => {
-  it("should", async () => {
+  it("should click on login + success", async () => {
     const stateSubject = getStateSubject();
     const converter = getConverter({
       stateSubject,
-      getErrorText: () => "Error",
+      getErrorText: () => Promise.resolve("Error"),
       getTree: () => Promise.resolve(getInitialOntologyTree()),
       login: () =>
         Promise.resolve({
@@ -33,6 +33,34 @@ describe("Login", () => {
     expect(stateSubject.getValue()).toMatchInlineSnapshot(`
 {
   "isLoading": true,
+  "menuProps": {
+    "id": "menu",
+    "onClick": [Function],
+    "onMenuClick": [Function],
+    "text": "Menu",
+  },
+  "pageType": "Ontology",
+  "tree": {
+    "ROOT": {
+      "id": "ROOT",
+      "indent": 0,
+      "isCollapsed": false,
+      "successors": [],
+      "text": "ROOT",
+    },
+  },
+}
+`);
+
+    await checkEventual((result) => {
+      if (result && result.pageType !== EPage.Ontology) return false;
+
+      return result?.isLoading === false;
+    }, stateSubject);
+
+    expect(stateSubject.getValue()).toMatchInlineSnapshot(`
+{
+  "isLoading": false,
   "menuProps": {
     "id": "menu",
     "onClick": [Function],

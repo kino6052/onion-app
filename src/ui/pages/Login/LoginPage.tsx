@@ -6,7 +6,7 @@ import { TLoginProps } from "./types";
 import { withDataConverter } from "../../utils/withConverter";
 import compose from "compose-function";
 import { getConverter } from "./converter";
-import { getStateSubject } from "../../../services/StateSubject";
+import { getStateSubject } from "../../view-model/StateSubject";
 import { TButtonProps } from "../../components/Button/types";
 
 const converter = getConverter({
