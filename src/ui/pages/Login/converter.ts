@@ -63,16 +63,16 @@ export const getConverter =
 
         stateSubject.next(nextState);
 
-        if (nextState.pageType === EPage.Ontology) {
-          const tree = await getTree();
-          const errorText = await getErrorText();
+        if (nextState.pageType !== EPage.Ontology) return;
 
-          const nextState = getUpdateState(stateSubject.getValue())(
-            updateOntologyState({ tree, errorText })
-          );
+        const tree = await getTree();
+        const errorText = await getErrorText();
 
-          stateSubject.next(nextState);
-        }
+        const _nextState = getUpdateState(stateSubject.getValue())(
+          updateOntologyState({ tree, errorText })
+        );
+
+        stateSubject.next(_nextState);
       };
     });
   };
