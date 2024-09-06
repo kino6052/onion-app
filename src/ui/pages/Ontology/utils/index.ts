@@ -30,12 +30,19 @@ export const mapTreeToTreeProps = (
         {
           ...value,
           menuProps: {
+            id: key,
             itemsProps: [
               {
                 id: "delete",
                 onClick: noop,
                 onMenuClick: noop,
                 text: "Delete",
+              },
+              {
+                id: "add",
+                onClick: noop,
+                onMenuClick: noop,
+                text: "Add New Item",
               },
             ],
             onBackgroundClick: noop,

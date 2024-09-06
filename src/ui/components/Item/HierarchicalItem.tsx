@@ -15,7 +15,7 @@ export const HierarchicalItem: React.FC<
   indent,
   children,
   isCollapsed,
-  menuProps,
+  menuProps: { MenuComponent = Menu, ...menuProps },
 }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const itemRef = useRef<HTMLDivElement>(null);
@@ -26,7 +26,7 @@ export const HierarchicalItem: React.FC<
       const position = itemRef.current.getBoundingClientRect();
       const style = menuRef.current.style;
       style.position = "absolute";
-      style.left = `${Math.min(window.screen.width - position.x, window.screen.width - position.width)}px`;
+      style.left = "-100px";
       style.top = `${position.y}px`;
     }
   }, [menuRef, itemRef]);
@@ -39,7 +39,7 @@ export const HierarchicalItem: React.FC<
         undefined
       )}
     >
-      {menuProps.isOpen && <Menu {...menuProps} ref={menuRef} />}
+      {menuProps.isOpen && <MenuComponent {...menuProps} ref={menuRef} />}
       <div className="item-component" onClick={onClick}>
         <span className="item-component__icon"></span>
         <Typography type={ETypographyType.Regular}>{text}</Typography>

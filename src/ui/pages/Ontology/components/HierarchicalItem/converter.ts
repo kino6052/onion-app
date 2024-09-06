@@ -2,7 +2,8 @@ import { THierarchicalItemProps } from "../../../../components/Item/types";
 import { EPage } from "../../../../types";
 import { getUpdateState } from "../../../../utils";
 import { TStateSubject } from "../../../../view-model/StateSubject/types";
-import { addNewItem, toggleCollapseItem } from "./actions";
+import { Menu } from "../Menu";
+import { toggleCollapseItem } from "./actions";
 
 type TOntologyConverter = {
   stateSubject: TStateSubject;
@@ -32,5 +33,7 @@ export const getConverter =
           })
         );
       };
+
+      _props.menuProps.MenuComponent = Menu;
     });
   };
