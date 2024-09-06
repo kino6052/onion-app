@@ -1,33 +1,33 @@
 import { TMenuProps } from "../../../../components/Menu/types";
 import { getUpdateState } from "../../../../utils";
-import { TStateSubject } from "../../../../view-model/StateSubject/types";
+import { TViewModelSubject } from "../../../../view-model/ViewModelSubject/types";
 import { addNewItem, closeMenu, removeItem } from "./actions";
 
 type TOntologyConverter = {
-  stateSubject: TStateSubject;
+  viewModelSubject: TViewModelSubject;
   getUniqueId: () => string;
 };
 
 export const getConverter =
-  ({ stateSubject, getUniqueId }: TOntologyConverter) =>
+  ({ viewModelSubject, getUniqueId }: TOntologyConverter) =>
   (props: TMenuProps) => {
     const { id } = props;
     return getUpdateState(props)((_props) => {
       _props.onBackgroundClick = async () => {
-        stateSubject.next(
-          getUpdateState(stateSubject.getValue())(closeMenu(id))
+        viewModelSubject.next(
+          getUpdateState(viewModelSubject.getValue())(closeMenu(id))
         );
       };
 
       _props.itemsProps[0].onClick = async () => {
-        stateSubject.next(
-          getUpdateState(stateSubject.getValue())(removeItem({ id }))
+        viewModelSubject.next(
+          getUpdateState(viewModelSubject.getValue())(removeItem({ id }))
         );
       };
 
       _props.itemsProps[1].onClick = async () => {
-        stateSubject.next(
-          getUpdateState(stateSubject.getValue())(
+        viewModelSubject.next(
+          getUpdateState(viewModelSubject.getValue())(
             addNewItem({ getUniqueId, id })
           )
         );

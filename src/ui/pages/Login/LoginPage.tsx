@@ -6,12 +6,12 @@ import { TLoginProps } from "./types";
 import { withDataConverter } from "../../utils/withConverter";
 import compose from "compose-function";
 import { getConverter } from "./converter";
-import { getStateSubject } from "../../view-model/StateSubject";
+import { getViewModelSubject } from "../../view-model/ViewModelSubject";
 import { TButtonProps } from "../../components/Button/types";
 import { getInitialOntologyTree } from "../Ontology/utils";
 
 const converter = getConverter({
-  stateSubject: getStateSubject(),
+  viewModelSubject: getViewModelSubject(),
   getErrorText: () => Promise.resolve("Error"),
   getTree: () => Promise.resolve(getInitialOntologyTree()),
   login: () =>

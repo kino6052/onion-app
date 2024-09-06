@@ -1,13 +1,15 @@
 import compose from "compose-function";
+import { uniqueId } from "lodash";
 import { HierarchicalItem as _Item } from "../../../../components/Item";
 import { withDataConverter } from "../../../../utils/withConverter";
+import { getViewModelSubject } from "../../../../view-model/ViewModelSubject";
+import { Menu } from "../Menu";
 import { getConverter } from "./converter";
-import { getStateSubject } from "../../../../view-model/StateSubject";
-import { uniqueId } from "lodash";
 
 const converter = getConverter({
-  stateSubject: getStateSubject(),
+  viewModelSubject: getViewModelSubject(),
   getUniqueId: uniqueId,
+  MenuComponent: Menu,
 });
 
 export const HierarchicalItem = compose(withDataConverter(converter))(_Item);

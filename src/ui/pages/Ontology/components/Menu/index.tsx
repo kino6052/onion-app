@@ -1,12 +1,12 @@
 import compose from "compose-function";
 import { Menu as _Menu } from "../../../../components/Menu";
 import { withDataConverter } from "../../../../utils/withConverter";
-import { getStateSubject } from "../../../../view-model/StateSubject";
+import { getViewModelSubject } from "../../../../view-model/ViewModelSubject";
 import { getConverter } from "./converter";
 import { uniqueId } from "lodash";
 
 const converter = getConverter({
-  stateSubject: getStateSubject(),
+  viewModelSubject: getViewModelSubject(),
   getUniqueId: uniqueId,
 });
 

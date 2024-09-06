@@ -2,7 +2,7 @@ import { TButtonProps } from "../../components/Button/types";
 import { THierarchicalItem } from "../../components/Item/types";
 import { EPage, TAppProps } from "../../types";
 import { findFirst, getUpdateState } from "../../utils";
-import { TStateSubject } from "../../view-model/StateSubject/types";
+import { TViewModelSubject } from "../../view-model/ViewModelSubject/types";
 import { getInitialOntologyState } from "../Ontology/utils";
 import {
   getDisabledButtonState,
@@ -17,19 +17,21 @@ type TLoginResponse = {
 };
 
 type TLoginConverter = {
-  stateSubject: TStateSubject;
+  viewModelSubject: TViewModelSubject;
   login: () => Promise<TLoginResponse>;
   getTree: () => Promise<Record<string, THierarchicalItem> | undefined>;
   getErrorText: () => Promise<string>;
 };
 
 export const getConverter =
-  ({ stateSubject, login, getTree, getErrorText }: TLoginConverter) =>
+  ({ viewModelSubject, login, getTree, getErrorText }: TLoginConverter) =>
   (props: TButtonProps) => {
     return getUpdateState(props)((_props) => {
       _props.onClick = async () => {
-        stateSubject.next(
-          getUpdateState(stateSubject.getValue())(getDisabledButtonState(true))
+        viewModelSubject.next(
+          getUpdateState(viewModelSubject.getValue())(
+            getDisabledButtonState(true)
+          )
         );
 
         try {
@@ -37,25 +39,25 @@ export const getConverter =
 
           const nextState =
             findFirst([isSuccessful && getInitialOntologyState()]) ||
-            getUpdateState<TAppProps>(stateSubject.getValue())(
+            getUpdateState<TAppProps>(viewModelSubject.getValue())(
               updateLoginErrorState({ message })
             );
 
-          stateSubject.next(nextState);
+          viewModelSubject.next(nextState);
 
           if (nextState.pageType !== EPage.Ontology) return;
 
           const tree = await getTree();
           const errorText = await getErrorText();
 
-          const _nextState = getUpdateState(stateSubject.getValue())(
+          const _nextState = getUpdateState(viewModelSubject.getValue())(
             updateOntologyState({ tree, errorText })
           );
 
-          stateSubject.next(_nextState);
+          viewModelSubject.next(_nextState);
         } finally {
-          stateSubject.next(
-            getUpdateState(stateSubject.getValue())(
+          viewModelSubject.next(
+            getUpdateState(viewModelSubject.getValue())(
               getDisabledButtonState(false)
             )
           );

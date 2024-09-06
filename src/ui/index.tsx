@@ -1,11 +1,11 @@
 import compose from "compose-function";
 import { App as _App } from "./App";
 import { withState } from "./utils/withState";
-import { getStateSubject } from "./view-model/StateSubject";
+import { getViewModelSubject } from "./view-model/ViewModelSubject";
 import { tap } from "rxjs";
 
-const stateSubject = getStateSubject();
+const viewModelSubject = getViewModelSubject();
 
-export const App = compose(withState(stateSubject))(_App);
+export const App = compose(withState(viewModelSubject))(_App);
 
-stateSubject.pipe(tap(console.warn)).subscribe();
+viewModelSubject.pipe(tap(console.warn)).subscribe();

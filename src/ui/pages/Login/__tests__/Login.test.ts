@@ -1,4 +1,4 @@
-import { getStateSubject } from "../../../view-model/StateSubject";
+import { getViewModelSubject } from "../../../view-model/ViewModelSubject";
 import { EPage } from "../../../types";
 import { checkEventual } from "../../../utils";
 import { getInitialOntologyTree } from "../../Ontology/utils";
@@ -6,15 +6,15 @@ import { getConverter } from "../converter";
 import { getInitialLoginState } from "../utils";
 
 beforeEach(() => {
-  const subject = getStateSubject(); // TODO: Rename ViewModelSubject
+  const subject = getViewModelSubject(); // TODO: Rename ViewModelSubject
   subject.next(getInitialLoginState());
 });
 
 describe("Login", () => {
   it("should click on login + success", async () => {
-    const stateSubject = getStateSubject();
+    const viewModelSubject = getViewModelSubject();
     const converter = getConverter({
-      stateSubject,
+      viewModelSubject,
       getErrorText: () => Promise.resolve("Error"),
       getTree: () => Promise.resolve(getInitialOntologyTree()),
       login: () =>
@@ -24,7 +24,7 @@ describe("Login", () => {
         }),
     });
 
-    const state = stateSubject.getValue();
+    const state = viewModelSubject.getValue();
 
     if (state.pageType !== EPage.Login) throw new Error("Not login page");
 
@@ -32,7 +32,7 @@ describe("Login", () => {
 
     result.onClick();
 
-    expect(stateSubject.getValue()).toMatchInlineSnapshot(`
+    expect(viewModelSubject.getValue()).toMatchInlineSnapshot(`
 {
   "buttonProps": {
     "hasIcon": true,
@@ -45,9 +45,9 @@ describe("Login", () => {
 
     await checkEventual((result) => {
       return result?.pageType === EPage.Ontology;
-    }, stateSubject);
+    }, viewModelSubject);
 
-    expect(stateSubject.getValue()).toMatchInlineSnapshot(`
+    expect(viewModelSubject.getValue()).toMatchInlineSnapshot(`
 {
   "isLoading": true,
   "menuProps": {
@@ -62,6 +62,27 @@ describe("Login", () => {
       "id": "ROOT",
       "indent": 0,
       "isCollapsed": false,
+      "menuProps": {
+        "id": "ROOT",
+        "isOpen": false,
+        "itemsProps": [
+          {
+            "id": "delete",
+            "onClick": [Function],
+            "onMenuClick": [Function],
+            "text": "Delete",
+          },
+          {
+            "id": "add",
+            "onClick": [Function],
+            "onMenuClick": [Function],
+            "text": "Add New Item",
+          },
+        ],
+        "onBackgroundClick": [Function],
+      },
+      "onClick": [Function],
+      "onMenuClick": [Function],
       "successors": [],
       "text": "ROOT",
     },
@@ -73,9 +94,9 @@ describe("Login", () => {
       if (result && result.pageType !== EPage.Ontology) return false;
 
       return result?.isLoading === false;
-    }, stateSubject);
+    }, viewModelSubject);
 
-    expect(stateSubject.getValue()).toMatchInlineSnapshot(`
+    expect(viewModelSubject.getValue()).toMatchInlineSnapshot(`
 {
   "isLoading": false,
   "menuProps": {
@@ -90,6 +111,27 @@ describe("Login", () => {
       "id": "ROOT",
       "indent": 0,
       "isCollapsed": false,
+      "menuProps": {
+        "id": "ROOT",
+        "isOpen": false,
+        "itemsProps": [
+          {
+            "id": "delete",
+            "onClick": [Function],
+            "onMenuClick": [Function],
+            "text": "Delete",
+          },
+          {
+            "id": "add",
+            "onClick": [Function],
+            "onMenuClick": [Function],
+            "text": "Add New Item",
+          },
+        ],
+        "onBackgroundClick": [Function],
+      },
+      "onClick": [Function],
+      "onMenuClick": [Function],
       "successors": [],
       "text": "ROOT",
     },
@@ -99,9 +141,9 @@ describe("Login", () => {
   });
 
   it("should click on login + failure", async () => {
-    const stateSubject = getStateSubject();
+    const viewModelSubject = getViewModelSubject();
     const converter = getConverter({
-      stateSubject,
+      viewModelSubject,
       getErrorText: () => Promise.resolve("Error"),
       getTree: () => Promise.resolve(getInitialOntologyTree()),
       login: () =>
@@ -111,7 +153,7 @@ describe("Login", () => {
         }),
     });
 
-    const state = stateSubject.getValue();
+    const state = viewModelSubject.getValue();
 
     if (state.pageType !== EPage.Login) throw new Error("Not login page");
 
@@ -119,7 +161,7 @@ describe("Login", () => {
 
     result.onClick();
 
-    expect(stateSubject.getValue()).toMatchInlineSnapshot(`
+    expect(viewModelSubject.getValue()).toMatchInlineSnapshot(`
 {
   "buttonProps": {
     "hasIcon": true,
@@ -134,9 +176,9 @@ describe("Login", () => {
       if (result && result.pageType !== EPage.Login) return false;
 
       return !!result?.message;
-    }, stateSubject);
+    }, viewModelSubject);
 
-    expect(stateSubject.getValue()).toMatchInlineSnapshot(`
+    expect(viewModelSubject.getValue()).toMatchInlineSnapshot(`
 {
   "buttonProps": {
     "hasIcon": true,

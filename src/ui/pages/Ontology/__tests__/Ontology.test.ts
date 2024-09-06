@@ -1,25 +1,25 @@
 import { uniqueId } from "lodash";
-import { EPage } from "../../../types";
-import { checkEventual, noop } from "../../../utils";
-import { getStateSubject } from "../../../view-model/StateSubject";
-import { getConverter } from "../components/HierarchicalItem/converter";
-import { getInitialOntologyState, getInitialOntologyTree } from "../utils";
 import { EConstant } from "../../../../constants";
+import { EPage } from "../../../types";
+import { noop } from "../../../utils";
+import { getViewModelSubject } from "../../../view-model/ViewModelSubject";
+import { getConverter } from "../components/HierarchicalItem/converter";
+import { getInitialOntologyState } from "../utils";
 
 beforeEach(() => {
-  const subject = getStateSubject();
+  const subject = getViewModelSubject();
   subject.next(getInitialOntologyState());
 });
 
 describe("Ontology", () => {
   it("should uncollapse", async () => {
-    const stateSubject = getStateSubject();
+    const viewModelSubject = getViewModelSubject();
     const converter = getConverter({
-      stateSubject,
+      viewModelSubject,
       getUniqueId: uniqueId,
     });
 
-    const state = stateSubject.getValue();
+    const state = viewModelSubject.getValue();
 
     if (state.pageType !== EPage.Ontology) throw new Error("Not login page");
 
@@ -31,7 +31,7 @@ describe("Ontology", () => {
 
     result.onClick();
 
-    expect(stateSubject.getValue()).toMatchInlineSnapshot(`
+    expect(viewModelSubject.getValue()).toMatchInlineSnapshot(`
 {
   "isLoading": true,
   "menuProps": {
@@ -46,6 +46,27 @@ describe("Ontology", () => {
       "id": "ROOT",
       "indent": 0,
       "isCollapsed": true,
+      "menuProps": {
+        "id": "ROOT",
+        "isOpen": false,
+        "itemsProps": [
+          {
+            "id": "delete",
+            "onClick": [Function],
+            "onMenuClick": [Function],
+            "text": "Delete",
+          },
+          {
+            "id": "add",
+            "onClick": [Function],
+            "onMenuClick": [Function],
+            "text": "Add New Item",
+          },
+        ],
+        "onBackgroundClick": [Function],
+      },
+      "onClick": [Function],
+      "onMenuClick": [Function],
       "successors": [],
       "text": "ROOT",
     },
@@ -55,13 +76,13 @@ describe("Ontology", () => {
   });
 
   it("should create new item", async () => {
-    const stateSubject = getStateSubject();
+    const viewModelSubject = getViewModelSubject();
     const converter = getConverter({
-      stateSubject,
+      viewModelSubject,
       getUniqueId: uniqueId,
     });
 
-    const state = stateSubject.getValue();
+    const state = viewModelSubject.getValue();
 
     if (state.pageType !== EPage.Ontology) throw new Error("Not login page");
 
@@ -73,7 +94,7 @@ describe("Ontology", () => {
 
     result.onMenuClick();
 
-    expect(stateSubject.getValue()).toMatchInlineSnapshot(`
+    expect(viewModelSubject.getValue()).toMatchInlineSnapshot(`
 {
   "isLoading": true,
   "menuProps": {
@@ -84,20 +105,32 @@ describe("Ontology", () => {
   },
   "pageType": "Ontology",
   "tree": {
-    "1": {
-      "id": "1",
-      "indent": 1,
-      "isCollapsed": false,
-      "successors": [],
-      "text": "New Item",
-    },
     "ROOT": {
       "id": "ROOT",
       "indent": 0,
       "isCollapsed": false,
-      "successors": [
-        "1",
-      ],
+      "menuProps": {
+        "id": "ROOT",
+        "isOpen": true,
+        "itemsProps": [
+          {
+            "id": "delete",
+            "onClick": [Function],
+            "onMenuClick": [Function],
+            "text": "Delete",
+          },
+          {
+            "id": "add",
+            "onClick": [Function],
+            "onMenuClick": [Function],
+            "text": "Add New Item",
+          },
+        ],
+        "onBackgroundClick": [Function],
+      },
+      "onClick": [Function],
+      "onMenuClick": [Function],
+      "successors": [],
       "text": "ROOT",
     },
   },
