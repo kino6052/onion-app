@@ -1,5 +1,4 @@
 import { forwardRef } from "react";
-import { createPortal } from "react-dom";
 import { Item } from "../Item";
 import "./styles.scss";
 import { TMenuProps } from "./types";

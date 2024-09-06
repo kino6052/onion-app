@@ -1,5 +1,4 @@
 import { TMenuProps } from "../../../../components/Menu/types";
-import { EPage } from "../../../../types";
 import { getUpdateState } from "../../../../utils";
 import { TStateSubject } from "../../../../view-model/StateSubject/types";
 import { addNewItem, closeMenu, removeItem } from "./actions";
