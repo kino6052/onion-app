@@ -6,7 +6,7 @@ import { getConverter } from "../converter";
 import { getInitialLoginState } from "../utils";
 
 beforeEach(() => {
-  const subject = getStateSubject();
+  const subject = getStateSubject(); // TODO: Rename ViewModelSubject
   subject.next(getInitialLoginState());
 });
 
