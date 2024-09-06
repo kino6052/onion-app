@@ -1,8 +1,21 @@
 import { produce } from "immer";
-import { Observable, filter, lastValueFrom, take } from "rxjs";
+import {
+  Observable,
+  Subject,
+  bindCallback,
+  concatMap,
+  defer,
+  filter,
+  from,
+  lastValueFrom,
+  map,
+  merge,
+  of,
+  take,
+} from "rxjs";
 
 export function findFirst<T extends unknown>(arr: T[], fallback?: T) {
-  return (arr.find(Boolean) || fallback) as Exclude<T, false>;
+  return (arr.find(Boolean) || fallback) as Exclude<T, boolean>;
 }
 
 export function getUpdateState<T extends Record<string, unknown>>(state: T) {
@@ -13,9 +26,21 @@ export const noop = () => {
   throw Error("Not implemented");
 };
 
-export function checkEventual<T extends Record<string, unknown>>(
-  predicate: (result: T | undefined) => boolean,
-  observable: Observable<T | undefined>
+export const throwError =
+  (message: string = "Oops") =>
+  () => {
+    throw Error(message);
+  };
+
+export function checkEventual(
+  predicate: () => boolean,
+  onChange: (cb: () => void) => void
 ) {
-  return lastValueFrom(observable.pipe(filter(predicate), take(1)));
+  const subject = new Subject<boolean>();
+
+  onChange(() => {
+    subject.next(predicate());
+  });
+
+  return lastValueFrom(subject.pipe(filter(Boolean), take(1)));
 }

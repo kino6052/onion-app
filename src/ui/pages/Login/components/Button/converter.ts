@@ -1,15 +1,14 @@
-import { TButtonProps } from "../../components/Button/types";
-import { THierarchicalItem } from "../../components/Item/types";
-import { EPage, TAppProps } from "../../types";
-import { findFirst, getUpdateState } from "../../utils";
-import { TViewModelSubject } from "../../view-model/ViewModelSubject/types";
-import { getInitialOntologyState } from "../Ontology/utils";
+import { TButtonProps } from "../../../../components/Button/types";
+import { THierarchicalItem } from "../../../../components/Item/types";
+import { EPage, TAppProps } from "../../../../types";
+import { findFirst, getUpdateState } from "../../../../utils";
+import { TViewModelSubject } from "../../../../view-model/ViewModelSubject/types";
+import { getInitialOntologyState } from "../../../Ontology/utils";
 import {
   getDisabledButtonState,
   updateLoginErrorState,
   updateOntologyState,
 } from "./actions";
-import { TLoginProps } from "./types";
 
 type TLoginResponse = {
   isSuccessful: boolean;
@@ -23,6 +22,9 @@ type TLoginConverter = {
   getErrorText: () => Promise<string>;
 };
 
+// TODO: converter should not know about the subject
+// Only should know getViewModel for the current component + onClick and so on.
+// Because converter is the DI thing, it is better to keep it on high level of abstraction
 export const getConverter =
   ({ viewModelSubject, login, getTree, getErrorText }: TLoginConverter) =>
   (props: TButtonProps) => {

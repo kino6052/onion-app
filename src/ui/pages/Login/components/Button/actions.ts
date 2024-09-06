@@ -1,6 +1,6 @@
-import { THierarchicalItem } from "../../components/Item/types";
-import { EPage, TAppProps } from "../../types";
-import { mapTreeToTreeProps } from "../Ontology/utils";
+import { THierarchicalItem } from "../../../../components/Item/types";
+import { EPage, TAppProps } from "../../../../types";
+import { mapTreeToTreeProps } from "../../../Ontology/utils";
 
 export const getDisabledButtonState =
   (isDisabled: boolean) => (_state: TAppProps) => {
