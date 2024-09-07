@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { HTMLProps, PropsWithChildren } from "react";
 import { TMenuProps } from "../Menu/types";
 
 type THandlers = {
@@ -8,7 +8,10 @@ type THandlers = {
 
 export type TItemProps = TItem & THandlers;
 export type THierarchicalItemProps = PropsWithChildren<
-  THierarchicalItem & THandlers & { menuProps: TMenuProps }
+  THierarchicalItem &
+    THandlers & { menuProps: TMenuProps } & { isEditing?: boolean } & {
+      inputProps: Partial<HTMLProps<HTMLInputElement>>;
+    }
 >;
 
 export type TItem = {

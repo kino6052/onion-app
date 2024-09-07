@@ -27,6 +27,16 @@ export const removeItem =
     parentNode.successors = parentNode.successors.filter((_id) => _id !== id);
   };
 
+export const renameItem =
+  ({ id }: { id: string; parentId?: string }) =>
+  (_state: TAppProps) => {
+    if (_state.pageType !== EPage.Ontology) return;
+
+    const node = _state.tree[id];
+
+    node.isEditing = true;
+  };
+
 export const addNewItem =
   ({ getUniqueId, id }: { getUniqueId: () => string; id: string }) =>
   (_state: TAppProps) => {
@@ -45,8 +55,6 @@ export const addNewItem =
         text: "New Item",
       },
     });
-
-    console.warn({ result });
 
     _state.tree[newId] = result[newId];
 

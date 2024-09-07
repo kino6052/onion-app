@@ -1,25 +1,36 @@
 import { EConstant } from "../../../../constants";
+import { HierarchicalItem } from "../../../components/Item";
 import { THierarchicalItemProps } from "../../../components/Item/types";
 import { noop } from "../../../utils";
-import { HierarchicalItem } from "../components/HierarchicalItem";
 
-export const composeTree = (
-  items: Record<string, THierarchicalItemProps>,
-  id: string = EConstant.Root,
-  indent = 0
-) => {
+export const composeTree = ({
+  items,
+  id = EConstant.Root,
+  indent = 0,
+  ItemComponent = HierarchicalItem,
+}: {
+  items: Record<string, THierarchicalItemProps>;
+  id?: string;
+  indent?: number;
+  ItemComponent?: React.FC<THierarchicalItemProps>;
+}) => {
   const item = items[id];
 
   if (!item) return null;
 
   return (
-    <HierarchicalItem {...item} onClick={noop} onMenuClick={noop} id={id}>
+    <ItemComponent {...item} onClick={noop} onMenuClick={noop} id={id}>
       {!item.isCollapsed &&
         item.successors.map((_id) => {
-          const C = composeTree(items, _id, indent + 1);
+          const C = composeTree({
+            items,
+            id: _id,
+            indent: indent + 1,
+            ItemComponent,
+          });
 
           return <span key={_id}>{C}</span>;
         })}
-    </HierarchicalItem>
+    </ItemComponent>
   );
 };

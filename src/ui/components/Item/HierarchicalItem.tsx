@@ -16,6 +16,8 @@ export const HierarchicalItem: React.FC<
   children,
   isCollapsed,
   menuProps: { MenuComponent = Menu, ...menuProps },
+  isEditing,
+  inputProps,
 }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const itemRef = useRef<HTMLDivElement>(null);
@@ -42,7 +44,10 @@ export const HierarchicalItem: React.FC<
       {menuProps.isOpen && <MenuComponent {...menuProps} ref={menuRef} />}
       <div className="item-component" onClick={onClick}>
         <span className="item-component__icon"></span>
-        <Typography type={ETypographyType.Regular}>{text}</Typography>
+        {!isEditing && (
+          <Typography type={ETypographyType.Regular}>{text}</Typography>
+        )}
+        {isEditing && <input {...inputProps} />}
         <span
           className="item-component__menu"
           onClick={(e) => {

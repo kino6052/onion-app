@@ -1,7 +1,10 @@
+import { EConstant } from "../../../../../constants";
 import { TMenuProps } from "../../../../components/Menu/types";
 import { getUpdateState } from "../../../../utils";
 import { TViewModelSubject } from "../../../../view-model/ViewModelSubject/types";
 import { addNewItem, closeMenu, removeItem } from "./actions";
+import { EMenuConstant } from "./constants";
+import { getMenuItemById } from "./utils";
 
 type TOntologyConverter = {
   viewModelSubject: TViewModelSubject;
@@ -21,21 +24,30 @@ export const getConverter =
       };
 
       // TODO: Use constants
-      _props.itemsProps[0].onClick = async () => {
-        const parentId = await getParentId(id);
-        viewModelSubject.next(
-          getUpdateState(viewModelSubject.getValue())(
-            removeItem({ id, parentId })
-          )
-        );
-      };
+      const menuItem01 = getMenuItemById(
+        EMenuConstant.Remove,
+        _props.itemsProps
+      );
 
-      _props.itemsProps[1].onClick = async () => {
-        viewModelSubject.next(
-          getUpdateState(viewModelSubject.getValue())(
-            addNewItem({ getUniqueId, id })
-          )
-        );
-      };
+      menuItem01 &&
+        (menuItem01.onClick = async () => {
+          const parentId = await getParentId(id);
+          viewModelSubject.next(
+            getUpdateState(viewModelSubject.getValue())(
+              removeItem({ id, parentId })
+            )
+          );
+        });
+
+      const menuItem02 = getMenuItemById(EMenuConstant.Add, _props.itemsProps);
+
+      menuItem02 &&
+        (menuItem02.onClick = async () => {
+          viewModelSubject.next(
+            getUpdateState(viewModelSubject.getValue())(
+              addNewItem({ getUniqueId, id })
+            )
+          );
+        });
     });
   };
