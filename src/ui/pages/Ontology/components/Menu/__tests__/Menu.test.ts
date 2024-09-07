@@ -81,4 +81,22 @@ describe("Menu", () => {
 
     expect(getTotalItemCount()).toMatchInlineSnapshot(`1`);
   });
+
+  it("should edit item", async () => {
+    const {
+      selectors: { getNode, getMenuItem },
+    } = composeTest();
+
+    const menuItem = getMenuItem(EConstant.Root, EMenuConstant.Add);
+
+    menuItem?.onClick();
+
+    const menuItem02 = getMenuItem("1", EMenuConstant.Rename);
+
+    expect(getNode("1")?.isEditing).toMatchInlineSnapshot(`undefined`);
+
+    menuItem02?.onClick();
+
+    expect(getNode("1")?.isEditing).toMatchInlineSnapshot(`true`);
+  });
 });

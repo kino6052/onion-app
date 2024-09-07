@@ -62,6 +62,14 @@ export const composeTest = () => {
     return Object.entries(viewModel.tree).length;
   };
 
+  const getNode = (id: string) => {
+    const viewModel = viewModelSubject.getValue();
+
+    if (viewModel.pageType !== EPage.Ontology) return undefined;
+
+    return viewModel.tree[id];
+  };
+
   return {
     onAppViewModelChange,
     getViewModel,
@@ -70,6 +78,7 @@ export const composeTest = () => {
       getNodeSuccessors,
       getMenuItem,
       getTotalItemCount,
+      getNode,
     },
   };
 };

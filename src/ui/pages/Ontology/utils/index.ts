@@ -33,6 +33,7 @@ export const mapTreeToTreeProps = (
           menuProps: getDefaultMenuProps(key),
           onClick: noop,
           onMenuClick: noop,
+          inputProps: {},
         } as THierarchicalItemProps,
       ];
     })

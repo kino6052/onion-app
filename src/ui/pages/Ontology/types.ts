@@ -10,7 +10,7 @@ export type TOntologyProps = TWithPageType<
     menuProps: TItemProps;
     isLoading: boolean;
     error?: string;
-    ItemComponent: React.FC<THierarchicalItemProps>;
+    ItemComponent?: React.FC<THierarchicalItemProps>;
   },
   EPage.Ontology
 >;

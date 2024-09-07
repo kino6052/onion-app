@@ -2,7 +2,7 @@ import { EConstant } from "../../../../../constants";
 import { TMenuProps } from "../../../../components/Menu/types";
 import { getUpdateState } from "../../../../utils";
 import { TViewModelSubject } from "../../../../view-model/ViewModelSubject/types";
-import { addNewItem, closeMenu, removeItem } from "./actions";
+import { addNewItem, closeMenu, removeItem, renameItem } from "./actions";
 import { EMenuConstant } from "./constants";
 import { getMenuItemById } from "./utils";
 
@@ -23,7 +23,6 @@ export const getConverter =
         );
       };
 
-      // TODO: Use constants
       const menuItem01 = getMenuItemById(
         EMenuConstant.Remove,
         _props.itemsProps
@@ -47,6 +46,18 @@ export const getConverter =
             getUpdateState(viewModelSubject.getValue())(
               addNewItem({ getUniqueId, id })
             )
+          );
+        });
+
+      const menuItem03 = getMenuItemById(
+        EMenuConstant.Rename,
+        _props.itemsProps
+      );
+
+      menuItem03 &&
+        (menuItem03.onClick = async () => {
+          viewModelSubject.next(
+            getUpdateState(viewModelSubject.getValue())(renameItem({ id }))
           );
         });
     });

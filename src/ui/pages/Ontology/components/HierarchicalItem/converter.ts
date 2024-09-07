@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { THierarchicalItemProps } from "../../../../components/Item/types";
 import { TMenuProps } from "../../../../components/Menu/types";
 import { EPage } from "../../../../types";
@@ -31,6 +32,18 @@ export const getConverter =
             const node = _state.tree[id];
 
             node.menuProps.isOpen = true;
+          })
+        );
+      };
+
+      _props.inputProps.onChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        viewModelSubject.next(
+          getUpdateState(viewModelSubject.getValue())((_state) => {
+            if (_state.pageType !== EPage.Ontology) return;
+
+            const node = _state.tree[id];
+
+            node.text = e.target.value;
           })
         );
       };
