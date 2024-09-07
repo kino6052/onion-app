@@ -1,4 +1,5 @@
 import { EPage, TAppProps } from "../../../../types";
+import { findFirst } from "../../../../utils";
 import { mapTreeToTreeProps } from "../../utils";
 
 export const closeMenu = (id: string) => (_state: TAppProps) => {
@@ -10,11 +11,20 @@ export const closeMenu = (id: string) => (_state: TAppProps) => {
 };
 
 export const removeItem =
-  ({ id }: { id: string }) =>
+  ({ id, parentId }: { id: string; parentId?: string }) =>
   (_state: TAppProps) => {
     if (_state.pageType !== EPage.Ontology) return;
 
     delete _state.tree[id];
+
+    const parentNode = findFirst([
+      !!parentId && _state.tree[parentId],
+      undefined,
+    ]);
+
+    if (!parentNode) return;
+
+    parentNode.successors = parentNode.successors.filter((_id) => _id !== id);
   };
 
 export const addNewItem =

@@ -6,10 +6,11 @@ import { addNewItem, closeMenu, removeItem } from "./actions";
 type TOntologyConverter = {
   viewModelSubject: TViewModelSubject;
   getUniqueId: () => string;
+  getParentId: (id: string) => Promise<string | undefined>;
 };
 
 export const getConverter =
-  ({ viewModelSubject, getUniqueId }: TOntologyConverter) =>
+  ({ viewModelSubject, getUniqueId, getParentId }: TOntologyConverter) =>
   (props: TMenuProps) => {
     const { id } = props;
     return getUpdateState(props)((_props) => {
@@ -19,9 +20,13 @@ export const getConverter =
         );
       };
 
+      // TODO: Use constants
       _props.itemsProps[0].onClick = async () => {
+        const parentId = await getParentId(id);
         viewModelSubject.next(
-          getUpdateState(viewModelSubject.getValue())(removeItem({ id }))
+          getUpdateState(viewModelSubject.getValue())(
+            removeItem({ id, parentId })
+          )
         );
       };
 

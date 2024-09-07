@@ -5,6 +5,7 @@ import {
 } from "../../../components/Item/types";
 import { EPage } from "../../../types";
 import { noop } from "../../../utils";
+import { getDefaultMenuProps } from "../components/Menu/utils";
 import { TOntologyProps } from "../types";
 
 export const getInitialOntologyTree = (): Record<
@@ -29,25 +30,7 @@ export const mapTreeToTreeProps = (
         key,
         {
           ...value,
-          menuProps: {
-            id: key,
-            itemsProps: [
-              {
-                id: "delete",
-                onClick: noop,
-                onMenuClick: noop,
-                text: "Delete",
-              },
-              {
-                id: "add",
-                onClick: noop,
-                onMenuClick: noop,
-                text: "Add New Item",
-              },
-            ],
-            onBackgroundClick: noop,
-            isOpen: false,
-          },
+          menuProps: getDefaultMenuProps(key),
           onClick: noop,
           onMenuClick: noop,
         } as THierarchicalItemProps,
