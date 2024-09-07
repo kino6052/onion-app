@@ -75,7 +75,7 @@ describe("Menu", () => {
 
     menuItem03?.onClick();
 
-    await checkEventual(() => getTotalItemCount() === 1, onAppViewModelChange);
+    await checkEventual(() => getTotalItemCount() === 1, onAppViewModelChange); // NOTE: To make tests more scalable, hide the awaiting function in the root
 
     expect(getNodeSuccessors(EConstant.Root)).toMatchInlineSnapshot(`[]`);
 
