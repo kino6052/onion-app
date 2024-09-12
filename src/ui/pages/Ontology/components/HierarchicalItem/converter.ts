@@ -36,17 +36,38 @@ export const getConverter =
         );
       };
 
-      _props.inputProps.onChange = async (e: ChangeEvent<HTMLInputElement>) => {
-        viewModelSubject.next(
-          getUpdateState(viewModelSubject.getValue())((_state) => {
-            if (_state.pageType !== EPage.Ontology) return;
+      if (_props.promptProps) {
+        _props.promptProps.textProps.onChange = async (
+          e: ChangeEvent<HTMLInputElement>
+        ) => {
+          viewModelSubject.next(
+            getUpdateState(viewModelSubject.getValue())((_state) => {
+              if (_state.pageType !== EPage.Ontology) return;
 
-            const node = _state.tree[id];
+              const node = _state.tree[id];
 
-            node.text = e.target.value;
-          })
-        );
-      };
+              if (!node.promptProps) return;
+
+              node.promptProps.textProps.value = e.target.value;
+            })
+          );
+        };
+
+        _props.promptProps.buttonProps.onClick = async () => {
+          viewModelSubject.next(
+            getUpdateState(viewModelSubject.getValue())((_state) => {
+              if (_state.pageType !== EPage.Ontology) return;
+
+              const node = _state.tree[id];
+
+              if (!node.promptProps) return;
+
+              node.text = node.promptProps.textProps.value;
+              node.promptProps = undefined;
+            })
+          );
+        };
+      }
 
       _props.menuProps.MenuComponent = MenuComponent;
     });

@@ -1,5 +1,6 @@
 import { HTMLProps, PropsWithChildren } from "react";
 import { TMenuProps } from "../Menu/types";
+import { TPromptProps } from "../Prompt/types";
 
 type THandlers = {
   onClick: () => void;
@@ -9,8 +10,8 @@ type THandlers = {
 export type TItemProps = TItem & THandlers;
 export type THierarchicalItemProps = PropsWithChildren<
   THierarchicalItem &
-    THandlers & { menuProps: TMenuProps } & { isEditing?: boolean } & {
-      inputProps: Partial<HTMLProps<HTMLInputElement>>;
+    THandlers & { menuProps: TMenuProps } & {
+      promptProps?: TPromptProps;
     }
 >;
 

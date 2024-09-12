@@ -5,6 +5,7 @@ import { Typography } from "../Typography";
 import { ETypographyType } from "../Typography/constants";
 import "./styles.scss";
 import { THierarchicalItemProps } from "./types";
+import { Prompt } from "../Prompt";
 
 export const HierarchicalItem: React.FC<
   PropsWithChildren<Omit<THierarchicalItemProps, "successors">>
@@ -16,8 +17,7 @@ export const HierarchicalItem: React.FC<
   children,
   isCollapsed,
   menuProps: { MenuComponent = Menu, ...menuProps },
-  isEditing,
-  inputProps,
+  promptProps,
 }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const itemRef = useRef<HTMLDivElement>(null);
@@ -34,30 +34,30 @@ export const HierarchicalItem: React.FC<
   }, [menuRef, itemRef]);
 
   return (
-    <div
-      className="item-component-wrapper"
-      style={findFirst(
-        [!!indent && { paddingLeft: 12, borderLeft: "1px dashed white" }],
-        undefined
-      )}
-    >
-      {menuProps.isOpen && <MenuComponent {...menuProps} ref={menuRef} />}
-      <div className="item-component" onClick={onClick}>
-        <span className="item-component__icon"></span>
-        {!isEditing && (
-          <Typography type={ETypographyType.Regular}>{text}</Typography>
+    <>
+      <div
+        className="item-component-wrapper"
+        style={findFirst(
+          [!!indent && { paddingLeft: 12, borderLeft: "1px dashed white" }],
+          undefined
         )}
-        {isEditing && <input {...inputProps} />}
-        <span
-          className="item-component__menu"
-          onClick={(e) => {
-            e.stopPropagation();
-            onMenuClick();
-          }}
-          ref={itemRef}
-        ></span>
+      >
+        {menuProps.isOpen && <MenuComponent {...menuProps} ref={menuRef} />}
+        <div className="item-component" onClick={onClick}>
+          <span className="item-component__icon"></span>
+          <Typography type={ETypographyType.Regular}>{text}</Typography>
+          <span
+            className="item-component__menu"
+            onClick={(e) => {
+              e.stopPropagation();
+              onMenuClick();
+            }}
+            ref={itemRef}
+          ></span>
+        </div>
+        {findFirst([!isCollapsed && children, null])}
       </div>
-      {findFirst([!isCollapsed && children, null])}
-    </div>
+      {promptProps && <Prompt {...promptProps} />}
+    </>
   );
 };

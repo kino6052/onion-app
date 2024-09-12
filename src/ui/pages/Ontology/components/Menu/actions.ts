@@ -1,3 +1,4 @@
+import { noop } from "lodash";
 import { EPage, TAppProps } from "../../../../types";
 import { findFirst } from "../../../../utils";
 import { mapTreeToTreeProps } from "../../utils";
@@ -34,7 +35,21 @@ export const renameItem =
 
     const node = _state.tree[id];
 
-    node.isEditing = true;
+    node.promptProps = {
+      buttonProps: {
+        hasIcon: true,
+        onClick: noop,
+        children: "Accept",
+        isDisabled: false,
+      },
+      description: "Input this",
+      textProps: {
+        onChange: noop,
+        placeholder: "Input text",
+        value: node.text,
+      },
+      title: "Input that",
+    };
   };
 
 export const addNewItem =
