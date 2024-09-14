@@ -11,7 +11,7 @@ export type TWithPageType<T, TPageType extends EPage> = T & {
   pageType: TPageType;
 };
 
-export type TAppProps = TLoginProps | TOntologyProps;
+export type TAppProps = TLoginProps | TOntologyProps | TNoteProps;
 
 type OmitNullish<T> = {
   [K in keyof T as T[K] extends NonNullable<T[K]> ? K : never]: T[K];

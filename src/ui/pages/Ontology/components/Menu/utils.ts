@@ -10,6 +10,12 @@ export const getDefaultMenuProps = (id: string) => ({
   id,
   itemsProps: [
     {
+      id: EMenuConstant.Examine,
+      onClick: noop,
+      onMenuClick: noop,
+      text: "Examine",
+    },
+    {
       id: EMenuConstant.Rename,
       onClick: noop,
       onMenuClick: noop,

@@ -1,36 +1,19 @@
-import { Button } from "../../components/Button";
 import { Item } from "../../components/Item";
-import { Typography } from "../../components/Typography";
-import { ETypographyType } from "../../components/Typography/constants";
 import { Word } from "../../components/Word";
-import { EConstant } from "../../../constants";
-import { composeTree } from "../../utils";
 import "./styles.scss";
+import { TNoteProps } from "./types";
 
-export const NotePage: React.FC<{}> = ({ props }) => {
+export const NotePage: React.FC<TNoteProps> = ({
+  itemProps,
+  wordTreeProps,
+}) => {
   return (
     <div className="note-page">
       <div className="note-page__navigation">
-        <Item id="" text="Note" />
+        <Item {...itemProps} text="Note" />
       </div>
       <div className="note-page__content">
-        <Word>One</Word>
-        <Word isCollapsible>
-          <Word>Test</Word>
-          <Word>Test</Word>
-          <Word isCollapsible>
-            <Word>Test</Word>
-            <Word>Test</Word>
-            <Word>Test</Word>
-          </Word>
-          <Word>Test</Word>
-        </Word>
-        <Word>Two</Word>
-        <Word>Two</Word>
-        <Word>Two</Word>
-        <Word>Two</Word>
-        <Word>Two</Word>
-        <Word>Two</Word>
+        <Word {...wordTreeProps} />
       </div>
     </div>
   );

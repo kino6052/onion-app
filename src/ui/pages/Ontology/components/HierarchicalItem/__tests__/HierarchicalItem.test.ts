@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 import { EConstant } from "../../../../../../constants";
 import { composeTest } from "../root";
+import { getInitialRenamePromptProps } from "../utils";
 
 const throwError = () => {
   throw new Error("No view model");
@@ -40,20 +41,44 @@ describe("Hierarchical Item", () => {
   });
 
   it("should edit name", async () => {
-    const { converter, getViewModel } = composeTest();
+    const {
+      converter,
+      getViewModel,
+      selectors: { getPromptProps },
+    } = composeTest();
+
+    const viewModel = getViewModel(EConstant.Root) ?? throwError();
+    viewModel.promptProps = getInitialRenamePromptProps();
 
     const result = converter(getViewModel(EConstant.Root) ?? throwError());
 
     expect(result.text).toMatchInlineSnapshot(`"ROOT"`);
 
-    result.inputProps.onChange?.({
+    result.promptProps?.textProps.onChange({
       target: {
         value: "123",
       },
     } as ChangeEvent<HTMLInputElement>);
 
-    const result01 = converter(getViewModel(EConstant.Root) ?? throwError());
+    expect(getPromptProps(EConstant.Root)).toMatchInlineSnapshot(`
+{
+  "buttonProps": {
+    "children": "Submit",
+    "hasIcon": true,
+    "onClick": [Function],
+  },
+  "description": "Enter a new name",
+  "textProps": {
+    "onChange": [Function],
+    "placeholder": "Enter a new name",
+    "value": "123",
+  },
+  "title": "Rename",
+}
+`);
 
-    expect(result01.text).toMatchInlineSnapshot(`"123"`);
+    result.promptProps?.buttonProps.onClick();
+
+    expect(getPromptProps(EConstant.Root)).toMatchInlineSnapshot(`undefined`);
   });
 });

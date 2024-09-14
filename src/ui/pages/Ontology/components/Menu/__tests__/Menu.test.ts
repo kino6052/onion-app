@@ -82,6 +82,30 @@ describe("Menu", () => {
     expect(getTotalItemCount()).toMatchInlineSnapshot(`1`);
   });
 
+  it("should not remove ROOT", async () => {
+    const {
+      onAppViewModelChange,
+      selectors: { getMenuItem, getTotalItemCount },
+    } = composeTest();
+
+    const menuItem = getMenuItem(EConstant.Root, EMenuConstant.Remove);
+
+    expect(menuItem).toMatchInlineSnapshot(`
+{
+  "id": "Remove",
+  "onClick": [Function],
+  "onMenuClick": [Function],
+  "text": "Remove",
+}
+`);
+
+    menuItem?.onClick();
+
+    await checkEventual(() => getTotalItemCount() === 1, onAppViewModelChange);
+
+    expect(getTotalItemCount()).toMatchInlineSnapshot(`1`);
+  });
+
   it("should edit item", async () => {
     const {
       selectors: { getNode, getMenuItem },
@@ -93,10 +117,25 @@ describe("Menu", () => {
 
     const menuItem02 = getMenuItem("1", EMenuConstant.Rename);
 
-    expect(getNode("1")?.isEditing).toMatchInlineSnapshot(`undefined`);
+    expect(getNode("1")?.promptProps).toMatchInlineSnapshot(`undefined`);
 
     menuItem02?.onClick();
 
-    expect(getNode("1")?.isEditing).toMatchInlineSnapshot(`true`);
+    expect(getNode("1")?.promptProps).toMatchInlineSnapshot(`
+{
+  "buttonProps": {
+    "children": "Submit",
+    "hasIcon": true,
+    "onClick": [Function],
+  },
+  "description": "Enter a new name",
+  "textProps": {
+    "onChange": [Function],
+    "placeholder": "Enter a new name",
+    "value": "",
+  },
+  "title": "Rename",
+}
+`);
   });
 });

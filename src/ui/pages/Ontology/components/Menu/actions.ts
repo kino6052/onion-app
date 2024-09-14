@@ -1,7 +1,8 @@
-import { noop } from "lodash";
+import { EConstant } from "../../../../../constants";
 import { EPage, TAppProps } from "../../../../types";
 import { findFirst } from "../../../../utils";
 import { mapTreeToTreeProps } from "../../utils";
+import { getInitialRenamePromptProps } from "../HierarchicalItem/utils";
 
 export const closeMenu = (id: string) => (_state: TAppProps) => {
   if (_state.pageType !== EPage.Ontology) return;
@@ -15,6 +16,8 @@ export const removeItem =
   ({ id, parentId }: { id: string; parentId?: string }) =>
   (_state: TAppProps) => {
     if (_state.pageType !== EPage.Ontology) return;
+
+    if (id === EConstant.Root) return;
 
     delete _state.tree[id];
 
@@ -35,21 +38,7 @@ export const renameItem =
 
     const node = _state.tree[id];
 
-    node.promptProps = {
-      buttonProps: {
-        hasIcon: true,
-        onClick: noop,
-        children: "Accept",
-        isDisabled: false,
-      },
-      description: "Input this",
-      textProps: {
-        onChange: noop,
-        placeholder: "Input text",
-        value: node.text,
-      },
-      title: "Input that",
-    };
+    node.promptProps = getInitialRenamePromptProps();
   };
 
 export const addNewItem =

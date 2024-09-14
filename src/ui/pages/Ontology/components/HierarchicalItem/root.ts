@@ -34,6 +34,11 @@ export const composeTest = () => {
     return viewModel?.menuProps.isOpen;
   };
 
+  const getPromptProps = (id: string) => {
+    const viewModel = getViewModel(id);
+    return viewModel?.promptProps;
+  };
+
   return {
     onAppViewModelChange,
     getViewModel,
@@ -41,6 +46,7 @@ export const composeTest = () => {
     selectors: {
       getIsCollapsed,
       getIsMenuOpen,
+      getPromptProps,
     },
   };
 };
