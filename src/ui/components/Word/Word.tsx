@@ -6,8 +6,12 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
   onMenuClick,
   childrenProps,
   isCollapsible,
+  getTextComponent = ({ index }: { index: number }) =>
+    ({ children }) => <span>{children}</span>,
   id,
 }) => {
+  const TextComponent = getTextComponent();
+
   return (
     <div
       className={["word-component", isCollapsible && "collapsible"]
@@ -16,10 +20,11 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
       onClick={onClick}
     >
       <span className="word-component__text">
-        {childrenProps.map((props) => {
-          if (typeof props === "string") return <span>{`${props} `}</span>;
+        {childrenProps.map((props, i) => {
+          if (typeof props === "string")
+            return <TextComponent index={i}>{`${props} `}</TextComponent>;
 
-          return <Word {...props} />;
+          return <Word {...props} getTextComponent={getTextComponent} />;
         })}
       </span>
       {isCollapsible && (

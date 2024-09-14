@@ -1,20 +1,14 @@
-import { Item } from "../../components/Item";
-import { Word } from "../../components/Word";
+import { Word } from "./components/Word";
+import { NotePage as _NotePage } from "./NotePage";
 import "./styles.scss";
 import { TNoteProps } from "./types";
 
-export const NotePage: React.FC<TNoteProps> = ({
-  itemProps,
-  wordTreeProps,
-}) => {
-  return (
-    <div className="note-page">
-      <div className="note-page__navigation">
-        <Item {...itemProps} text="Note" />
-      </div>
-      <div className="note-page__content">
-        <Word {...wordTreeProps} />
-      </div>
-    </div>
-  );
-};
+export const NotePage: React.FC<TNoteProps> = (props) => (
+  <_NotePage
+    {...props}
+    wordTreeProps={{
+      ...props.wordTreeProps,
+      Component: Word,
+    }}
+  />
+);

@@ -56,7 +56,7 @@ const generateTreePropsFromTree = (tree: TProcessedWord): TWordProps => {
   return {
     id: tree.id,
     isCollapsible: true,
-    onClick: noop,
+    // onClick: noop,
     onMenuClick: noop,
     childrenProps: tree.open.map((item) => {
       if (typeof item === "string") return item;
@@ -72,7 +72,7 @@ export const Primary: Story = {
     itemProps: {
       id: "",
       text: "Test",
-      onClick: noop,
+      // onClick: noop,
       onMenuClick: noop,
     },
     pageType: EPage.Note,
