@@ -41,6 +41,12 @@ export const renameItem =
     node.promptProps = getInitialRenamePromptProps();
   };
 
+export const examineItem = ({ id }: { id: string; parentId?: string }) =>
+  (_state: TAppProps) => {
+    _state.pageType = EPage.Note;
+
+  }
+
 export const addNewItem =
   ({ getUniqueId, id }: { getUniqueId: () => string; id: string }) =>
   (_state: TAppProps) => {
