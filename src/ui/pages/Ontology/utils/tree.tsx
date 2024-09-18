@@ -4,6 +4,7 @@ import { THierarchicalItemProps } from "../../../components/Item/types";
 import { noop } from "../../../utils";
 
 export const composeTree = ({
+  // TODO: Better convert this logic to props mapping
   items,
   id = EConstant.Root,
   indent = 0,
