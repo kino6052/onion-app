@@ -1,4 +1,5 @@
 import { TLoginProps } from "./pages/Login/types";
+import { TNoteProps } from "./pages/Note/types";
 import { TOntologyProps } from "./pages/Ontology/types";
 
 export enum EPage {

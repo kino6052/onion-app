@@ -1,17 +1,16 @@
+import { TextComponent } from "../Text";
 import "./styles.scss";
 import { TWordProps } from "./types";
+import { isTextComponent } from "./utils";
 
 export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
   onClick,
   onMenuClick,
   childrenProps,
   isCollapsible,
-  getTextComponent = ({ index }: { index: number }) =>
-    ({ children }) => <span>{children}</span>,
+  Component = Word,
   id,
 }) => {
-  const TextComponent = getTextComponent();
-
   return (
     <div
       className={["word-component", isCollapsible && "collapsible"]
@@ -21,10 +20,11 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
     >
       <span className="word-component__text">
         {childrenProps.map((props, i) => {
-          if (typeof props === "string")
-            return <TextComponent index={i}>{`${props} `}</TextComponent>;
+          if (isTextComponent(props)) {
+            return <TextComponent index={i}>{props.children}</TextComponent>;
+          }
 
-          return <Word {...props} getTextComponent={getTextComponent} />;
+          return <Component {...props} />;
         })}
       </span>
       {isCollapsible && (

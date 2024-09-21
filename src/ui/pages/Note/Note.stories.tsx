@@ -74,6 +74,7 @@ export const Primary: Story = {
       text: "Test",
       // onClick: noop,
       onMenuClick: noop,
+      onClick: noop,
     },
     pageType: EPage.Note,
     wordTreeProps: generateTreePropsFromTree(wordTree),

@@ -3,9 +3,11 @@ import {
   TItemProps,
 } from "../../components/Item/types";
 import { EPage, TWithPageType } from "../../types";
+import { FC } from "../../libs/react";
 
 export type TOntologyProps = TWithPageType<
   {
+    Component?: FC<TOntologyProps>;
     tree: Record<string, THierarchicalItemProps>;
     menuProps: TItemProps;
     isLoading: boolean;

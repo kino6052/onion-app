@@ -1,11 +1,11 @@
 import { PropsWithChildren } from "react";
+import { TTextProps } from "../Text/types";
 
 export type TWordProps = {
   id: string;
   onClick: () => void;
   onMenuClick: () => void;
   isCollapsible: boolean;
-  childrenProps: (string | TWordProps)[];
+  childrenProps: (TTextProps | TWordProps)[];
   Component?: React.FC<TWordProps>;
-  getTextComponent?: () => React.FC<PropsWithChildren>;
 };

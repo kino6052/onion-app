@@ -1,13 +1,12 @@
 import { Word as _Word } from "../../../../components/Word";
 import { TWordProps } from "../../../../components/Word/types";
-import { getWithRange } from "../../withRange";
-import { TextComponent } from "../TextComponent";
+import { compose } from "../../../../libs/compose";
+import { FC } from "../../../../libs/react";
+import { withDataConverter } from "../../../../utils/withConverter";
+import { getConverter } from "./converter";
 
-export const Word = (props: TWordProps) => {
-  const getTextComponent = () => {
-    const withRange = getWithRange();
-    return withRange(TextComponent);
-  };
+const converter = getConverter({ getComponent: () => Word });
 
-  return <_Word {...props} getTextComponent={getTextComponent} />;
-};
+export const Word = compose(
+  withDataConverter<TWordProps, TWordProps>(converter)(_Word)
+) as FC<TWordProps>;
