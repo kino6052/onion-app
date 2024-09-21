@@ -4,11 +4,14 @@ import { getViewModelSubject } from "../../../../view-model/ViewModelSubject";
 import { getInitialOntologyState } from "../../../Ontology/utils";
 import { EMenuConstant } from "./constants";
 import { getConverter } from "./converter";
+import { TDeserializedWord } from "../../../Note/types";
+import { EConstant } from "../../../../../constants";
 
 export const composeTest = () => {
   let counter = 1;
   const viewModelSubject = getViewModelSubject();
   viewModelSubject.next(getInitialOntologyState());
+  const NoteMap: Record<string, TDeserializedWord> = {};
 
   const converter = getConverter({
     viewModelSubject,
@@ -21,8 +24,20 @@ export const composeTest = () => {
       const v = viewModelSubject.getValue();
       if (v.pageType !== EPage.Ontology) return undefined;
       const node = Object.values(v.tree).find((v) => v.successors.includes(id));
-
       return node?.id;
+    },
+    getNoteById: async (id: string) => {
+      const note = NoteMap[id];
+
+      if (note) return note;
+
+      NoteMap[id] = {
+        id: EConstant.Root,
+        open: ["Root"],
+        closed: "Root",
+      };
+
+      return NoteMap[id];
     },
   });
 
@@ -70,6 +85,28 @@ export const composeTest = () => {
     return viewModel.tree[id];
   };
 
+  const getWordTree = () => {
+    const viewModel = viewModelSubject.getValue();
+
+    if (viewModel.pageType !== EPage.Note) return undefined;
+
+    return viewModel.wordTreeProps;
+  };
+
+  const getIsLoading = () => {
+    const viewModel = viewModelSubject.getValue();
+
+    if (viewModel.pageType !== EPage.Note) return false;
+
+    return viewModel.isLoading;
+  };
+
+  const getPageType = () => {
+    const viewModel = viewModelSubject.getValue();
+
+    return viewModel.pageType;
+  };
+
   return {
     onAppViewModelChange,
     getViewModel,
@@ -79,6 +116,9 @@ export const composeTest = () => {
       getMenuItem,
       getTotalItemCount,
       getNode,
+      getPageType,
+      getWordTree,
+      getIsLoading,
     },
   };
 };

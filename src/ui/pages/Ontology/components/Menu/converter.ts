@@ -1,7 +1,12 @@
-import { EConstant } from "../../../../../constants";
 import { TMenuProps } from "../../../../components/Menu/types";
+import { EPage } from "../../../../types";
 import { getUpdateState } from "../../../../utils";
 import { TViewModelSubject } from "../../../../view-model/ViewModelSubject/types";
+import { TDeserializedWord } from "../../../Note/types";
+import {
+  generateTreePropsFromTree,
+  getInitialNoteState,
+} from "../../../Note/utils";
 import { addNewItem, closeMenu, removeItem, renameItem } from "./actions";
 import { EMenuConstant } from "./constants";
 import { getMenuItemById } from "./utils";
@@ -10,10 +15,16 @@ type TOntologyConverter = {
   viewModelSubject: TViewModelSubject;
   getUniqueId: () => string;
   getParentId: (id: string) => Promise<string | undefined>;
+  getNoteById: (id: string) => Promise<TDeserializedWord>;
 };
 
 export const getConverter =
-  ({ viewModelSubject, getUniqueId, getParentId }: TOntologyConverter) =>
+  ({
+    viewModelSubject,
+    getUniqueId,
+    getParentId,
+    getNoteById,
+  }: TOntologyConverter) =>
   (props: TMenuProps) => {
     const { id } = props;
     return getUpdateState(props)((_props) => {
@@ -58,6 +69,27 @@ export const getConverter =
         (menuItem03.onClick = async () => {
           viewModelSubject.next(
             getUpdateState(viewModelSubject.getValue())(renameItem({ id }))
+          );
+        });
+
+      const menuItem04 = getMenuItemById(
+        EMenuConstant.Examine,
+        _props.itemsProps
+      );
+
+      menuItem04 &&
+        (menuItem04.onClick = async () => {
+          const state = getInitialNoteState();
+          state.isLoading = true;
+          viewModelSubject.next(state);
+
+          const note = await getNoteById(id);
+          viewModelSubject.next(
+            getUpdateState(viewModelSubject.getValue())((state) => {
+              if (state.pageType !== EPage.Note) return;
+              state.wordTreeProps = generateTreePropsFromTree(note);
+              state.isLoading = false;
+            })
           );
         });
     });

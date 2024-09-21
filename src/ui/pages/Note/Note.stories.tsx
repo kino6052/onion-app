@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { NotePage } from ".";
-import { TNoteProps, TProcessedWord } from "./types";
+import { TNoteProps, TDeserializedWord } from "./types";
 import { EPage } from "../../types";
 import { EConstant } from "../../../constants";
-import { generateWordTree } from "./utils/tree";
+import { deserializeNote } from "./utils/tree";
 import { TWordProps } from "../../components/Word/types";
 import { noop } from "../../utils";
+import { getInitialNoteState } from "./utils";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -27,56 +28,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const data = {
-  [EConstant.Root]: {
-    id: EConstant.Root,
-    open: "This is a really cool {{1}}, that I want to share with {{2}}.",
-    closed: "Root",
-  },
-  "1": {
-    id: "1",
-    open: "comprehensible piece of knowledge",
-    closed: "stuff",
-  },
-  "2": {
-    id: "2",
-    open: "wonderful human {{3}}",
-    closed: "peeps",
-  },
-  "3": {
-    id: "3",
-    open: "stookies",
-    closed: "beings",
-  },
-};
-
-const wordTree = generateWordTree(data[EConstant.Root], data);
-
-const generateTreePropsFromTree = (tree: TProcessedWord): TWordProps => {
-  return {
-    id: tree.id,
-    isCollapsible: true,
-    // onClick: noop,
-    onMenuClick: noop,
-    childrenProps: tree.open.map((item) => {
-      if (typeof item === "string") return item;
-
-      return generateTreePropsFromTree(item);
-    }),
-  };
-};
-
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary: Story = {
-  args: {
-    itemProps: {
-      id: "",
-      text: "Test",
-      // onClick: noop,
-      onMenuClick: noop,
-      onClick: noop,
-    },
-    pageType: EPage.Note,
-    wordTreeProps: generateTreePropsFromTree(wordTree),
-  } as TNoteProps,
+  args: getInitialNoteState(),
 };

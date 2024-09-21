@@ -6,13 +6,15 @@ export type TNoteProps = TWithPageType<
   {
     itemProps: TItemProps;
     wordTreeProps: TWordProps;
+    isLoading: boolean;
   },
   EPage.Note
 >;
 
-export type TUnprocessedWord = { id: string; open: string; closed: string };
-export type TProcessedWord = {
+export type TSerializedWord = { id: string; open: string; closed: string };
+
+export type TDeserializedWord = {
   id: string;
-  open: (string | TProcessedWord)[];
+  open: (string | TDeserializedWord)[];
   closed: string;
 };

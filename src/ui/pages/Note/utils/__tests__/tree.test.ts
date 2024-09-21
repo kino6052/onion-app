@@ -1,5 +1,5 @@
 import { EConstant } from "../../../../../constants";
-import { generateDataFromTree, generateWordTree } from "../tree";
+import { serializeNote, deserializeNote } from "../tree";
 
 describe("Note", () => {
   it("should compose note tree from data", () => {
@@ -26,7 +26,7 @@ describe("Note", () => {
       },
     };
 
-    const wordTree = generateWordTree(data[EConstant.Root], data);
+    const wordTree = deserializeNote(data[EConstant.Root], data);
 
     expect(wordTree).toMatchInlineSnapshot(`
 {
@@ -98,9 +98,9 @@ describe("Note", () => {
       },
     };
 
-    const wordTree = generateWordTree(data[EConstant.Root], data);
+    const wordTree = deserializeNote(data[EConstant.Root], data);
 
-    const result = generateDataFromTree(wordTree);
+    const result = serializeNote(wordTree);
 
     expect(result).toMatchInlineSnapshot(`
 {

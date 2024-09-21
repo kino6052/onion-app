@@ -138,4 +138,37 @@ describe("Menu", () => {
 }
 `);
   });
+
+  it("should examine item", async () => {
+    const {
+      onAppViewModelChange,
+      selectors: { getPageType, getMenuItem, getIsLoading, getWordTree },
+    } = composeTest();
+
+    const menuItem = getMenuItem(EConstant.Root, EMenuConstant.Examine);
+
+    expect(getPageType()).toMatchInlineSnapshot(`"Ontology"`);
+
+    menuItem?.onClick();
+
+    expect(getPageType()).toMatchInlineSnapshot(`"Note"`);
+
+    await checkEventual(() => getIsLoading() === false, onAppViewModelChange);
+
+    expect(getWordTree()).toMatchInlineSnapshot(`
+{
+  "childrenProps": [
+    {
+      "children": "Root",
+      "index": 0,
+      "onClick": [Function],
+    },
+  ],
+  "id": "ROOT",
+  "isCollapsible": true,
+  "onClick": [Function],
+  "onMenuClick": [Function],
+}
+`);
+  });
 });

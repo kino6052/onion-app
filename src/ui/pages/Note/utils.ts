@@ -2,10 +2,12 @@ import { EConstant } from "../../../constants";
 import { TWordProps } from "../../components/Word/types";
 import { EPage } from "../../types";
 import { noop } from "../../utils";
-import { TNoteProps, TProcessedWord, TUnprocessedWord } from "./types";
-import { generateWordTree } from "./utils/tree";
+import { TNoteProps, TDeserializedWord, TSerializedWord } from "./types";
+import { deserializeNote } from "./utils/tree";
 
-export const generateTreePropsFromTree = (tree: TProcessedWord): TWordProps => {
+export const generateTreePropsFromTree = (
+  tree: TDeserializedWord
+): TWordProps => {
   return {
     id: tree.id,
     isCollapsible: true,
@@ -41,8 +43,9 @@ export const getInitialNoteState = (): TNoteProps => {
       onClick: noop,
       onMenuClick: noop,
     },
+    isLoading: true,
     wordTreeProps: generateTreePropsFromTree(
-      generateWordTree(data[EConstant.Root], data)
+      deserializeNote(data[EConstant.Root], data)
     ),
   };
 };

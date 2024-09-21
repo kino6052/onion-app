@@ -1,17 +1,23 @@
 import { templateParser } from "../../../utils";
-import { TProcessedWord, TUnprocessedWord } from "../types";
+import { TDeserializedWord, TSerializedWord } from "../types";
 
-export const generateWordTree = (
-  word: TUnprocessedWord,
-  data: Record<string, TUnprocessedWord>
-): TProcessedWord => {
+/** Generates word tree from from the serialized data like
+ * {
+ *  "id1": { "id": "id1", open: "this is {{id2}}!", closed: "Closed" },
+ *  "id2": { "id": "id2", open: "cool stuff", closed: "closed" },
+ * }
+ */
+export const deserializeNote = (
+  word: TSerializedWord,
+  data: Record<string, TSerializedWord>
+): TDeserializedWord => {
   const words = templateParser<typeof data>(word.open, data)
     .filter((word) => word && word !== " ")
     .map((_word) => {
       if (typeof _word === "string") return _word;
 
       // @ts-ignore
-      return generateWordTree(_word, data);
+      return deserializeNote(_word, data);
     });
 
   return {
@@ -21,9 +27,15 @@ export const generateWordTree = (
   };
 };
 
-export const generateDataFromTree = (
-  wordTree: TProcessedWord,
-  data: Record<string, TUnprocessedWord> = {}
+/** Serializes data back into the form:
+ * {
+ *  "id1": { "id": "id1", open: "this is {{id2}}!", closed: "Closed" },
+ *  "id2": { "id": "id2", open: "cool stuff", closed: "closed" },
+ * }
+ */
+export const serializeNote = (
+  wordTree: TDeserializedWord,
+  data: Record<string, TSerializedWord> = {}
 ) => {
   const word = {
     closed: wordTree.closed,
@@ -32,7 +44,7 @@ export const generateDataFromTree = (
       .map((a) => {
         if (typeof a === "string") return a;
 
-        generateDataFromTree(a, data); // FIXME: I'm impure...
+        serializeNote(a, data); // FIXME: I'm impure...
 
         return `{{${a.id}}}`;
       })
