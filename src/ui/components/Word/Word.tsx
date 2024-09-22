@@ -1,3 +1,5 @@
+import { Menu } from "../Menu";
+import { Prompt } from "../Prompt";
 import { TextComponent } from "../Text";
 import "./styles.scss";
 import { TWordProps } from "./types";
@@ -9,8 +11,13 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
   childrenProps,
   isCollapsible,
   Component = Word,
+  isOpen,
+  text,
+  promptProps,
+  menuProps,
   id,
 }) => {
+  console.warn({ isOpen, text, childrenProps });
   return (
     <div
       className={["word-component", isCollapsible && "collapsible"]
@@ -19,14 +26,18 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
       onClick={onClick}
     >
       <span className="word-component__text">
-        {childrenProps.map((props, i) => {
-          if (isTextComponent(props)) {
-            return <TextComponent index={i}>{props.children}</TextComponent>;
-          }
+        {!isOpen && text}
+        {!!isOpen &&
+          childrenProps.map((props, i) => {
+            if (isTextComponent(props)) {
+              return <TextComponent index={i}>{props.children}</TextComponent>;
+            }
 
-          return <Component {...props} />;
-        })}
+            return <Component {...props} />;
+          })}
       </span>
+      {menuProps && <Menu {...menuProps} />}
+      {promptProps && <Prompt {...promptProps} />}
       {isCollapsible && (
         <button className="word-component__menu" onClick={onMenuClick}></button>
       )}

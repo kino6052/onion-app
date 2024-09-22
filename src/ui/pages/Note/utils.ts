@@ -11,6 +11,7 @@ export const generateTreePropsFromTree = (
   return {
     id: tree.id,
     isCollapsible: true,
+    text: tree.closed,
     onClick: noop,
     onMenuClick: noop,
     childrenProps: tree.open.map((item, i) => {
@@ -26,15 +27,15 @@ export const generateTreePropsFromTree = (
   };
 };
 
-export const getInitialNoteState = (): TNoteProps => {
-  const data = {
+export const getInitialNoteState = (
+  data = {
     [EConstant.Root]: {
       id: EConstant.Root,
       open: "Empty",
       closed: "Root",
     },
-  };
-
+  }
+): TNoteProps => {
   return {
     pageType: EPage.Note,
     itemProps: {

@@ -1,3 +1,7 @@
+import { isArray } from "lodash";
+import { TTextProps } from "../../../components/Text/types";
+import { TWordProps } from "../../../components/Word/types";
+import { isTextComponent } from "../../../components/Word/utils";
 import { templateParser } from "../../../utils";
 import { TDeserializedWord, TSerializedWord } from "../types";
 
@@ -55,3 +59,55 @@ export const serializeNote = (
 
   return data;
 };
+
+export const findNodeById = (id: string, tree: TDeserializedWord) => {
+  return findTreeNodeById({
+    id,
+    tree,
+    filter: (v) => typeof v !== "string",
+    propName: "open",
+  });
+};
+
+export const findNotePropsById = (id: string, tree: TWordProps) => {
+  return findTreeNodeById({
+    id,
+    tree,
+    filter: (v: TWordProps | TTextProps) => !isTextComponent(v),
+    propName: "childrenProps",
+  });
+};
+
+export function findTreeNodeById<
+  PTree extends Record<string, unknown>,
+  POther extends unknown,
+>({
+  id,
+  tree,
+  propName,
+  filter,
+}: {
+  id: string;
+  tree: PTree;
+  propName: string;
+  filter: (input: PTree | POther) => boolean;
+}): PTree | undefined {
+  if (id === tree.id) return tree;
+  if (!tree[propName] || !isArray(tree[propName])) return;
+  if (tree[propName].filter(filter).length === 0) return undefined;
+  return tree[propName].reduce(
+    (acc: PTree | undefined, v: PTree | POther): PTree | undefined => {
+      if (acc) return acc;
+
+      if (!filter(v)) return acc;
+
+      return findTreeNodeById<PTree, POther>({
+        id,
+        tree: v as PTree,
+        propName,
+        filter,
+      }) as PTree;
+    },
+    undefined as PTree | undefined
+  );
+}

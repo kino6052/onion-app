@@ -3,9 +3,9 @@ import { TWordProps } from "../../../../components/Word/types";
 import { compose } from "../../../../libs/compose";
 import { FC } from "../../../../libs/react";
 import { withDataConverter } from "../../../../utils/withConverter";
-import { getConverter } from "./converter";
+import { composeTest } from "./root";
 
-const converter = getConverter({ getComponent: () => Word });
+const { converter } = composeTest();
 
 export const Word = compose(
   withDataConverter<TWordProps, TWordProps>(converter)(_Word)

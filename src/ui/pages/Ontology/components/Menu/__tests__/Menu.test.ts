@@ -159,7 +159,7 @@ describe("Menu", () => {
 {
   "childrenProps": [
     {
-      "children": "Root",
+      "children": "Empty",
       "index": 0,
       "onClick": [Function],
     },
@@ -168,6 +168,7 @@ describe("Menu", () => {
   "isCollapsible": true,
   "onClick": [Function],
   "onMenuClick": [Function],
+  "text": "Root",
 }
 `);
   });

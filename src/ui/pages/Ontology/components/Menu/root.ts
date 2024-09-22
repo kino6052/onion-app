@@ -33,7 +33,7 @@ export const composeTest = () => {
 
       NoteMap[id] = {
         id: EConstant.Root,
-        open: ["Root"],
+        open: ["Empty"],
         closed: "Root",
       };
 
