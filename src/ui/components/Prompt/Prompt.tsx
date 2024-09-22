@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { Button } from "../Button";
 import "./styles.scss";
 import { TPromptProps } from "./types";
@@ -15,7 +16,13 @@ export const Prompt: React.FC<TPromptProps> = ({
         {description && (
           <p className={"prompt-component__description"}>{description}</p>
         )}
-        <textarea className={"prompt-component__input"} {...textProps} />
+        <textarea
+          className={"prompt-component__input"}
+          {...textProps}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+            textProps.onChange(e.target.value);
+          }}
+        />
         <Button {...buttonProps} />
       </div>
     </div>

@@ -27,15 +27,15 @@ export const generateTreePropsFromTree = (
   };
 };
 
-export const getInitialNoteState = (
-  data = {
-    [EConstant.Root]: {
-      id: EConstant.Root,
-      open: "Empty",
-      closed: "Root",
-    },
-  }
-): TNoteProps => {
+export const DEFAULT_DATA: Record<string, TSerializedWord> = {
+  [EConstant.Root]: {
+    id: EConstant.Root,
+    open: "Empty",
+    closed: "Root",
+  },
+};
+
+export const getInitialNoteState = (data = DEFAULT_DATA): TNoteProps => {
   return {
     pageType: EPage.Note,
     itemProps: {

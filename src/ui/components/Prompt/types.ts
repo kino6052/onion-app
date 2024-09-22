@@ -5,8 +5,9 @@ export type TPromptProps = {
   title: string;
   textProps: {
     value: string;
-    onChange: ChangeEventHandler;
+    onChange: (input: string) => void;
     placeholder: string;
+    isDisabled: boolean;
   };
   buttonProps: TButtonProps;
   description: string;

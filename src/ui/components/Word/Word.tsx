@@ -17,20 +17,21 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
   menuProps,
   id,
 }) => {
-  console.warn({ isOpen, text, childrenProps });
   return (
     <div
       className={["word-component", isCollapsible && "collapsible"]
         .filter(Boolean)
         .join(" ")}
-      onClick={onClick}
+      onClick={() => {
+        onClick();
+      }}
     >
       <span className="word-component__text">
         {!isOpen && text}
         {!!isOpen &&
           childrenProps.map((props, i) => {
             if (isTextComponent(props)) {
-              return <TextComponent index={i}>{props.children}</TextComponent>;
+              return <TextComponent index={i}>{props.children} </TextComponent>;
             }
 
             return <Component {...props} />;
