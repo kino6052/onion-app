@@ -130,6 +130,7 @@ describe("Menu", () => {
   },
   "description": "Enter a new name",
   "textProps": {
+    "isDisabled": true,
     "onChange": [Function],
     "placeholder": "Enter a new name",
     "value": "",

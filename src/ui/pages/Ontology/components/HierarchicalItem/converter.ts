@@ -38,7 +38,7 @@ export const getConverter =
 
       if (_props.promptProps) {
         _props.promptProps.textProps.onChange = async (
-          e: ChangeEvent<HTMLInputElement>
+          input: string
         ) => {
           viewModelSubject.next(
             getUpdateState(viewModelSubject.getValue())((_state) => {
@@ -48,7 +48,7 @@ export const getConverter =
 
               if (!node.promptProps) return;
 
-              node.promptProps.textProps.value = e.target.value;
+              node.promptProps.textProps.value = input;
             })
           );
         };

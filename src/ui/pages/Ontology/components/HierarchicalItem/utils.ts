@@ -12,6 +12,7 @@ export const getInitialRenamePromptProps = (): TPromptProps => ({
     onChange: noop,
     placeholder: "Enter a new name",
     value: "",
+    isDisabled: true,
   },
   title: "Rename",
 });

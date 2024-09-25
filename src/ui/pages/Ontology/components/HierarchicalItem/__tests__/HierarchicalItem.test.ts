@@ -54,11 +54,7 @@ describe("Hierarchical Item", () => {
 
     expect(result.text).toMatchInlineSnapshot(`"ROOT"`);
 
-    result.promptProps?.textProps.onChange({
-      target: {
-        value: "123",
-      },
-    } as ChangeEvent<HTMLInputElement>);
+    result.promptProps?.textProps.onChange("123");
 
     expect(getPromptProps(EConstant.Root)).toMatchInlineSnapshot(`
 {
@@ -69,6 +65,7 @@ describe("Hierarchical Item", () => {
   },
   "description": "Enter a new name",
   "textProps": {
+    "isDisabled": true,
     "onChange": [Function],
     "placeholder": "Enter a new name",
     "value": "123",
