@@ -10,3 +10,8 @@ export type TLoginProps = TWithPageType<
   },
   EPage.Login
 >;
+
+export type TLoginState = {
+  message?: string;
+  isLoading: boolean;
+}

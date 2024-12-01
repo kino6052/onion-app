@@ -1,4 +1,4 @@
-import { TItemProps } from "../../components/Item/types";
+import { TItem, TItemProps } from "../../components/Item/types";
 import { TWordProps } from "../../components/Word/types";
 import { EPage, TWithPageType } from "../../types";
 
@@ -18,3 +18,9 @@ export type TDeserializedWord = {
   open: (string | TDeserializedWord)[];
   closed: string;
 };
+
+export type TNoteState = {
+  item: TItem;
+  wordTree: TDeserializedWord;
+  isLoading: boolean;
+}

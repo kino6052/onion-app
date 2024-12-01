@@ -1,4 +1,5 @@
 import {
+  THierarchicalItem,
   THierarchicalItemProps,
   TItemProps,
 } from "../../components/Item/types";
@@ -16,3 +17,9 @@ export type TOntologyProps = TWithPageType<
   },
   EPage.Ontology
 >;
+
+export type TOntologyState = {
+  tree: Record<string, THierarchicalItem>,
+  isLoading: boolean;
+  error?: string;
+}
