@@ -8,16 +8,16 @@ import { THierarchicalItemProps } from "./types";
 import { Prompt } from "../Prompt";
 
 export const HierarchicalItem: React.FC<
-  PropsWithChildren<Omit<THierarchicalItemProps, "successors">>
+THierarchicalItemProps
 > = ({
   text,
   onClick,
   onMenuClick,
   indent,
-  children,
   isCollapsed,
   menuProps: { MenuComponent = Menu, ...menuProps },
   promptProps,
+  successors
 }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const itemRef = useRef<HTMLDivElement>(null);
@@ -55,7 +55,9 @@ export const HierarchicalItem: React.FC<
             ref={itemRef}
           ></span>
         </div>
-        {findFirst([!isCollapsed && children, null])}
+        {!isCollapsed && successors && successors.map((successorProps) => (
+          <HierarchicalItem {...successorProps} />
+        ))}
       </div>
       {promptProps && <Prompt {...promptProps} />}
     </>

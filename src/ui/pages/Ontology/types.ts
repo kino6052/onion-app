@@ -9,7 +9,7 @@ import { FC } from "../../libs/react";
 export type TOntologyProps = TWithPageType<
   {
     Component?: FC<TOntologyProps>;
-    tree: Record<string, THierarchicalItemProps>;
+    hierarchicalItemProps: THierarchicalItemProps;
     menuProps: TItemProps;
     isLoading: boolean;
     error?: string;
@@ -19,7 +19,7 @@ export type TOntologyProps = TWithPageType<
 >;
 
 export type TOntologyState = {
-  tree: Record<string, THierarchicalItem>,
+  tree: Record<string, THierarchicalItem>;
   isLoading: boolean;
   error?: string;
-}
+};

@@ -1,4 +1,4 @@
-import { HTMLProps, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { TMenuProps } from "../Menu/types";
 import { TPromptProps } from "../Prompt/types";
 
@@ -7,12 +7,29 @@ type THandlers = {
   onMenuClick: () => void;
 };
 
+export type TWithMenuProps = { menuProps: TMenuProps };
+export type TWithPromptProps = {
+  promptProps?: TPromptProps;
+};
+export type TWithCollapsed = {
+  isCollapsed: boolean;
+};
+export type TWithIndent = {
+  indent: number;
+};
+export type TWithIsMenuOpenState = {
+  isMenuOpen: boolean;
+};
+
 export type TItemProps = TItem & THandlers;
+
 export type THierarchicalItemProps = PropsWithChildren<
-  THierarchicalItem &
-    THandlers & { menuProps: TMenuProps } & {
-      promptProps?: TPromptProps;
-    }
+  TItem & { successors: THierarchicalItemProps[] } & TWithCollapsed &
+    TWithIsMenuOpenState &
+    THandlers &
+    TWithMenuProps &
+    TWithPromptProps &
+    TWithIndent
 >;
 
 export type TItem = {
@@ -20,8 +37,8 @@ export type TItem = {
   text: string;
 };
 
-export type THierarchicalItem = TItem & {
-  successors: string[];
-  isCollapsed: boolean;
-  indent: number;
-};
+export type THierarchicalItem = TItem &
+  TWithCollapsed &
+  TWithIsMenuOpenState & {
+    successors: string[];
+  } & TWithIndent;

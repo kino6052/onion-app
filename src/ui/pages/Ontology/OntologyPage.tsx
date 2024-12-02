@@ -1,21 +1,23 @@
-import { Item } from "../../components/Item";
-import { composeTree } from "./utils/tree";
+import { HierarchicalItem, Item } from "../../components/Item";
+import { Loader } from "../../components/Loader";
 import "./styles.scss";
 import { TOntologyProps } from "./types";
 
 export const OntologyPage: React.FC<TOntologyProps> = ({
-  tree,
+  hierarchicalItemProps,
   menuProps,
-  ItemComponent,
+  ItemComponent = HierarchicalItem,
+  isLoading
 }) => {
   return (
     <div className="ontology-page">
-      <div className="ontology-page__navigation">
+      {isLoading && <Loader />}
+      {!isLoading && <><div className="ontology-page__navigation">
         <Item {...menuProps} text="Ontology" />
       </div>
       <div className="ontology-page__content">
-        {composeTree({ items: tree, ItemComponent })}
-      </div>
+        <ItemComponent {...hierarchicalItemProps} />
+      </div></>}
     </div>
   );
 };
