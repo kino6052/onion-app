@@ -41,4 +41,4 @@ export type THierarchicalItem = TItem &
   TWithCollapsed &
   TWithIsMenuOpenState & {
     successors: string[];
-  } & TWithIndent;
+  };

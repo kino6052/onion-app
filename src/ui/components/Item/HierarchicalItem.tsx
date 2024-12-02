@@ -45,7 +45,7 @@ THierarchicalItemProps
         {menuProps.isOpen && <MenuComponent {...menuProps} ref={menuRef} />}
         <div className="item-component" onClick={onClick}>
           <span className="item-component__icon"></span>
-          <Typography type={ETypographyType.Regular}>{text}</Typography>
+          <Typography type={ETypographyType.Regular}>{text} {isCollapsed ? '(...)' : ''}</Typography>
           <span
             className="item-component__menu"
             onClick={(e) => {

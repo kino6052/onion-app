@@ -28,7 +28,6 @@ const state001 = {
   tree: {
     [EConstant.Root]: {
       id: EConstant.Root,
-      indent: 0,
       isCollapsed: false,
       isMenuOpen: false,
       successors: [],
@@ -50,7 +49,6 @@ const state002 = {
   tree: {
     [EConstant.Root]: {
       id: EConstant.Root,
-      indent: 0,
       isCollapsed: false,
       isMenuOpen: false,
       successors: [],
@@ -71,7 +69,6 @@ const state003 = {
   tree: {
     [EConstant.Root]: {
       id: EConstant.Root,
-      indent: 0,
       isCollapsed: false,
       isMenuOpen: false,
       successors: ['001', '002'],
@@ -79,7 +76,6 @@ const state003 = {
     },
     '001': {
       id: '001',
-      indent: 1,
       isCollapsed: false,
       isMenuOpen: false,
       successors: ['0011', '0012'],
@@ -87,7 +83,6 @@ const state003 = {
     },
     '002': {
       id: '002',
-      indent: 1,
       isCollapsed: false,
       isMenuOpen: false,
       successors: [],
@@ -95,7 +90,6 @@ const state003 = {
     },
     '0011': {
       id: '0011',
-      indent: 2,
       isCollapsed: false,
       isMenuOpen: false,
       successors: [],
@@ -103,7 +97,6 @@ const state003 = {
     },
     '0012': {
       id: '0012',
-      indent: 2,
       isCollapsed: false,
       isMenuOpen: false,
       successors: [],
@@ -116,5 +109,58 @@ export const _003: Story = {
   args: {
     state: state003,
     props:  mapStateToProps(state003, () => {})
+  },
+};
+
+const state004 = {
+  "isLoading": false,
+
+  "tree": {
+    "ROOT": {
+      "id": "ROOT",
+      "isCollapsed": false,
+      "isMenuOpen": false,
+      "successors": ["001", "002"],
+      "text": "ROOT"
+    },
+
+    "001": {
+      "id": "001",
+      "isCollapsed": true,
+      "isMenuOpen": false,
+      "successors": ["0011", "0012"],
+      "text": "001"
+    },
+
+    "002": {
+      "id": "002",
+      "isCollapsed": false,
+      "isMenuOpen": false,
+      "successors": [],
+      "text": "002"
+    },
+
+    "0011": {
+      "id": "0011",
+      "isCollapsed": false,
+      "isMenuOpen": false,
+      "successors": [],
+      "text": "0011"
+    },
+
+    "0012": {
+      "id": "0012",
+      "isCollapsed": false,
+      "isMenuOpen": false,
+      "successors": [],
+      "text": "0012"
+    }
+  }
+} as TOntologyState;
+
+export const _004: Story = {
+  args: {
+    state: state004,
+    props:  mapStateToProps(state004, () => {})
   },
 };

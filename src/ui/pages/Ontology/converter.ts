@@ -21,19 +21,20 @@ function createTree(
   if (!root) throw new Error("No root");
 
   // Recursive helper function to build tree
-  const buildTree = (node: THierarchicalItem): THierarchicalItemProps => {
+  const buildTree = (node: THierarchicalItem, indent: number = 0): THierarchicalItemProps => {
     // Get successor nodes
     const successors = node.successors.map(id => {
       const successor = nodeMap[id];
       if (!successor) {
         throw new Error(`Node ${id} not found`);
       }
-      return buildTree(successor);
+      return buildTree(successor, indent + 1);
     });
 
     // Return node with successors as hierarchical props
     return {
       ...node,
+      indent,
       successors,
       onClick: noop,
       onMenuClick: noop,
