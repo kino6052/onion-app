@@ -7,17 +7,21 @@ export const OntologyPage: React.FC<TOntologyProps> = ({
   hierarchicalItemProps,
   menuProps,
   ItemComponent = HierarchicalItem,
-  isLoading
+  isLoading,
 }) => {
   return (
     <div className="ontology-page">
       {isLoading && <Loader />}
-      {!isLoading && <><div className="ontology-page__navigation">
-        <Item {...menuProps} text="Ontology" />
-      </div>
-      <div className="ontology-page__content">
-        <ItemComponent {...hierarchicalItemProps} />
-      </div></>}
+      {!isLoading && (
+        <>
+          <div className="ontology-page__navigation">
+            <Item {...menuProps} text="Ontology" />
+          </div>
+          <div className="ontology-page__content">
+            <ItemComponent {...hierarchicalItemProps} />
+          </div>
+        </>
+      )}
     </div>
   );
 };

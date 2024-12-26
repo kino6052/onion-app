@@ -6,6 +6,7 @@ export const Button: React.FC<PropsWithChildren<TButtonProps>> = ({
   children,
   onClick,
   hasIcon,
+  isDisabled,
 }) => {
   return (
     <button
@@ -13,6 +14,7 @@ export const Button: React.FC<PropsWithChildren<TButtonProps>> = ({
         .filter(Boolean)
         .join(" ")}
       onClick={onClick}
+      disabled={isDisabled}
     >
       {hasIcon && <span className="button-component__icon"></span>}
       {children}

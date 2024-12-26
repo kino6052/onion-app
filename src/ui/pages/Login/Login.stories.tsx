@@ -1,13 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
-import { LoginPage } from ".";
-import { noop } from "../../utils";
-import { EPage } from "../../types";
+import { EPage, TAppProps, TAppState } from "../../types";
+import { mapStateToProps } from "./converter";
+import { DEFAULT_STATE } from "./data";
+import { LoginPage } from "./LoginPage";
+import { TLoginProps } from "./types";
+import { Button } from "../../components/Button";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: "Pages/Login",
-  component: LoginPage,
+  component: ({ props }) => <LoginPage {...(props.pageProps as TLoginProps)} />,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
@@ -18,18 +20,53 @@ const meta = {
   argTypes: {},
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   args: {},
-} satisfies Meta<typeof LoginPage>;
+} satisfies Meta<React.FC<{ props: TAppProps; state: TAppState }>>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Primary: Story = {
+export const _001Initial: Story = {
   args: {
-    buttonProps: {
-      hasIcon: true,
-      onClick: noop,
-    },
-    pageType: EPage.Login,
+    state: DEFAULT_STATE,
+    props: mapStateToProps({
+      login: () => Promise.resolve({}),
+      ButtonComponent: Button,
+    })(DEFAULT_STATE, () => {}),
+  },
+};
+
+const state002 = {
+  pageType: EPage.Login,
+  pageState: {
+    isLoading: true,
+  },
+} satisfies TAppState;
+
+export const _002Loading: Story = {
+  args: {
+    state: state002,
+    props: mapStateToProps({
+      login: () => Promise.resolve({}),
+      ButtonComponent: Button,
+    })(state002, () => {}),
+  },
+};
+
+const state003 = {
+  pageType: EPage.Login,
+  pageState: {
+    isLoading: false,
+    message: "Error",
+  },
+} satisfies TAppState;
+
+export const _003Error: Story = {
+  args: {
+    state: state003,
+    props: mapStateToProps({
+      login: () => Promise.resolve({}),
+      ButtonComponent: Button,
+    })(state003, () => {}),
   },
 };

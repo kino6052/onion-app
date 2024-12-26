@@ -5,10 +5,6 @@ import { TLoginProps } from "./types";
 import { getUpdateState } from "../../utils";
 import { Button } from "./components/Button";
 
-export const LoginPage = compose(
-  withDataConverter((props: TLoginProps) => {
-    return getUpdateState(props)((_props) => {
-      _props.buttonProps.ButtonComponent = Button;
-    });
-  })
-)(_LoginPage);
+export const LoginPage = compose(withDataConverter((props: TLoginProps) => {}))(
+  _LoginPage
+);

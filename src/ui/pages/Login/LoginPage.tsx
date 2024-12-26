@@ -6,6 +6,7 @@ import { TLoginProps } from "./types";
 
 export const LoginPage: React.FC<TLoginProps> = ({
   buttonProps: { ButtonComponent = Button, ...buttonProps },
+  message,
 }) => {
   return (
     <div className="login-page">
@@ -14,6 +15,7 @@ export const LoginPage: React.FC<TLoginProps> = ({
         <Typography type={ETypographyType.Regular}>
           App for making ontologies and summaries
         </Typography>
+        <Typography type={ETypographyType.Label}>{message}</Typography>
       </div>
       <div className="login-page__buttons">
         <Typography type={ETypographyType.Label}>Login options</Typography>

@@ -3,23 +3,26 @@ import {
   THierarchicalItemProps,
   TItemProps,
 } from "../../components/Item/types";
-import { EPage, TWithPageType } from "../../types";
-import { FC } from "../../libs/react";
+import { EPage, TPageTypeState, TWithComponent } from "../../types";
+import { TIsLoadingState, TMessageState } from "../../types";
 
-export type TOntologyProps = TWithPageType<
-  {
-    Component?: FC<TOntologyProps>;
+export type TOntologyPurePropsBase = TIsLoadingState &
+  Partial<TMessageState> & {
     hierarchicalItemProps: THierarchicalItemProps;
     menuProps: TItemProps;
-    isLoading: boolean;
-    error?: string;
-    ItemComponent?: React.FC<THierarchicalItemProps>;
-  },
-  EPage.Ontology
->;
+  };
+
+export type TOntologyPurePropsWithComponent = TOntologyPurePropsBase & {
+  ItemComponent?: React.FC<THierarchicalItemProps>;
+};
+
+export type TOntologyPureProps = TPageTypeState<EPage.Ontology> &
+  TOntologyPurePropsWithComponent;
+
+export type TOntologyProps = TWithComponent<TOntologyPureProps> &
+  TOntologyPureProps;
 
 export type TOntologyState = {
   tree: Record<string, THierarchicalItem>;
-  isLoading: boolean;
-  error?: string;
-};
+} & TIsLoadingState &
+  Partial<TMessageState>;

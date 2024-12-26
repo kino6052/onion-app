@@ -1,15 +1,18 @@
 import { TItem, TItemProps } from "../../components/Item/types";
 import { TWordProps } from "../../components/Word/types";
-import { EPage, TWithPageType } from "../../types";
+import {
+  EPage,
+  TIsLoadingState,
+  TPageTypeState,
+  TWithComponent,
+} from "../../types";
 
-export type TNoteProps = TWithPageType<
-  {
-    itemProps: TItemProps;
-    wordTreeProps: TWordProps;
-    isLoading: boolean;
-  },
-  EPage.Note
->;
+export type TPureNoteProps = TPageTypeState<EPage.Note> & {
+  itemProps: TItemProps;
+  wordTreeProps: TWordProps;
+} & TIsLoadingState;
+
+export type TNoteProps = TWithComponent<TPureNoteProps> & TPureNoteProps;
 
 export type TSerializedWord = { id: string; open: string; closed: string };
 
@@ -23,4 +26,4 @@ export type TNoteState = {
   item: TItem;
   wordTree: TDeserializedWord;
   isLoading: boolean;
-}
+};

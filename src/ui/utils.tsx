@@ -5,6 +5,9 @@ export function findFirst<T extends unknown>(arr: T[], fallback?: T) {
   return (arr.find(Boolean) || fallback) as Exclude<T, boolean>;
 }
 
+export const wait = async (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
 export function templateParser<T extends Record<string, unknown>>(
   value: string,
   vars: T

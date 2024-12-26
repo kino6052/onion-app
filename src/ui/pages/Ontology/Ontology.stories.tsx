@@ -1,166 +1,171 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { OntologyPage } from ".";
 import { EConstant } from "../../../constants";
+import { EPage, TAppProps, TAppState } from "../../types";
 import { mapStateToProps } from "./converter";
-import { TOntologyState } from "./types";
+import { TOntologyProps, TOntologyState } from "./types";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: "Pages/Ontology",
-  component: ({ props }) => <OntologyPage {...props} />,
-  parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
-    layout: "centered",
-  },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-  tags: [],
-  // More on argTypes: https://storybook.js.org/docs/api/argtypes
-  argTypes: {},
-  // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-  args: {},
-} satisfies Meta<typeof OntologyPage>;
+  component: ({ props }) => (
+    <OntologyPage {...(props.pageProps as TOntologyProps)} />
+  ),
+} satisfies Meta<React.FC<{ props: TAppProps; state: TAppState }>>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 const state001 = {
-  isLoading: false,
-  tree: {
-    [EConstant.Root]: {
-      id: EConstant.Root,
-      isCollapsed: false,
-      isMenuOpen: false,
-      successors: [],
-      text: EConstant.Root,
+  pageType: EPage.Ontology,
+  pageState: {
+    isLoading: false,
+    tree: {
+      [EConstant.Root]: {
+        id: EConstant.Root,
+        isCollapsed: false,
+        isMenuOpen: false,
+        successors: [],
+        text: EConstant.Root,
+      },
     },
   },
-} as TOntologyState;
+} satisfies TAppState;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const _001: Story = {
+export const _001Initial: Story = {
   args: {
     state: state001,
-    props:  mapStateToProps(state001, () => {})
+    props: mapStateToProps(state001, () => {}),
   },
 };
 
 const state002 = {
-  isLoading: true,
-  tree: {
-    [EConstant.Root]: {
-      id: EConstant.Root,
-      isCollapsed: false,
-      isMenuOpen: false,
-      successors: [],
-      text: EConstant.Root,
+  pageType: EPage.Ontology,
+  pageState: {
+    isLoading: true,
+    tree: {
+      [EConstant.Root]: {
+        id: EConstant.Root,
+        isCollapsed: false,
+        isMenuOpen: false,
+        successors: [],
+        text: EConstant.Root,
+      },
     },
   },
-} as TOntologyState;
+} satisfies TAppState;
 
-export const _002: Story = {
+export const _002Loading: Story = {
   args: {
     state: state002,
-    props:  mapStateToProps(state002, () => {})
+    props: mapStateToProps(state002, () => {}),
   },
 };
 
 const state003 = {
-  isLoading: false,
-  tree: {
-    [EConstant.Root]: {
-      id: EConstant.Root,
-      isCollapsed: false,
-      isMenuOpen: false,
-      successors: ['001', '002'],
-      text: EConstant.Root,
-    },
-    '001': {
-      id: '001',
-      isCollapsed: false,
-      isMenuOpen: false,
-      successors: ['0011', '0012'],
-      text: '001',
-    },
-    '002': {
-      id: '002',
-      isCollapsed: false,
-      isMenuOpen: false,
-      successors: [],
-      text: '002',
-    },
-    '0011': {
-      id: '0011',
-      isCollapsed: false,
-      isMenuOpen: false,
-      successors: [],
-      text: '0011',
-    },
-    '0012': {
-      id: '0012',
-      isCollapsed: false,
-      isMenuOpen: false,
-      successors: [],
-      text: '0012',
+  pageType: EPage.Ontology,
+  pageState: {
+    isLoading: false,
+    tree: {
+      [EConstant.Root]: {
+        id: EConstant.Root,
+        isCollapsed: false,
+        isMenuOpen: false,
+        successors: ["001", "002"],
+        text: EConstant.Root,
+      },
+      "001": {
+        id: "001",
+        isCollapsed: false,
+        isMenuOpen: false,
+        successors: ["0011", "0012"],
+        text: "001",
+      },
+      "002": {
+        id: "002",
+        isCollapsed: false,
+        isMenuOpen: false,
+        successors: [],
+        text: "002",
+      },
+      "0011": {
+        id: "0011",
+        isCollapsed: false,
+        isMenuOpen: false,
+        successors: [],
+        text: "0011",
+      },
+      "0012": {
+        id: "0012",
+        isCollapsed: false,
+        isMenuOpen: false,
+        successors: [],
+        text: "0012",
+      },
     },
   },
-} as TOntologyState;
+} satisfies TAppState;
 
-export const _003: Story = {
+export const _003Tree: Story = {
   args: {
     state: state003,
-    props:  mapStateToProps(state003, () => {})
+    props: mapStateToProps(state003, () => {}),
   },
 };
 
 const state004 = {
-  "isLoading": false,
+  pageType: EPage.Ontology,
+  pageState: {
+    isLoading: false,
 
-  "tree": {
-    "ROOT": {
-      "id": "ROOT",
-      "isCollapsed": false,
-      "isMenuOpen": false,
-      "successors": ["001", "002"],
-      "text": "ROOT"
+    tree: {
+      ROOT: {
+        id: "ROOT",
+        isCollapsed: false,
+        isMenuOpen: false,
+        successors: ["001", "002"],
+        text: "ROOT",
+      },
+
+      "001": {
+        id: "001",
+        isCollapsed: true,
+        isMenuOpen: false,
+        successors: ["0011", "0012"],
+        text: "001",
+      },
+
+      "002": {
+        id: "002",
+        isCollapsed: false,
+        isMenuOpen: false,
+        successors: [],
+        text: "002",
+      },
+
+      "0011": {
+        id: "0011",
+        isCollapsed: false,
+        isMenuOpen: false,
+        successors: [],
+        text: "0011",
+      },
+
+      "0012": {
+        id: "0012",
+        isCollapsed: false,
+        isMenuOpen: false,
+        successors: [],
+        text: "0012",
+      },
     },
+  },
+} satisfies TAppState;
 
-    "001": {
-      "id": "001",
-      "isCollapsed": true,
-      "isMenuOpen": false,
-      "successors": ["0011", "0012"],
-      "text": "001"
-    },
-
-    "002": {
-      "id": "002",
-      "isCollapsed": false,
-      "isMenuOpen": false,
-      "successors": [],
-      "text": "002"
-    },
-
-    "0011": {
-      "id": "0011",
-      "isCollapsed": false,
-      "isMenuOpen": false,
-      "successors": [],
-      "text": "0011"
-    },
-
-    "0012": {
-      "id": "0012",
-      "isCollapsed": false,
-      "isMenuOpen": false,
-      "successors": [],
-      "text": "0012"
-    }
-  }
-} as TOntologyState;
-
-export const _004: Story = {
+export const _004Collapsed: Story = {
   args: {
     state: state004,
-    props:  mapStateToProps(state004, () => {})
+    props: mapStateToProps(state004, () => {}),
   },
 };

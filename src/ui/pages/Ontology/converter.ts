@@ -1,69 +1,30 @@
-import { EConstant } from "../../../constants";
-import {
-  THierarchicalItem,
-  THierarchicalItemProps,
-  TItem,
-} from "../../components/Item/types";
-import { EPage } from "../../types";
+import { HierarchicalItem } from "../../components/Item";
+import { EPage, TAppProps, TAppState } from "../../types";
 import { getUpdateState, noop } from "../../utils";
-import { HierarchicalItem } from "./components/HierarchicalItem";
-import { TOntologyProps, TOntologyState } from "./types";
-
-interface TreeNode extends THierarchicalItem {
-  children: TreeNode[];
-}
-
-function createTree(
-  nodeMap: Record<string, THierarchicalItem>
-): THierarchicalItemProps {
-  const root = nodeMap[EConstant.Root];
-
-  if (!root) throw new Error("No root");
-
-  // Recursive helper function to build tree
-  const buildTree = (node: THierarchicalItem, indent: number = 0): THierarchicalItemProps => {
-    // Get successor nodes
-    const successors = node.successors.map(id => {
-      const successor = nodeMap[id];
-      if (!successor) {
-        throw new Error(`Node ${id} not found`);
-      }
-      return buildTree(successor, indent + 1);
-    });
-
-    // Return node with successors as hierarchical props
-    return {
-      ...node,
-      indent,
-      successors,
-      onClick: noop,
-      onMenuClick: noop,
-      menuProps: {
-        id: "menu",
-        itemsProps: [],
-        onBackgroundClick: noop,
-        isOpen: node.isMenuOpen,
-      },
-    };
-  };
-
-  return buildTree(root);
-}
+import { TOntologyProps } from "./types";
+import { createTree } from "./utils";
 
 export const mapStateToProps = (
-  state: TOntologyState,
-  setState: (cb: (state: TOntologyState) => TOntologyState) => void
-): TOntologyProps => {
+  state: TAppState,
+  setState: (cb: (state: TAppState) => TAppState) => void
+): TAppProps => {
+  if (state.pageType !== EPage.Ontology) {
+    throw Error("Invalid page type");
+  }
+
   return {
-    isLoading: state.isLoading,
-    menuProps: {
-      id: "menu",
-      onClick: noop,
-      onMenuClick: noop,
-      text: "Menu",
+    pageProps: {
+      isLoading: state.pageState.isLoading,
+      menuProps: {
+        id: "menu",
+        onClick: noop,
+        onMenuClick: noop,
+        text: "Menu",
+      },
+      pageType: EPage.Ontology,
+      hierarchicalItemProps: createTree(state.pageState.tree),
     },
     pageType: EPage.Ontology,
-    hierarchicalItemProps: createTree(state.tree),
   };
 };
 

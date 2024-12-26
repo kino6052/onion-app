@@ -1,17 +1,19 @@
 import { TButtonProps } from "../../components/Button/types";
-import { EPage, TWithPageType } from "../../types";
+import {
+  EPage,
+  TMessageState,
+  TIsLoadingState,
+  TPageTypeState,
+  THasErrorState,
+} from "../../types";
 import { FC } from "../../libs/react";
 
-export type TLoginProps = TWithPageType<
-  {
-    Component?: FC<TLoginProps>;
-    message?: string;
-    buttonProps: TButtonProps;
-  },
-  EPage.Login
->;
-
-export type TLoginState = {
+export type TLoginProps = TPageTypeState<EPage.Login> & {
+  Component?: FC<TLoginProps>;
   message?: string;
-  isLoading: boolean;
-}
+  buttonProps: TButtonProps;
+};
+
+export type TLoginState = Partial<TMessageState> &
+  TIsLoadingState &
+  Partial<THasErrorState>;

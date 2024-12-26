@@ -33,7 +33,7 @@ export const getDefaultMenuProps = (id: string) => ({
       onMenuClick: noop,
       text: "Remove",
     },
-  ],
+  ] satisfies TItemProps[],
   onBackgroundClick: noop,
   isOpen: false,
 });
