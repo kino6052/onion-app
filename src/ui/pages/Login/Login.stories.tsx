@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { EPage, TAppProps, TAppState } from "../../types";
-import { mapStateToProps } from "./logic";
+import { mapStateToButtonProps } from "./components/Button";
 import { DEFAULT_STATE } from "./data";
 import { LoginPage } from "./LoginPage";
 import { TLoginProps } from "./types";
-import { Button } from "../../components/Button";
-import { mapStateToButtonProps } from "./components/Button";
+import { getMapStateToProps } from "./logic";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -30,7 +29,7 @@ type Story = StoryObj<typeof meta>;
 export const _001Initial: Story = {
   args: {
     state: DEFAULT_STATE,
-    props: mapStateToProps({
+    props: getMapStateToProps({
       mapStateToButtonProps,
     })(DEFAULT_STATE, () => {}),
   },
@@ -46,7 +45,7 @@ const state002 = {
 export const _002Loading: Story = {
   args: {
     state: state002,
-    props: mapStateToProps({
+    props: getMapStateToProps({
       mapStateToButtonProps,
     })(state002, () => {}),
   },
@@ -63,7 +62,7 @@ const state003 = {
 export const _003Error: Story = {
   args: {
     state: state003,
-    props: mapStateToProps({
+    props: getMapStateToProps({
       mapStateToButtonProps,
     })(state003, () => {}),
   },

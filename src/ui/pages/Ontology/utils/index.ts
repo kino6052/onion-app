@@ -1,10 +1,12 @@
+import { FC } from "react";
 import { EConstant } from "../../../../constants";
 import {
   THierarchicalItem,
   THierarchicalItemProps,
 } from "../../../components/Item/types";
-import { Menu } from "../../../components/Menu";
+import { TAppState, TSetState } from "../../../types";
 import { noop } from "../../../utils";
+import { TMenuProps } from "../../../components/Menu/types";
 
 export const getInitialOntologyTree = (): Record<
   string,
@@ -50,71 +52,76 @@ export const getInitialOntologyTree = (): Record<
  * @param nodeMap - An object mapping node IDs to their data (text, successors, collapse state, etc)
  * @returns A tree structure starting from the root node with all child relationships resolved
  */
-export function createTree(
-  nodeMap: Record<string, THierarchicalItem>
-): THierarchicalItemProps {
-  const root = nodeMap[EConstant.Root];
+export const getCreateTree =
+  ({
+    MenuComponent,
+  }: {
+    setState: TSetState<TAppState>;
+    MenuComponent: FC<TMenuProps>;
+  }) =>
+  (nodeMap: Record<string, THierarchicalItem>): THierarchicalItemProps => {
+    const root = nodeMap[EConstant.Root];
 
-  if (!root) throw new Error("No root");
+    if (!root) throw new Error("No root");
 
-  // Recursive helper function to build tree
-  const buildTree = (
-    node: THierarchicalItem,
-    indent: number = 0
-  ): THierarchicalItemProps => {
-    // Get successor nodes
-    const successors = node.successors.map((id) => {
-      const successor = nodeMap[id];
-      if (!successor) {
-        throw new Error(`Node ${id} not found`);
-      }
-      return buildTree(successor, indent + 1);
-    });
+    // Recursive helper function to build tree
+    const buildTree = (
+      node: THierarchicalItem,
+      indent: number = 0
+    ): THierarchicalItemProps => {
+      // Get successor nodes
+      const successors = node.successors.map((id) => {
+        const successor = nodeMap[id];
+        if (!successor) {
+          throw new Error(`Node ${id} not found`);
+        }
+        return buildTree(successor, indent + 1);
+      });
 
-    // Return node with successors as hierarchical props
-    return {
-      ...node,
-      indent,
-      successors,
-      onClick: noop,
-      onMenuClick: noop,
-      menuProps: {
-        id: "menu",
-        Component: Menu,
-        itemsProps: [
-          {
-            id: "ontology",
-            text: "Ontology",
+      // Return node with successors as hierarchical props
+      return {
+        ...node,
+        indent,
+        successors,
+        onClick: noop,
+        onMenuClick: noop,
+        menuProps: {
+          id: "menu",
+          Component: MenuComponent,
+          itemsProps: [
+            {
+              id: "ontology",
+              text: "Ontology",
+              onClick: noop,
+              onMenuClick: noop,
+            },
+          ],
+          onBackgroundClick: noop,
+          isOpen: node.isMenuOpen,
+        },
+        promptProps: node.promptState && {
+          buttonProps: {
             onClick: noop,
-            onMenuClick: noop,
+            children: "Apply",
+            hasIcon: false,
           },
-        ],
-        onBackgroundClick: noop,
-        isOpen: node.isMenuOpen,
-      },
-      promptProps: node.promptState && {
-        buttonProps: {
-          onClick: noop,
-          children: "Apply",
-          hasIcon: false,
+          cancelButtonProps: {
+            onClick: noop,
+            children: "Cancel",
+            hasIcon: false,
+          },
+          description: "Type new text",
+          onBackgrounClick: noop,
+          textProps: {
+            value: node.text,
+            onChange: noop,
+            isDisabled: false,
+            placeholder: "Type new text",
+          },
+          title: "Edit node",
         },
-        cancelButtonProps: {
-          onClick: noop,
-          children: "Cancel",
-          hasIcon: false,
-        },
-        description: "Type new text",
-        onBackgrounClick: noop,
-        textProps: {
-          value: node.text,
-          onChange: noop,
-          isDisabled: false,
-          placeholder: "Type new text",
-        },
-        title: "Edit node",
-      },
+      };
     };
-  };
 
-  return buildTree(root);
-}
+    return buildTree(root);
+  };

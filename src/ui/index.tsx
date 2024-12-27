@@ -1,11 +1,7 @@
-import compose from "compose-function";
-import { App as _App } from "./App";
-import { withState } from "./utils/withState";
-import { getViewModelSubject } from "./view-model/ViewModelSubject";
-import { tap } from "rxjs";
+import { getMapStateToProps } from "./logic";
+import { mapStateToLoginPageProps } from "./pages/Login";
+import { TAppState, TSetState } from "./types";
 
-const viewModelSubject = getViewModelSubject();
-
-export const App = compose(withState(viewModelSubject))(_App);
-
-viewModelSubject.pipe(tap(console.warn)).subscribe();
+export const mapStateToAppProps = getMapStateToProps({
+  mapStateToLoginPageProps,
+});

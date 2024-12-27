@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { OntologyPage } from ".";
 import { EConstant } from "../../../constants";
 import { EPage, TAppProps, TAppState } from "../../types";
-import { mapStateToProps } from "./converter";
+import { mapStateToProps } from "./logic";
 import { TOntologyProps } from "./types";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export

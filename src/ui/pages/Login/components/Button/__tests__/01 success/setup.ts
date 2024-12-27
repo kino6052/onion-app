@@ -1,8 +1,8 @@
-import { EConstant } from "../../../../../../constants";
-import { EPage, TAppState } from "../../../../../types";
-import { TLogin, TLoginResponse } from "../../../types";
-import { getMapStateToProps } from "../logic";
-import { StateManager } from "./stateManager";
+import { EConstant } from "../../../../../../../constants";
+import { EPage, TAppState } from "../../../../../../types";
+import { TLogin, TLoginResponse } from "../../../../types";
+import { getMapStateToProps } from "../../logic";
+import { StateManager } from "../../../../../../utils/stateManager";
 
 export const setup = () => {
   const login: TLogin = jest.fn().mockImplementation(() =>

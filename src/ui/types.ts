@@ -13,6 +13,10 @@ export enum EPage {
 export type TWithId = { id: string };
 
 export type TSetState<T> = (cb: (prev: T) => T) => void;
+export type TMapStateToProps<T> = (
+  state: TAppState,
+  setState: TSetState<TAppState>
+) => T;
 
 export type TPageTypeState<TPageType extends EPage> = {
   pageType: TPageType;
@@ -61,10 +65,19 @@ export type TWithNotificationProps = {
   notificationProps: TPromptProps;
 };
 
-export type TAppProps = {
-  pageType: EPage;
-  pageProps: TLoginProps | TOntologyProps | TNoteProps;
-};
+export type TAppProps =
+  | {
+      pageType: EPage.Login;
+      pageProps: TLoginProps;
+    }
+  | {
+      pageType: EPage.Note;
+      pageProps: TNoteProps;
+    }
+  | {
+      pageType: EPage.Ontology;
+      pageProps: TOntologyProps;
+    };
 
 type OmitNullish<T> = {
   [K in keyof T as T[K] extends NonNullable<T[K]> ? K : never]: T[K];

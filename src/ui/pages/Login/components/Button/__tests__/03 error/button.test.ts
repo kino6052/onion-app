@@ -1,11 +1,9 @@
 import { setup } from "./utils";
 
 describe("button test", () => {
-  it("should login", async () => {
-    // Setup
+  it("should produce error", async () => {
     const { login, mapStateToButtonProps, stateManager } = setup();
 
-    // Core
     const props = mapStateToButtonProps(
       stateManager.getState(),
       stateManager.setState.bind(stateManager)
@@ -30,18 +28,11 @@ describe("button test", () => {
     expect(stateManager.getState()).toMatchInlineSnapshot(`
 {
   "pageState": {
+    "hasError": true,
     "isLoading": false,
-    "tree": {
-      "ROOT": {
-        "id": "ROOT",
-        "isCollapsed": false,
-        "isMenuOpen": false,
-        "successors": [],
-        "text": "",
-      },
-    },
+    "message": "Something went wrong",
   },
-  "pageType": "Ontology",
+  "pageType": "Login",
 }
 `);
   });
