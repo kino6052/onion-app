@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { EPage, TAppProps, TAppState } from "../../types";
-import { mapStateToProps } from "./converter";
+import { useState } from "react";
+import { TAppProps, TAppState } from "../../types";
+import { mapStateToButtonProps } from "./components/Button";
 import { DEFAULT_STATE } from "./data";
+import { mapStateToProps } from "./logic";
 import { LoginPage } from "./LoginPage";
 import { TLoginProps } from "./types";
-import { Button } from "../../components/Button";
-import { useState } from "react";
-import { wait } from "../../utils";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -15,14 +14,7 @@ const meta = {
     const [state, setState] = useState<TAppState>(DEFAULT_STATE);
 
     const props = mapStateToProps({
-      login: async () => {
-        await wait(1000);
-
-        return {
-          error: "Error",
-        };
-      },
-      ButtonComponent: Button,
+      mapStateToButtonProps,
     })(state, (cb) => {
       console.warn({ state });
       setState(cb(state));

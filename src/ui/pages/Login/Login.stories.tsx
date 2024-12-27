@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { EPage, TAppProps, TAppState } from "../../types";
-import { mapStateToProps } from "./converter";
+import { mapStateToProps } from "./logic";
 import { DEFAULT_STATE } from "./data";
 import { LoginPage } from "./LoginPage";
 import { TLoginProps } from "./types";
 import { Button } from "../../components/Button";
+import { mapStateToButtonProps } from "./components/Button";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -30,8 +31,7 @@ export const _001Initial: Story = {
   args: {
     state: DEFAULT_STATE,
     props: mapStateToProps({
-      login: () => Promise.resolve({}),
-      ButtonComponent: Button,
+      mapStateToButtonProps,
     })(DEFAULT_STATE, () => {}),
   },
 };
@@ -47,8 +47,7 @@ export const _002Loading: Story = {
   args: {
     state: state002,
     props: mapStateToProps({
-      login: () => Promise.resolve({}),
-      ButtonComponent: Button,
+      mapStateToButtonProps,
     })(state002, () => {}),
   },
 };
@@ -65,8 +64,7 @@ export const _003Error: Story = {
   args: {
     state: state003,
     props: mapStateToProps({
-      login: () => Promise.resolve({}),
-      ButtonComponent: Button,
+      mapStateToButtonProps,
     })(state003, () => {}),
   },
 };

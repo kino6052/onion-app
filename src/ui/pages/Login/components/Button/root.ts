@@ -2,7 +2,7 @@ import { tap } from "rxjs";
 import { EPage } from "../../../../types";
 import { getViewModelSubject } from "../../../../view-model/ViewModelSubject";
 import { getInitialOntologyTree } from "../../../Ontology/utils";
-import { getConverter } from "./converter";
+import { getConverter } from "./logic";
 import { getInitialLoginState } from "../../utils";
 import { findFirst } from "../../../../utils";
 
