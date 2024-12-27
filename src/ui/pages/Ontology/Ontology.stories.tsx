@@ -3,7 +3,7 @@ import { OntologyPage } from ".";
 import { EConstant } from "../../../constants";
 import { EPage, TAppProps, TAppState } from "../../types";
 import { mapStateToProps } from "./converter";
-import { TOntologyProps, TOntologyState } from "./types";
+import { TOntologyProps } from "./types";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -32,7 +32,6 @@ const state001 = {
   },
 } satisfies TAppState;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const _001Initial: Story = {
   args: {
     state: state001,
@@ -167,5 +166,113 @@ export const _004Collapsed: Story = {
   args: {
     state: state004,
     props: mapStateToProps(state004, () => {}),
+  },
+};
+
+const state005 = {
+  pageType: EPage.Ontology,
+  pageState: {
+    isLoading: false,
+    tree: {
+      [EConstant.Root]: {
+        id: EConstant.Root,
+        isCollapsed: false,
+        isMenuOpen: false,
+        successors: [],
+        text: EConstant.Root,
+      },
+    },
+
+    isMenuOpen: true,
+  },
+} satisfies TAppState;
+
+export const _005Initial: Story = {
+  args: {
+    state: state005,
+    props: mapStateToProps(state005, () => {}),
+  },
+};
+
+const state006 = {
+  pageType: EPage.Ontology,
+  pageState: {
+    isLoading: false,
+    tree: {
+      [EConstant.Root]: {
+        id: EConstant.Root,
+        isCollapsed: false,
+        isMenuOpen: true,
+        successors: [],
+        text: EConstant.Root,
+      },
+    },
+
+    isMenuOpen: false,
+  },
+} satisfies TAppState;
+
+export const _006Initial: Story = {
+  args: {
+    state: state006,
+    props: mapStateToProps(state006, () => {}),
+  },
+};
+
+const state007 = {
+  pageType: EPage.Ontology,
+  pageState: {
+    isLoading: false,
+    tree: {
+      [EConstant.Root]: {
+        id: EConstant.Root,
+        isCollapsed: false,
+        isMenuOpen: true,
+        successors: [],
+        text: EConstant.Root,
+        promptState: {
+          text: "Text",
+        },
+      },
+    },
+
+    isMenuOpen: false,
+  },
+} satisfies TAppState;
+
+export const _007Initial: Story = {
+  args: {
+    state: state007,
+    props: mapStateToProps(state007, () => {}),
+  },
+};
+
+const state008 = {
+  pageType: EPage.Ontology,
+  pageState: {
+    isLoading: false,
+    tree: {
+      [EConstant.Root]: {
+        id: EConstant.Root,
+        isCollapsed: false,
+        isMenuOpen: true,
+        successors: [],
+        text: EConstant.Root,
+        promptState: {
+          text: "Text",
+        },
+      },
+    },
+
+    hasError: true,
+    message: "Ooops",
+    isMenuOpen: false,
+  },
+} satisfies TAppState;
+
+export const _008Initial: Story = {
+  args: {
+    state: state008,
+    props: mapStateToProps(state008, () => {}),
   },
 };

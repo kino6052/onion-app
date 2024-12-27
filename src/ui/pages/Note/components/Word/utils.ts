@@ -52,4 +52,11 @@ export const getDefaultPromptProps = ({
     isDisabled: true,
   },
   title,
+  cancelButtonProps: {
+    hasIcon: false,
+    onClick: noop,
+    children: submitText,
+    isDisabled: true,
+  },
+  onBackgrounClick: noop,
 });

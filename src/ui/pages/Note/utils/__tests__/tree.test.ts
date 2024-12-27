@@ -1,11 +1,11 @@
 import { EConstant } from "../../../../../constants";
+import { TSerializedWord } from "../../types";
 import { generateTreePropsFromTree } from "../../utils";
 import {
-  serializeNote,
   deserializeNote,
   findNodeById,
-  findTreeNodeById,
   findNotePropsById,
+  serializeNote,
 } from "../tree";
 
 describe("Note", () => {
@@ -15,23 +15,27 @@ describe("Note", () => {
         id: EConstant.Root,
         open: "This is a really cool {{1}}, that I want to share with {{2}}.",
         closed: "Root",
+        isCollapsed: false,
       },
       "1": {
         id: "1",
         open: "comprehensible piece of knowledge",
         closed: "stuff",
+        isCollapsed: false,
       },
       "2": {
         id: "2",
         open: "wonderful human {{3}}",
         closed: "peeps",
+        isCollapsed: false,
       },
       "3": {
         id: "3",
         open: "stookies",
         closed: "beings",
+        isCollapsed: false,
       },
-    };
+    } satisfies Record<string, TSerializedWord>;
 
     const wordTree = deserializeNote(data[EConstant.Root], data);
 
@@ -39,6 +43,7 @@ describe("Note", () => {
 {
   "closed": "Root",
   "id": "ROOT",
+  "isCollapsed": false,
   "open": [
     "This",
     "is",
@@ -48,6 +53,7 @@ describe("Note", () => {
     {
       "closed": "stuff",
       "id": "1",
+      "isCollapsed": false,
       "open": [
         "comprehensible",
         "piece",
@@ -64,12 +70,14 @@ describe("Note", () => {
     {
       "closed": "peeps",
       "id": "2",
+      "isCollapsed": false,
       "open": [
         "wonderful",
         "human",
         {
           "closed": "beings",
           "id": "3",
+          "isCollapsed": false,
           "open": [
             "stookies",
           ],
@@ -114,21 +122,25 @@ describe("Note", () => {
   "1": {
     "closed": "stuff",
     "id": "1",
+    "isCollapsed": false,
     "open": "comprehensible piece of knowledge",
   },
   "2": {
     "closed": "peeps",
     "id": "2",
+    "isCollapsed": false,
     "open": "wonderful human {{3}}",
   },
   "3": {
     "closed": "beings",
     "id": "3",
+    "isCollapsed": false,
     "open": "stookies",
   },
   "ROOT": {
     "closed": "Root",
     "id": "ROOT",
+    "isCollapsed": false,
     "open": "This is a really cool {{1}} that I want to share with {{2}}",
   },
 }
@@ -165,6 +177,7 @@ describe("Note", () => {
 {
   "closed": "stuff",
   "id": "1",
+  "isCollapsed": false,
   "open": [
     "comprehensible",
     "piece",
@@ -178,12 +191,14 @@ describe("Note", () => {
 {
   "closed": "peeps",
   "id": "2",
+  "isCollapsed": false,
   "open": [
     "wonderful",
     "human",
     {
       "closed": "beings",
       "id": "3",
+      "isCollapsed": false,
       "open": [
         "stookies",
       ],
@@ -196,6 +211,7 @@ describe("Note", () => {
 {
   "closed": "beings",
   "id": "3",
+  "isCollapsed": false,
   "open": [
     "stookies",
   ],

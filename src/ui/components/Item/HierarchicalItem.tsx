@@ -6,58 +6,57 @@ import { ETypographyType } from "../Typography/constants";
 import "./styles.scss";
 import { THierarchicalItemProps } from "./types";
 import { Prompt } from "../Prompt";
+import { useMenuRefs } from "../Menu/utils/useMenuRefs";
 
-export const HierarchicalItem: React.FC<
-THierarchicalItemProps
-> = ({
+export const HierarchicalItem: React.FC<THierarchicalItemProps> = ({
   text,
   onClick,
   onMenuClick,
   indent,
   isCollapsed,
-  menuProps: { MenuComponent = Menu, ...menuProps },
+  menuProps,
   promptProps,
-  successors
+  successors,
 }) => {
-  const menuRef = useRef<HTMLDivElement>(null);
-  const itemRef = useRef<HTMLDivElement>(null);
-
-  // TODO: Move into a HOC
-  useEffect(() => {
-    if (menuRef.current && itemRef.current) {
-      const position = itemRef.current.getBoundingClientRect();
-      const style = menuRef.current.style;
-      style.position = "absolute";
-      style.left = "-100px";
-      style.top = `${position.y}px`;
-    }
-  }, [menuRef, itemRef]);
+  const { menuButtonRef, menuRef } = useMenuRefs();
 
   return (
     <>
       <div
         className="item-component-wrapper"
         style={findFirst(
-          [!!indent && { paddingLeft: 12, borderLeft: "1px dashed white" }],
+          [
+            !!indent && {
+              paddingLeft: 12,
+              borderLeft: "1px dashed white",
+              width: `calc(100% - ${12 * indent}px)`,
+            },
+          ],
           undefined
         )}
       >
-        {menuProps.isOpen && <MenuComponent {...menuProps} ref={menuRef} />}
+        {menuProps?.isOpen && menuProps?.Component && (
+          <menuProps.Component {...menuProps} ref={menuRef} />
+        )}
         <div className="item-component" onClick={onClick}>
-          <span className="item-component__icon"></span>
-          <Typography type={ETypographyType.Regular}>{text} {isCollapsed ? '(...)' : ''}</Typography>
+          {menuProps && <span className="item-component__icon"></span>}
+          <Typography type={ETypographyType.Regular}>
+            {text} {isCollapsed ? "(...)" : ""}
+          </Typography>
           <span
             className="item-component__menu"
             onClick={(e) => {
               e.stopPropagation();
               onMenuClick();
             }}
-            ref={itemRef}
+            ref={menuButtonRef}
           ></span>
         </div>
-        {!isCollapsed && successors && successors.map((successorProps) => (
-          <HierarchicalItem {...successorProps} />
-        ))}
+        {!isCollapsed &&
+          successors &&
+          successors.map((successorProps) => (
+            <HierarchicalItem {...successorProps} />
+          ))}
       </div>
       {promptProps && <Prompt {...promptProps} />}
     </>

@@ -19,7 +19,6 @@ export const deserializeNote = (
     .filter((word) => word && word !== " ")
     .map((_word) => {
       if (typeof _word === "string") return _word;
-
       // @ts-ignore
       return deserializeNote(_word, data);
     });
@@ -28,6 +27,7 @@ export const deserializeNote = (
     id: word.id,
     open: words,
     closed: word.closed,
+    isCollapsed: !!word.isCollapsed,
   };
 };
 
@@ -53,6 +53,7 @@ export const serializeNote = (
         return `{{${a.id}}}`;
       })
       .join(" "),
+    isCollapsed: wordTree.isCollapsed,
   };
 
   data[wordTree.id] = word;

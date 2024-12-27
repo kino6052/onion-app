@@ -1,9 +1,11 @@
+import { TCoordinates, TWithComponent } from "../../types";
 import { TItemProps } from "../Item/types";
 
-export type TMenuProps = {
+export type TMenuPropsBase = {
   id: string;
   itemsProps: TItemProps[];
   onBackgroundClick: () => void;
   isOpen?: boolean;
-  MenuComponent?: React.FC<TMenuProps>;
 };
+
+export type TMenuProps = TMenuPropsBase & TWithComponent<TMenuPropsBase>;

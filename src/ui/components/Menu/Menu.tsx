@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useRef } from "react";
 import { Item } from "../Item";
 import "./styles.scss";
 import { TMenuProps } from "./types";

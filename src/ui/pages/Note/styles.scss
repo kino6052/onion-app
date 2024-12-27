@@ -1,19 +1,26 @@
+@import "../../mixins";
+@import "../../constants";
+
 .note-page {
-  background-color: #333;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  height: 100vh;
+  @include background-color($background-color);
+  @include font-style($font-style);
+  @include flex-column(12px);
+  @include full-height;
   margin: 0;
-  box-sizing: border-box;
+  @include box-style(12px);
+  @include full-width;
 
   &__content {
     display: inline;
-    padding: 12px;
-    border: 1px dashed white;
-    margin: 0 12px;
+    @include box-style(12px, 1px dashed white);
     height: 100%;
     margin-bottom: 12px;
-    // display: flex;
+  }
+
+  &__navigation {
+    @include flex-column;
+    position: relative;
+    top: 0;
+    @include full-width;
   }
 }

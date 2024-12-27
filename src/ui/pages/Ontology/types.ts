@@ -3,10 +3,16 @@ import {
   THierarchicalItemProps,
   TItemProps,
 } from "../../components/Item/types";
-import { EPage, TPageTypeState, TWithComponent } from "../../types";
+import {
+  EPage,
+  TPageTypeState,
+  TWithComponent,
+  TWithNotificationProps,
+} from "../../types";
 import { TIsLoadingState, TMessageState } from "../../types";
 
-export type TOntologyPurePropsBase = TIsLoadingState &
+export type TOntologyPurePropsBase = TWithNotificationProps &
+  TIsLoadingState &
   Partial<TMessageState> & {
     hierarchicalItemProps: THierarchicalItemProps;
     menuProps: TItemProps;
@@ -24,5 +30,4 @@ export type TOntologyProps = TWithComponent<TOntologyPureProps> &
 
 export type TOntologyState = {
   tree: Record<string, THierarchicalItem>;
-} & TIsLoadingState &
-  Partial<TMessageState>;
+};

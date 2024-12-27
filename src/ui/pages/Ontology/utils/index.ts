@@ -3,6 +3,7 @@ import {
   THierarchicalItem,
   THierarchicalItemProps,
 } from "../../../components/Item/types";
+import { Menu } from "../../../components/Menu";
 import { noop } from "../../../utils";
 
 export const getInitialOntologyTree = (): Record<
@@ -79,9 +80,38 @@ export function createTree(
       onMenuClick: noop,
       menuProps: {
         id: "menu",
-        itemsProps: [],
+        Component: Menu,
+        itemsProps: [
+          {
+            id: "ontology",
+            text: "Ontology",
+            onClick: noop,
+            onMenuClick: noop,
+          },
+        ],
         onBackgroundClick: noop,
         isOpen: node.isMenuOpen,
+      },
+      promptProps: node.promptState && {
+        buttonProps: {
+          onClick: noop,
+          children: "Apply",
+          hasIcon: false,
+        },
+        cancelButtonProps: {
+          onClick: noop,
+          children: "Cancel",
+          hasIcon: false,
+        },
+        description: "Type new text",
+        onBackgrounClick: noop,
+        textProps: {
+          value: node.text,
+          onChange: noop,
+          isDisabled: false,
+          placeholder: "Type new text",
+        },
+        title: "Edit node",
       },
     };
   };

@@ -37,9 +37,7 @@ export const getConverter =
       };
 
       if (_props.promptProps) {
-        _props.promptProps.textProps.onChange = async (
-          input: string
-        ) => {
+        _props.promptProps.textProps.onChange = async (input: string) => {
           viewModelSubject.next(
             getUpdateState(viewModelSubject.getValue())((_state) => {
               if (_state.pageType !== EPage.Ontology) return;
@@ -68,7 +66,5 @@ export const getConverter =
           );
         };
       }
-
-      _props.menuProps.MenuComponent = MenuComponent;
     });
   };

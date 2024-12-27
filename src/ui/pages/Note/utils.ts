@@ -1,8 +1,7 @@
 import { EConstant } from "../../../constants";
 import { TWordProps } from "../../components/Word/types";
-import { EPage } from "../../types";
 import { noop } from "../../utils";
-import { TNoteProps, TDeserializedWord, TSerializedWord } from "./types";
+import { TDeserializedWord, TNoteState, TSerializedWord } from "./types";
 import { deserializeNote } from "./utils/tree";
 
 export const generateTreePropsFromTree = (
@@ -32,21 +31,13 @@ export const DEFAULT_DATA: Record<string, TSerializedWord> = {
     id: EConstant.Root,
     open: "Empty",
     closed: "Root",
+    isCollapsed: true,
   },
 };
 
-export const getInitialNoteState = (data = DEFAULT_DATA): TNoteProps => {
+export const getInitialNoteState = (data = DEFAULT_DATA): TNoteState => {
   return {
-    pageType: EPage.Note,
-    itemProps: {
-      text: "Note",
-      id: "note-page-menu",
-      onClick: noop,
-      onMenuClick: noop,
-    },
-    isLoading: true,
-    wordTreeProps: generateTreePropsFromTree(
-      deserializeNote(data[EConstant.Root], data)
-    ),
+    id: "note",
+    wordTree: deserializeNote(data[EConstant.Root], data),
   };
 };

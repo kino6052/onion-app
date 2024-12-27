@@ -1,5 +1,6 @@
 import { HierarchicalItem, Item } from "../../components/Item";
 import { Loader } from "../../components/Loader";
+import { Prompt } from "../../components/Prompt";
 import "./styles.scss";
 import { TOntologyProps } from "./types";
 
@@ -8,6 +9,7 @@ export const OntologyPage: React.FC<TOntologyProps> = ({
   menuProps,
   ItemComponent = HierarchicalItem,
   isLoading,
+  notificationProps,
 }) => {
   return (
     <div className="ontology-page">
@@ -21,6 +23,9 @@ export const OntologyPage: React.FC<TOntologyProps> = ({
             <ItemComponent {...hierarchicalItemProps} />
           </div>
         </>
+      )}
+      {notificationProps && (
+        <Prompt {...notificationProps} isNotificationOnly />
       )}
     </div>
   );

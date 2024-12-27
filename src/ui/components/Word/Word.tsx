@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { Menu } from "../Menu";
+import { useMenuRefs } from "../Menu/utils/useMenuRefs";
 import { Prompt } from "../Prompt";
 import { TextComponent } from "../Text";
 import "./styles.scss";
@@ -17,12 +19,25 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
   menuProps,
   id,
 }) => {
+  const [[x, y], setCoordinates] = useState([100, 100]);
+  const { menuRef } = useMenuRefs();
+
+  useEffect(() => {
+    if (menuRef.current !== null) {
+      const menuPosition = menuRef.current.getBoundingClientRect();
+      const style = menuRef.current.style;
+      style.left = `${x - menuPosition.width}px`;
+      style.top = `${y}px`;
+    }
+  }, [x, y]);
+
   return (
     <div
       className={["word-component", isCollapsible && "collapsible"]
         .filter(Boolean)
         .join(" ")}
-      onClick={() => {
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+        setCoordinates([e.clientX, e.clientY]);
         onClick();
       }}
     >
@@ -31,13 +46,17 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
         {!!isOpen &&
           childrenProps.map((props, i) => {
             if (isTextComponent(props)) {
-              return <TextComponent index={i}>{props.children} </TextComponent>;
+              return (
+                <TextComponent key={i} isSelected={props.isSelected}>
+                  {props.children}{" "}
+                </TextComponent>
+              );
             }
 
             return <Component {...props} />;
           })}
       </span>
-      {menuProps && <Menu {...menuProps} />}
+      {menuProps && <Menu {...menuProps} ref={menuRef} />}
       {promptProps && <Prompt {...promptProps} />}
       {isCollapsible && (
         <button className="word-component__menu" onClick={onMenuClick}></button>

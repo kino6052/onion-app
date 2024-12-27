@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import { TMenuProps } from "../Menu/types";
 import { TPromptProps } from "../Prompt/types";
+import { TPromptState } from "../../types";
 
 type THandlers = {
   onClick: () => void;
@@ -21,13 +22,13 @@ export type TWithIsMenuOpenState = {
   isMenuOpen: boolean;
 };
 
-export type TItemProps = TItem & THandlers;
+export type TItemProps = TItem & THandlers & Partial<{ menuProps: TMenuProps }>;
 
 export type THierarchicalItemProps = PropsWithChildren<
   TItem & { successors: THierarchicalItemProps[] } & TWithCollapsed &
     TWithIsMenuOpenState &
     THandlers &
-    TWithMenuProps &
+    Partial<TWithMenuProps> &
     TWithPromptProps &
     TWithIndent
 >;
@@ -41,4 +42,4 @@ export type THierarchicalItem = TItem &
   TWithCollapsed &
   TWithIsMenuOpenState & {
     successors: string[];
-  };
+  } & Partial<TPromptState>;

@@ -1,3 +1,10 @@
+.item-component-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  width: 100%;
+}
+
 .item-component {
   display: flex;
   padding: 12px;
