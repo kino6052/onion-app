@@ -25,14 +25,16 @@ export type TSerializedWord = {
   id: string;
   open: string;
   closed: string;
-} & Partial<TIsCollapsed>;
+} & Partial<TIsCollapsed> &
+  Partial<TWithIsMenuOpenState> &
+  Partial<TWithSelectedRange>;
 
 export type TIsCollapsed = {
   isCollapsed: boolean;
 };
 
 export type TWithSelectedRange = {
-  range: [number, number];
+  range: [number | undefined, number | undefined];
 };
 
 export type TDeserializedWord = {
@@ -45,5 +47,5 @@ export type TDeserializedWord = {
   Partial<TWithSelectedRange>;
 
 export type TNoteState = TWithId & {
-  wordTree: TDeserializedWord;
+  wordTree: Record<string, TSerializedWord>;
 };

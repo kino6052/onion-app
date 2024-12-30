@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { getInitialNoteState } from "./utils";
 import { getMapStateToProps } from "./logic";
-import { EPage, TNotePageState } from "../../types";
+import { EPage, TNotePageProps, TNotePageState } from "../../types";
 import { deserializeNote } from "./utils/tree";
 import { TSerializedWord } from "./types";
 import { EConstant } from "../../../constants";
@@ -10,7 +10,7 @@ import { NotePage } from "./NotePage";
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: "Pages/Note",
-  component: NotePage,
+  component: ({ pageProps }: TNotePageProps) => <NotePage {...pageProps} />,
 } satisfies Meta<typeof NotePage>;
 
 export default meta;
@@ -70,7 +70,7 @@ const data003: Record<string, TSerializedWord> = {
 const state003 = {
   pageState: {
     id: "note",
-    wordTree: deserializeNote(data003[EConstant.Root], data003),
+    wordTree: data003,
     isLoading: false,
   },
   pageType: EPage.Note,
@@ -84,8 +84,7 @@ const state004 = {
   pageState: {
     id: "note",
     wordTree: {
-      ...deserializeNote(data003[EConstant.Root], data003),
-      promptState: { text: "This is a prompt" },
+      ...data003,
     },
     isLoading: false,
   },
@@ -100,9 +99,14 @@ const state005 = {
   pageState: {
     id: "note",
     wordTree: {
-      ...deserializeNote(data003[EConstant.Root], data003),
-      isMenuOpen: true,
+      ...data003,
+      [EConstant.Root]: {
+        id: EConstant.Root,
+        closed: "Root",
+        open: "This is test",
+      },
     },
+    isMenuOpen: true,
     isLoading: false,
   },
   pageType: EPage.Note,
@@ -116,9 +120,14 @@ const state006 = {
   pageState: {
     id: "note",
     wordTree: {
-      ...deserializeNote(data003[EConstant.Root], data003),
-      isMenuOpen: false,
-      range: [1, 5],
+      ...data003,
+      [EConstant.Root]: {
+        id: EConstant.Root,
+        closed: "Root",
+        open: "This is test",
+        isMenuOpen: false,
+        range: [1, 5],
+      },
     },
     isLoading: false,
   },
@@ -132,9 +141,7 @@ export const _006: Story = {
 const state007 = {
   pageState: {
     id: "note",
-    wordTree: {
-      ...deserializeNote(data003[EConstant.Root], data003),
-    },
+    wordTree: data003,
     isLoading: false,
     hasError: true,
     message: "An error occurred",

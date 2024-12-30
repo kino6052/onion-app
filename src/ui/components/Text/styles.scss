@@ -1,0 +1,7 @@
+.text-component {
+  &__item {
+    &:hover {
+      background-color: darkcyan !important;
+    }
+  }
+}

@@ -28,6 +28,8 @@ export const deserializeNote = (
     open: words,
     closed: word.closed,
     isCollapsed: !!word.isCollapsed,
+    isEndIndexConfirmed: word.isEndIndexConfirmed,
+    range: word.range,
   };
 };
 

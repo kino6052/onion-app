@@ -38,6 +38,7 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
         .join(" ")}
       onClick={(e: React.MouseEvent<HTMLDivElement>) => {
         setCoordinates([e.clientX, e.clientY]);
+        e.stopPropagation();
         onClick();
       }}
     >
@@ -47,7 +48,7 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
           childrenProps.map((props, i) => {
             if (isTextComponent(props)) {
               return (
-                <TextComponent key={i} isSelected={props.isSelected}>
+                <TextComponent {...props} key={i} isSelected={props.isSelected}>
                   {props.children}{" "}
                 </TextComponent>
               );
@@ -59,7 +60,13 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
       {menuProps && <Menu {...menuProps} ref={menuRef} />}
       {promptProps && <Prompt {...promptProps} />}
       {isCollapsible && (
-        <button className="word-component__menu" onClick={onMenuClick}></button>
+        <button
+          className="word-component__menu"
+          onClick={(e) => {
+            e.stopPropagation();
+            onMenuClick();
+          }}
+        ></button>
       )}
     </div>
   );

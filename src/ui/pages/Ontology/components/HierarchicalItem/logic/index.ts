@@ -102,17 +102,12 @@ const buildTree =
                   );
 
                   getNote().then((data) => {
-                    const wordTree = deserializeNote(
-                      data[EConstant.Root],
-                      data
-                    );
-
                     setState((prev) => ({
                       ...prev,
                       pageState: {
                         id: node.id,
                         isLoading: false,
-                        wordTree,
+                        wordTree: data,
                       },
                       pageType: EPage.Note,
                     }));

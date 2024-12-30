@@ -71,19 +71,22 @@ export type TWithNotificationProps = {
   notificationProps: TPromptProps;
 };
 
-export type TAppProps =
-  | {
-      pageType: EPage.Login;
-      pageProps: TLoginProps;
-    }
-  | {
-      pageType: EPage.Note;
-      pageProps: TNoteProps;
-    }
-  | {
-      pageType: EPage.Ontology;
-      pageProps: TOntologyProps;
-    };
+export type TLoginPageProps = {
+  pageType: EPage.Login;
+  pageProps: TLoginProps;
+};
+
+export type TOntologyPageProps = {
+  pageType: EPage.Ontology;
+  pageProps: TOntologyProps;
+};
+
+export type TNotePageProps = {
+  pageType: EPage.Note;
+  pageProps: TNoteProps;
+};
+
+export type TAppProps = TLoginPageProps | TNotePageProps | TOntologyPageProps;
 
 type OmitNullish<T> = {
   [K in keyof T as T[K] extends NonNullable<T[K]> ? K : never]: T[K];

@@ -11,6 +11,10 @@ export const setPartial = <TPage extends EPage>(
     if (prevState.pageType !== page)
       throw new Error(`Current page is not "${page}" page`);
 
-    return merge({}, prevState, state);
+    const result = merge({}, prevState, state);
+
+    console.warn({ result });
+
+    return result;
   });
 };

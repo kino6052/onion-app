@@ -10,7 +10,7 @@ export const mapStateToHierarchicalItemProps = getMapStateToProps({
     Promise.resolve({
       [EConstant.Root]: {
         id: EConstant.Root,
-        open: "This is {{id1}}! However, {{id2}} is {{id3}}.",
+        open: "This is text.",
         closed: "Root",
         isCollapsed: false,
       },
