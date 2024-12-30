@@ -15,7 +15,7 @@ export type TWithId = { id: string };
 export type TSetState<T> = (cb: (prev: T) => T) => void;
 export type TMapStateToProps<TState = TAppState<EPage>, TProps = TAppProps> = (
   state: TState,
-  setState: TSetState<TState>
+  setState: TSetState<TAppState>
 ) => TProps;
 
 export type TPageTypeState<TPageType extends EPage> = {

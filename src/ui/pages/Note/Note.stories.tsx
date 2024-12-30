@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { NotePage } from ".";
 import { getInitialNoteState } from "./utils";
-import { mapStateToProps } from "./converter";
+import { getMapStateToProps } from "./logic";
 import { EPage, TNotePageState } from "../../types";
 import { deserializeNote } from "./utils/tree";
 import { TSerializedWord } from "./types";
 import { EConstant } from "../../../constants";
+import { NotePage } from "./NotePage";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -25,7 +25,7 @@ const state001 = {
 } satisfies TNotePageState;
 
 export const _001: Story = {
-  args: mapStateToProps()(state001, () => {}),
+  args: getMapStateToProps()(state001, () => {}),
 };
 
 const state002 = {
@@ -37,7 +37,7 @@ const state002 = {
 } satisfies TNotePageState;
 
 export const _002: Story = {
-  args: mapStateToProps()(state002, () => {}),
+  args: getMapStateToProps()(state002, () => {}),
 };
 
 const data003: Record<string, TSerializedWord> = {
@@ -77,7 +77,7 @@ const state003 = {
 } satisfies TNotePageState;
 
 export const _003: Story = {
-  args: mapStateToProps()(state003, () => {}),
+  args: getMapStateToProps()(state003, () => {}),
 };
 
 const state004 = {
@@ -93,7 +93,7 @@ const state004 = {
 } satisfies TNotePageState;
 
 export const _004: Story = {
-  args: mapStateToProps()(state004, () => {}),
+  args: getMapStateToProps()(state004, () => {}),
 };
 
 const state005 = {
@@ -109,7 +109,7 @@ const state005 = {
 } satisfies TNotePageState;
 
 export const _005: Story = {
-  args: mapStateToProps()(state005, () => {}),
+  args: getMapStateToProps()(state005, () => {}),
 };
 
 const state006 = {
@@ -126,7 +126,7 @@ const state006 = {
 } satisfies TNotePageState;
 
 export const _006: Story = {
-  args: mapStateToProps()(state006, () => {}),
+  args: getMapStateToProps()(state006, () => {}),
 };
 
 const state007 = {
@@ -143,5 +143,5 @@ const state007 = {
 } satisfies TNotePageState;
 
 export const _007: Story = {
-  args: mapStateToProps()(state007, () => {}),
+  args: getMapStateToProps()(state007, () => {}),
 };

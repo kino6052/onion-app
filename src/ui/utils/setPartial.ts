@@ -1,4 +1,4 @@
-import { assign } from "lodash";
+import { merge } from "lodash";
 import { EPage, TAppState, TSetState } from "../types";
 import { TWithRecursiveFallback } from "./types";
 
@@ -11,6 +11,6 @@ export const setPartial = <TPage extends EPage>(
     if (prevState.pageType !== page)
       throw new Error(`Current page is not "${page}" page`);
 
-    return assign({}, prevState, state);
+    return merge({}, prevState, state);
   });
 };

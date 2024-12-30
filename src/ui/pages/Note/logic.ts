@@ -1,13 +1,19 @@
 import { TTextProps } from "../../components/Text/types";
 import { TWordProps } from "../../components/Word/types";
-import { EPage, TNotePageState, TSetState } from "../../types";
+import {
+  EPage,
+  TAppProps,
+  TAppState,
+  TNotePageState,
+  TSetState,
+} from "../../types";
 import { noop } from "../../utils";
 import { getDefaultMenuProps } from "./components/Word/utils";
 import { TNoteProps } from "./types";
 
 export const mapStateToWordTreeProps = (
   state: TNotePageState,
-  setState: TSetState<TNotePageState>
+  setState: TSetState<TAppState>
 ): TWordProps => {
   const { wordTree } = state.pageState;
   const { closed, id, isCollapsed, open } = wordTree;
@@ -60,30 +66,33 @@ export const mapStateToWordTreeProps = (
   } satisfies TWordProps;
 };
 
-export const mapStateToProps =
+export const getMapStateToProps =
   () =>
-  (state: TNotePageState, setState: TSetState<TNotePageState>): TNoteProps => {
+  (state: TNotePageState, setState: TSetState<TAppState>): TAppProps => {
     return {
-      isLoading: state.pageState.isLoading,
-      itemProps: {
-        id: state.pageState.id,
-        onClick: noop,
-        onMenuClick: noop,
-        text: "",
-        menuProps: getDefaultMenuProps(state.pageState.id),
-      },
-      wordTreeProps: mapStateToWordTreeProps(state, setState),
-      notificationProps: state.pageState.hasError
-        ? {
-            buttonProps: {
-              onClick: noop,
-              children: "OK",
-            },
-            description: state.pageState.message ?? "An error occurred",
-            onBackgrounClick: noop,
-            title: "Error",
-            isNotificationOnly: true,
-          }
-        : undefined,
-    } satisfies TNoteProps;
+      pageProps: {
+        isLoading: state.pageState.isLoading,
+        itemProps: {
+          id: state.pageState.id,
+          onClick: noop,
+          onMenuClick: noop,
+          text: "",
+          menuProps: getDefaultMenuProps(state.pageState.id),
+        },
+        wordTreeProps: mapStateToWordTreeProps(state, setState),
+        notificationProps: state.pageState.hasError
+          ? {
+              buttonProps: {
+                onClick: noop,
+                children: "OK",
+              },
+              description: state.pageState.message ?? "An error occurred",
+              onBackgrounClick: noop,
+              title: "Error",
+              isNotificationOnly: true,
+            }
+          : undefined,
+      } satisfies TNoteProps,
+      pageType: EPage.Note,
+    };
   };

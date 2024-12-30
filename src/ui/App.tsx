@@ -1,5 +1,5 @@
 import { LoginPage } from "./pages/Login/LoginPage";
-import { NotePage } from "./pages/Note";
+import { NotePage } from "./pages/Note/NotePage";
 import { OntologyPage } from "./pages/Ontology/OntologyPage";
 import { EPage, TAppProps } from "./types";
 

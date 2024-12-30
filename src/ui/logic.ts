@@ -8,17 +8,25 @@ import {
 
 export const getMapStateToProps =
   (dependencies: {
-    mapStateToLoginPageProps: TMapStateToProps;
-    mapStateToOntologyProps: TMapStateToProps;
+    mapStateToLoginPageProps: TMapStateToProps<TAppState<EPage.Login>>;
+    mapStateToOntologyProps: TMapStateToProps<TAppState<EPage.Ontology>>;
+    mapStateToNoteProps: TMapStateToProps<TAppState<EPage.Note>>;
   }) =>
   (state: TAppState, setState: TSetState<TAppState>): TAppProps => {
-    const { mapStateToLoginPageProps, mapStateToOntologyProps } = dependencies;
+    const {
+      mapStateToLoginPageProps,
+      mapStateToOntologyProps,
+      mapStateToNoteProps,
+    } = dependencies;
 
     if (state.pageType === EPage.Login)
       return mapStateToLoginPageProps(state, setState);
 
     if (state.pageType === EPage.Ontology)
       return mapStateToOntologyProps(state, setState);
+
+    if (state.pageType === EPage.Note)
+      return mapStateToNoteProps(state, setState);
 
     throw new Error("Not implemented");
   };

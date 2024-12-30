@@ -23,6 +23,7 @@ export const setup = () => {
       counter += 1;
       return `${counter}`;
     },
+    getNote: () => Promise.resolve({}),
   });
 
   return { stateManager, mapStateToButtonProps };

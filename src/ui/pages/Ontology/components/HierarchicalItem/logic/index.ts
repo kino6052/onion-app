@@ -11,6 +11,7 @@ import {
   TAppProps,
   TAppState,
   TMapStateToProps,
+  TNotePageState,
   TSetState,
 } from "../../../../../types";
 import { noop } from "../../../../../utils";
@@ -19,6 +20,8 @@ import { menuItemRemove } from "./remove";
 import { updateNodeProperties } from "../utils";
 import { getPromptProps, menuItemRename } from "./rename";
 import { setPartial } from "../../../../../utils/setPartial";
+import { TNoteState, TSerializedWord } from "../../../../Note/types";
+import { deserializeNote } from "../../../../Note/utils/tree";
 
 const handleMenuClick = (
   node: THierarchicalItem,
@@ -34,74 +37,107 @@ const handleBackgroundClick = (
   updateNodeProperties(node.id, { isMenuOpen: false }, setState);
 };
 
-const buildTree = (
-  node: THierarchicalItem,
-  parent: THierarchicalItem | undefined,
-  nodeMap: Record<string, THierarchicalItem>,
-  setState: TSetState<TAppState>,
-  MenuComponent: FC<TMenuProps>,
-  getUniqueId: () => string,
-  indent: number = 0
-): THierarchicalItemProps => {
-  const successors = node.successors.map((id) => {
-    const successor = nodeMap[id];
-    if (!successor) {
-      throw new Error(`Node ${id} not found`);
-    }
-    return buildTree(
-      successor,
-      node,
-      nodeMap,
-      setState,
-      MenuComponent,
-      getUniqueId,
-      indent + 1
-    );
-  });
+const buildTree =
+  (dependencies: {
+    getNote: () => Promise<Record<string, TSerializedWord>>;
+    getUniqueId: () => string;
+    MenuComponent: FC<TMenuProps>;
+  }) =>
+  (
+    node: THierarchicalItem,
+    parent: THierarchicalItem | undefined,
+    nodeMap: Record<string, THierarchicalItem>,
+    setState: TSetState<TAppState>,
 
-  return {
-    ...node,
-    indent,
-    successors,
-    onClick: () => {
-      updateNodeProperties(
-        node.id,
-        {
-          isCollapsed: !node.isCollapsed,
-        },
-        setState
+    indent: number = 0
+  ): THierarchicalItemProps => {
+    const { MenuComponent, getUniqueId, getNote } = dependencies;
+    const successors = node.successors.map((id) => {
+      const successor = nodeMap[id];
+      if (!successor) {
+        throw new Error(`Node ${id} not found`);
+      }
+      return buildTree(dependencies)(
+        successor,
+        node,
+        nodeMap,
+        setState,
+        indent + 1
       );
-    },
-    onMenuClick: () => handleMenuClick(node, setState),
-    menuProps: node.isMenuOpen
-      ? {
-          id: "menu",
-          Component: MenuComponent,
-          itemsProps: [
-            menuItemAdd(node, setState, getUniqueId),
-            menuItemRename(node, setState),
-            {
-              id: "examine",
-              text: "Examine",
-              onClick: noop,
-            },
-            menuItemRemove(node.id, parent, setState),
-          ],
-          onBackgroundClick: () => handleBackgroundClick(node, setState),
-          isOpen: node.isMenuOpen,
-        }
-      : undefined,
-    promptProps: node.promptState && getPromptProps(node, setState),
+    });
+
+    return {
+      ...node,
+      indent,
+      successors,
+      onClick: () => {
+        updateNodeProperties(
+          node.id,
+          {
+            isCollapsed: !node.isCollapsed,
+          },
+          setState
+        );
+      },
+      onMenuClick: () => handleMenuClick(node, setState),
+      menuProps: node.isMenuOpen
+        ? {
+            id: "menu",
+            Component: MenuComponent,
+            itemsProps: [
+              menuItemAdd(node, setState, getUniqueId),
+              menuItemRename(node, setState),
+              {
+                id: "examine",
+                text: "Examine",
+                onClick: () => {
+                  setPartial(
+                    {
+                      pageState: {
+                        isLoading: true,
+                      },
+                    },
+                    setState,
+                    EPage.Ontology
+                  );
+
+                  getNote().then((data) => {
+                    const wordTree = deserializeNote(
+                      data[EConstant.Root],
+                      data
+                    );
+
+                    setState((prev) => ({
+                      ...prev,
+                      pageState: {
+                        id: node.id,
+                        isLoading: false,
+                        wordTree,
+                      },
+                      pageType: EPage.Note,
+                    }));
+                  });
+                },
+              },
+              menuItemRemove(node.id, parent, setState),
+            ],
+            onBackgroundClick: () => handleBackgroundClick(node, setState),
+            isOpen: node.isMenuOpen,
+          }
+        : undefined,
+      promptProps: node.promptState && getPromptProps(node, setState),
+    };
   };
-};
 
 export const getMapStateToProps =
   ({
     MenuComponent,
     getUniqueId,
+    getNote,
   }: {
     MenuComponent: FC<TMenuProps>;
     getUniqueId: () => string;
+    getNote: () => Promise<Record<string, TSerializedWord>>;
   }): TMapStateToProps<TAppState, THierarchicalItemProps> =>
   (state, setState) => {
     if (state.pageType !== EPage.Ontology)
@@ -112,12 +148,9 @@ export const getMapStateToProps =
 
     if (!root) throw new Error("No root");
 
-    return buildTree(
-      root,
-      undefined,
-      nodeMap,
-      setState,
+    return buildTree({
+      getNote,
+      getUniqueId,
       MenuComponent,
-      getUniqueId
-    );
+    })(root, undefined, nodeMap, setState);
   };

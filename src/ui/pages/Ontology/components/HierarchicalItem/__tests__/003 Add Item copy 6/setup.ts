@@ -26,7 +26,15 @@ export const setup = () => {
       counter += 1;
       return `${counter}`;
     },
-    getNote: () => Promise.resolve({}),
+    getNote: () =>
+      Promise.resolve({
+        [EConstant.Root]: {
+          id: EConstant.Root,
+          open: "This is {{id1}}! However, {{id2}} is {{id3}}.",
+          closed: "Root",
+          isCollapsed: false,
+        },
+      }),
   });
 
   const composeActions = getComposeActions(() =>
