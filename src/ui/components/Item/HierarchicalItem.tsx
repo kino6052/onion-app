@@ -1,12 +1,11 @@
-import React, { PropsWithChildren, useEffect, useRef } from "react";
+import React from "react";
 import { findFirst } from "../../utils";
-import { Menu } from "../Menu";
+import { useMenuRefs } from "../Menu/utils/useMenuRefs";
+import { Prompt } from "../Prompt";
 import { Typography } from "../Typography";
 import { ETypographyType } from "../Typography/constants";
 import "./styles.scss";
 import { THierarchicalItemProps } from "./types";
-import { Prompt } from "../Prompt";
-import { useMenuRefs } from "../Menu/utils/useMenuRefs";
 
 export const HierarchicalItem: React.FC<THierarchicalItemProps> = ({
   text,
@@ -35,10 +34,17 @@ export const HierarchicalItem: React.FC<THierarchicalItemProps> = ({
           undefined
         )}
       >
-        {menuProps?.isOpen && menuProps?.Component && (
+        {menuProps && menuProps?.Component && (
+          // @ts-expect-error add ref type support
           <menuProps.Component {...menuProps} ref={menuRef} />
         )}
-        <div className="item-component" onClick={onClick}>
+        <div
+          className="item-component"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick();
+          }}
+        >
           {menuProps && <span className="item-component__icon"></span>}
           <Typography type={ETypographyType.Regular}>
             {text} {isCollapsed ? "(...)" : ""}
@@ -47,7 +53,7 @@ export const HierarchicalItem: React.FC<THierarchicalItemProps> = ({
             className="item-component__menu"
             onClick={(e) => {
               e.stopPropagation();
-              onMenuClick();
+              onMenuClick?.();
             }}
             ref={menuButtonRef}
           ></span>

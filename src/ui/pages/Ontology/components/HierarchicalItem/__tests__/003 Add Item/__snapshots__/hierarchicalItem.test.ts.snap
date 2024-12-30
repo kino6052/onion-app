@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hierarchical Item should add item 1`] = `
+{
+  "id": "ROOT",
+  "indent": 0,
+  "isCollapsed": false,
+  "isMenuOpen": false,
+  "menuProps": undefined,
+  "onClick": [Function],
+  "onMenuClick": [Function],
+  "promptProps": undefined,
+  "successors": [
+    {
+      "id": "1",
+      "indent": 1,
+      "isCollapsed": false,
+      "isMenuOpen": false,
+      "menuProps": undefined,
+      "onClick": [Function],
+      "onMenuClick": [Function],
+      "promptProps": undefined,
+      "successors": [],
+      "text": "New Item",
+    },
+  ],
+  "text": "ROOT",
+}
+`;

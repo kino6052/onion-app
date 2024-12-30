@@ -5,7 +5,7 @@ import { EPage, TAppProps, TAppState, TMapStateToProps } from "../../types";
 import { getUpdateState, noop } from "../../utils";
 import { TOntologyProps } from "./types";
 
-export const mapStateToProps =
+export const getMapStateToProps =
   ({
     mapStateToHierarchicalItemProps,
   }: {
@@ -22,11 +22,13 @@ export const mapStateToProps =
     return {
       pageType: EPage.Ontology,
       pageProps: {
-        buttonProps: {
-          onClick: noop,
-          children: "Text",
-          hasIcon: false,
-        },
+        // buttonProps: {
+        //   onClick: noop,
+        //   children: "Text",
+        //   hasIcon: false,
+        // },
+
+        message: state.pageState.message,
 
         isLoading: state.pageState.isLoading,
         notificationProps: state.pageState.hasError

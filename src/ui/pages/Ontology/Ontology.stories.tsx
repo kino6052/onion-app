@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { OntologyPage } from ".";
 import { EConstant } from "../../../constants";
 import { EPage, TAppProps, TAppState } from "../../types";
-import { mapStateToProps } from "./logic";
+import { getMapStateToProps } from "./logic";
 import { TOntologyProps } from "./types";
+import { mapStateToHierarchicalItemProps } from "./components/HierarchicalItem";
+import { OntologyPage } from "./OntologyPage";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -35,7 +36,9 @@ const state001 = {
 export const _001Initial: Story = {
   args: {
     state: state001,
-    props: mapStateToProps(state001, () => {}),
+    props: getMapStateToProps({
+      mapStateToHierarchicalItemProps,
+    })(state001, () => {}),
   },
 };
 
@@ -58,7 +61,9 @@ const state002 = {
 export const _002Loading: Story = {
   args: {
     state: state002,
-    props: mapStateToProps(state002, () => {}),
+    props: getMapStateToProps({
+      mapStateToHierarchicalItemProps,
+    })(state002, () => {}),
   },
 };
 
@@ -109,7 +114,9 @@ const state003 = {
 export const _003Tree: Story = {
   args: {
     state: state003,
-    props: mapStateToProps(state003, () => {}),
+    props: getMapStateToProps({
+      mapStateToHierarchicalItemProps,
+    })(state003, () => {}),
   },
 };
 
@@ -165,7 +172,9 @@ const state004 = {
 export const _004Collapsed: Story = {
   args: {
     state: state004,
-    props: mapStateToProps(state004, () => {}),
+    props: getMapStateToProps({
+      mapStateToHierarchicalItemProps,
+    })(state004, () => {}),
   },
 };
 
@@ -190,7 +199,9 @@ const state005 = {
 export const _005Initial: Story = {
   args: {
     state: state005,
-    props: mapStateToProps(state005, () => {}),
+    props: getMapStateToProps({
+      mapStateToHierarchicalItemProps,
+    })(state005, () => {}),
   },
 };
 
@@ -215,7 +226,9 @@ const state006 = {
 export const _006Initial: Story = {
   args: {
     state: state006,
-    props: mapStateToProps(state006, () => {}),
+    props: getMapStateToProps({
+      mapStateToHierarchicalItemProps,
+    })(state006, () => {}),
   },
 };
 
@@ -243,7 +256,9 @@ const state007 = {
 export const _007Initial: Story = {
   args: {
     state: state007,
-    props: mapStateToProps(state007, () => {}),
+    props: getMapStateToProps({
+      mapStateToHierarchicalItemProps,
+    })(state007, () => {}),
   },
 };
 
@@ -273,6 +288,8 @@ const state008 = {
 export const _008Initial: Story = {
   args: {
     state: state008,
-    props: mapStateToProps(state008, () => {}),
+    props: getMapStateToProps({
+      mapStateToHierarchicalItemProps,
+    })(state008, () => {}),
   },
 };

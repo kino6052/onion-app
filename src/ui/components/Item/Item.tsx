@@ -16,16 +16,26 @@ export const Item: React.FC<PropsWithChildren<TItemProps>> = ({
 
   return (
     <div className="item-component-wrapper">
-      <div className="item-component" onClick={onClick}>
+      <div
+        className="item-component"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
+      >
         <span className="item-component__icon"></span>
         <Typography type={ETypographyType.Regular}>{text}</Typography>
         {menuProps && (
           <span
             className="item-component__menu"
-            onClick={onMenuClick}
+            onClick={(e) => {
+              e.stopPropagation();
+              onMenuClick?.();
+            }}
             ref={menuButtonRef}
           >
             {menuProps.isOpen && menuProps.Component && (
+              // @ts-expect-error TODO: Add ref type support
               <menuProps.Component {...menuProps} ref={menuRef} />
             )}
           </span>

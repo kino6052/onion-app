@@ -1,6 +1,6 @@
 import { LoginPage } from "./pages/Login/LoginPage";
 import { NotePage } from "./pages/Note";
-import { OntologyPage } from "./pages/Ontology";
+import { OntologyPage } from "./pages/Ontology/OntologyPage";
 import { EPage, TAppProps } from "./types";
 
 export const App: React.FC<TAppProps> = ({ pageProps, pageType }) => {

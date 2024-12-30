@@ -1,4 +1,4 @@
-import { TCoordinates, TWithComponent } from "../../types";
+import { TWithComponent } from "../../types";
 import { TItemProps } from "../Item/types";
 
 export type TMenuPropsBase = {

@@ -1,4 +1,4 @@
-import { setup } from "./utils";
+import { setup } from "./setup";
 
 describe("button test", () => {
   it("should login", async () => {

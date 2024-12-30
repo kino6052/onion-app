@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hierarchical Item should remove nested items 1`] = `
+{
+  "id": "ROOT",
+  "indent": 0,
+  "isCollapsed": false,
+  "isMenuOpen": false,
+  "menuProps": undefined,
+  "onClick": [Function],
+  "onMenuClick": [Function],
+  "promptProps": undefined,
+  "successors": [],
+  "text": "ROOT",
+}
+`;

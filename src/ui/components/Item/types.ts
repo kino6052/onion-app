@@ -5,10 +5,9 @@ import { TPromptState } from "../../types";
 
 type THandlers = {
   onClick: () => void;
-  onMenuClick: () => void;
 };
 
-export type TWithMenuProps = { menuProps: TMenuProps };
+export type TWithMenuProps = { menuProps: TMenuProps; onMenuClick: () => void };
 export type TWithPromptProps = {
   promptProps?: TPromptProps;
 };
@@ -22,7 +21,7 @@ export type TWithIsMenuOpenState = {
   isMenuOpen: boolean;
 };
 
-export type TItemProps = TItem & THandlers & Partial<{ menuProps: TMenuProps }>;
+export type TItemProps = TItem & THandlers & Partial<TWithMenuProps>;
 
 export type THierarchicalItemProps = PropsWithChildren<
   TItem & { successors: THierarchicalItemProps[] } & TWithCollapsed &

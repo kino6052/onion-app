@@ -13,7 +13,7 @@ export enum EPage {
 export type TWithId = { id: string };
 
 export type TSetState<T> = (cb: (prev: T) => T) => void;
-export type TMapStateToProps<T> = (
+export type TMapStateToProps<T = TAppProps> = (
   state: TAppState,
   setState: TSetState<TAppState>
 ) => T;

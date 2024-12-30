@@ -12,7 +12,7 @@ export const mapStateToButtonProps = getMapStateToProps({
           isCollapsed: false,
           isMenuOpen: false,
           successors: [],
-          text: "",
+          text: EConstant.Root,
         },
       },
     } satisfies TLoginResponse),

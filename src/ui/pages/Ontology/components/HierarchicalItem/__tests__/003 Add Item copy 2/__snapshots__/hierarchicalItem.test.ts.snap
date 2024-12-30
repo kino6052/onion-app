@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hierarchical Item should create nested items 1`] = `
+{
+  "id": "ROOT",
+  "indent": 0,
+  "isCollapsed": false,
+  "isMenuOpen": false,
+  "menuProps": undefined,
+  "onClick": [Function],
+  "onMenuClick": [Function],
+  "promptProps": undefined,
+  "successors": [
+    {
+      "id": "1",
+      "indent": 1,
+      "isCollapsed": false,
+      "isMenuOpen": false,
+      "menuProps": undefined,
+      "onClick": [Function],
+      "onMenuClick": [Function],
+      "promptProps": undefined,
+      "successors": [
+        {
+          "id": "2",
+          "indent": 2,
+          "isCollapsed": false,
+          "isMenuOpen": false,
+          "menuProps": undefined,
+          "onClick": [Function],
+          "onMenuClick": [Function],
+          "promptProps": undefined,
+          "successors": [],
+          "text": "New Item",
+        },
+      ],
+      "text": "New Item",
+    },
+  ],
+  "text": "ROOT",
+}
+`;

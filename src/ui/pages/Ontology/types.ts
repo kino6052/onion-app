@@ -11,7 +11,7 @@ import {
 } from "../../types";
 import { TIsLoadingState, TMessageState } from "../../types";
 
-export type TOntologyPurePropsBase = TWithNotificationProps &
+export type TOntologyPurePropsBase = Partial<TWithNotificationProps> &
   TIsLoadingState &
   Partial<TMessageState> & {
     hierarchicalItemProps: THierarchicalItemProps;
@@ -22,8 +22,7 @@ export type TOntologyPurePropsWithComponent = TOntologyPurePropsBase & {
   ItemComponent?: React.FC<THierarchicalItemProps>;
 };
 
-export type TOntologyPureProps = TPageTypeState<EPage.Ontology> &
-  TOntologyPurePropsWithComponent;
+export type TOntologyPureProps = TOntologyPurePropsWithComponent;
 
 export type TOntologyProps = TWithComponent<TOntologyPureProps> &
   TOntologyPureProps;

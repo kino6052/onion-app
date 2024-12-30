@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hierarchical Item should open menu 2`] = `
+{
+  "id": "ROOT",
+  "indent": 0,
+  "isCollapsed": false,
+  "isMenuOpen": true,
+  "menuProps": {
+    "Component": {},
+    "id": "menu",
+    "isOpen": true,
+    "itemsProps": [
+      {
+        "id": "add",
+        "onClick": [Function],
+        "text": "Add child",
+      },
+      {
+        "id": "rename",
+        "onClick": [Function],
+        "text": "Rename",
+      },
+      {
+        "id": "examine",
+        "onClick": [Function],
+        "text": "Examine",
+      },
+      {
+        "id": "remove",
+        "onClick": [Function],
+        "text": "Remove",
+      },
+    ],
+    "onBackgroundClick": [Function],
+  },
+  "onClick": [Function],
+  "onMenuClick": [Function],
+  "promptProps": undefined,
+  "successors": [],
+  "text": "ROOT",
+}
+`;

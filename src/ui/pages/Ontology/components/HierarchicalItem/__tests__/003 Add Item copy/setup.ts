@@ -1,5 +1,6 @@
 import { TMenuProps } from "../../../../../../components/Menu/types";
 import { EPage, TAppState } from "../../../../../../types";
+import { getComposeActions } from "../../../../../../utils/composeActions";
 import { StateManager } from "../../../../../../utils/stateManager";
 import { getInitialOntologyTree } from "../../../../utils";
 import { getMapStateToProps } from "../../logic";
@@ -25,5 +26,12 @@ export const setup = () => {
     },
   });
 
-  return { stateManager, mapStateToButtonProps };
+  const composeActions = getComposeActions(() =>
+    mapStateToButtonProps(
+      stateManager.getState(),
+      stateManager.setState.bind(stateManager)
+    )
+  );
+
+  return { stateManager, mapStateToButtonProps, composeActions };
 };

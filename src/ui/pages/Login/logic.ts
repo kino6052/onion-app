@@ -1,5 +1,5 @@
-import { TButtonProps } from "../../components/Button/types";
-import { EPage, TAppProps, TAppState, TSetState } from "../../types";
+import { EPage, TAppProps, TAppState } from "../../types";
+import { TMapStateToButtonProps } from "./components/Button/types";
 
 /** this function converts the state of the Login page into the props for the Login page.
  * It also handles the login logic, like loading the ontology and setting the state accordingly */
@@ -7,10 +7,7 @@ export const getMapStateToProps =
   ({
     mapStateToButtonProps,
   }: {
-    mapStateToButtonProps: (
-      state: TAppState,
-      setState: TSetState<TAppState>
-    ) => TButtonProps;
+    mapStateToButtonProps: TMapStateToButtonProps;
   }) =>
   (
     state: TAppState,

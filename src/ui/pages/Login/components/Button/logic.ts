@@ -1,6 +1,7 @@
 import { TButtonProps } from "../../../../components/Button/types";
 import { EPage, TAppState, TSetState } from "../../../../types";
 import { TLogin, TLoginResponse } from "../../types";
+import { TMapStateToButtonProps } from "./types";
 
 const handleLoginSuccess = (
   result: TLoginResponse,
@@ -78,7 +79,10 @@ const handleClick = (login: TLogin, setState: TSetState<TAppState>) => {
 };
 
 export const getMapStateToProps =
-  (dependencies: { login: TLogin; ButtonComponent?: React.FC<TButtonProps> }) =>
+  (dependencies: {
+    login: TLogin;
+    ButtonComponent?: React.FC<TButtonProps>;
+  }): TMapStateToButtonProps =>
   (state: TAppState, setState: TSetState<TAppState>) => {
     const { login, ButtonComponent } = dependencies;
 

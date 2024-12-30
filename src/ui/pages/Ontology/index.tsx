@@ -1,8 +1,6 @@
-import { withDataConverter } from "../../utils/withConverter";
-import { converter } from "./logic";
-import { OntologyPage as _OntologyPage } from "./OntologyPage";
-import compose from "compose-function";
+import { mapStateToHierarchicalItemProps } from "./components/HierarchicalItem";
+import { getMapStateToProps } from "./logic";
 
-export const OntologyPage = compose(withDataConverter(converter))(
-  _OntologyPage
-);
+export const mapStateToOntologyProps = getMapStateToProps({
+  mapStateToHierarchicalItemProps,
+});

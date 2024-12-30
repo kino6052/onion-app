@@ -1,17 +1,24 @@
-import { EPage, TAppProps, TAppState, TSetState } from "./types";
+import {
+  EPage,
+  TAppProps,
+  TAppState,
+  TMapStateToProps,
+  TSetState,
+} from "./types";
 
 export const getMapStateToProps =
   (dependencies: {
-    mapStateToLoginPageProps: (
-      state: TAppState,
-      setState: TSetState<TAppState>
-    ) => TAppProps;
+    mapStateToLoginPageProps: TMapStateToProps;
+    mapStateToOntologyProps: TMapStateToProps;
   }) =>
   (state: TAppState, setState: TSetState<TAppState>): TAppProps => {
-    const { mapStateToLoginPageProps: mapLoginPageStateToProps } = dependencies;
+    const { mapStateToLoginPageProps, mapStateToOntologyProps } = dependencies;
 
     if (state.pageType === EPage.Login)
-      return mapLoginPageStateToProps(state, setState);
+      return mapStateToLoginPageProps(state, setState);
+
+    if (state.pageType === EPage.Ontology)
+      return mapStateToOntologyProps(state, setState);
 
     throw new Error("Not implemented");
   };
