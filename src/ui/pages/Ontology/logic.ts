@@ -9,10 +9,13 @@ export const getMapStateToProps =
   ({
     mapStateToHierarchicalItemProps,
   }: {
-    mapStateToHierarchicalItemProps: TMapStateToProps<THierarchicalItemProps>;
+    mapStateToHierarchicalItemProps: TMapStateToProps<
+      TAppState,
+      THierarchicalItemProps
+    >;
   }) =>
   (
-    state: TAppState,
+    state: TAppState<EPage.Ontology>,
     setState: (cb: (state: TAppState) => TAppState) => void
   ): TAppProps => {
     if (state.pageType !== EPage.Ontology) {
@@ -22,12 +25,6 @@ export const getMapStateToProps =
     return {
       pageType: EPage.Ontology,
       pageProps: {
-        // buttonProps: {
-        //   onClick: noop,
-        //   children: "Text",
-        //   hasIcon: false,
-        // },
-
         message: state.pageState.message,
 
         isLoading: state.pageState.isLoading,

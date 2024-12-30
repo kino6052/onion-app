@@ -12,7 +12,7 @@ const meta = {
   component: ({ props }) => (
     <OntologyPage {...(props.pageProps as TOntologyProps)} />
   ),
-} satisfies Meta<React.FC<{ props: TAppProps; state: TAppState }>>;
+} satisfies Meta<React.FC<{ props: TAppProps; state: TAppState<EPage> }>>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -31,7 +31,7 @@ const state001 = {
       },
     },
   },
-} satisfies TAppState;
+} satisfies TAppState<EPage.Ontology>;
 
 export const _001Initial: Story = {
   args: {

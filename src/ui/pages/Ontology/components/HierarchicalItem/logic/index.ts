@@ -1,3 +1,4 @@
+import { cloneDeep } from "lodash";
 import { FC } from "react";
 import { EConstant } from "../../../../../../constants";
 import {
@@ -7,14 +8,17 @@ import {
 import { TMenuProps } from "../../../../../components/Menu/types";
 import {
   EPage,
-  TMapStateToProps,
+  TAppProps,
   TAppState,
+  TMapStateToProps,
   TSetState,
 } from "../../../../../types";
 import { noop } from "../../../../../utils";
-import { cloneDeep } from "lodash";
-import { handleAddChild, menuItemAdd } from "./add";
+import { menuItemAdd } from "./add";
 import { menuItemRemove } from "./remove";
+import { updateNodeProperties } from "../utils";
+import { getPromptProps, menuItemRename } from "./rename";
+import { setPartial } from "../../../../../utils/setPartial";
 
 const handleMenuClick = (
   node: THierarchicalItem,
@@ -59,7 +63,15 @@ const buildTree = (
     ...node,
     indent,
     successors,
-    onClick: noop,
+    onClick: () => {
+      updateNodeProperties(
+        node.id,
+        {
+          isCollapsed: !node.isCollapsed,
+        },
+        setState
+      );
+    },
     onMenuClick: () => handleMenuClick(node, setState),
     menuProps: node.isMenuOpen
       ? {
@@ -67,11 +79,7 @@ const buildTree = (
           Component: MenuComponent,
           itemsProps: [
             menuItemAdd(node, setState, getUniqueId),
-            {
-              id: "rename",
-              text: "Rename",
-              onClick: noop,
-            },
+            menuItemRename(node, setState),
             {
               id: "examine",
               text: "Examine",
@@ -83,27 +91,7 @@ const buildTree = (
           isOpen: node.isMenuOpen,
         }
       : undefined,
-    promptProps: node.promptState && {
-      buttonProps: {
-        onClick: noop,
-        children: "Apply",
-        hasIcon: false,
-      },
-      cancelButtonProps: {
-        onClick: noop,
-        children: "Cancel",
-        hasIcon: false,
-      },
-      description: "Type new text",
-      onBackgrounClick: noop,
-      textProps: {
-        value: node.text,
-        onChange: noop,
-        isDisabled: false,
-        placeholder: "Type new text",
-      },
-      title: "Edit node",
-    },
+    promptProps: node.promptState && getPromptProps(node, setState),
   };
 };
 
@@ -114,7 +102,7 @@ export const getMapStateToProps =
   }: {
     MenuComponent: FC<TMenuProps>;
     getUniqueId: () => string;
-  }): TMapStateToProps<THierarchicalItemProps> =>
+  }): TMapStateToProps<TAppState, THierarchicalItemProps> =>
   (state, setState) => {
     if (state.pageType !== EPage.Ontology)
       throw new Error("Expected an ontology page");
@@ -133,32 +121,3 @@ export const getMapStateToProps =
       getUniqueId
     );
   };
-
-const updateNodeProperties = (
-  nodeId: string,
-  partialProps: Partial<THierarchicalItem>,
-  setState: TSetState<TAppState>
-) => {
-  setState((prevState) => {
-    if (prevState.pageType !== EPage.Ontology)
-      throw new Error("Current page is not an ontology page");
-
-    const tree = cloneDeep(prevState.pageState.tree);
-    const node = tree[nodeId];
-
-    if (!node) throw new Error(`Node with ID ${nodeId} not found`);
-
-    tree[nodeId] = {
-      ...node,
-      ...partialProps,
-    };
-
-    return {
-      ...prevState,
-      pageState: {
-        ...prevState.pageState,
-        tree,
-      },
-    };
-  });
-};

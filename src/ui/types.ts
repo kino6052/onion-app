@@ -13,10 +13,10 @@ export enum EPage {
 export type TWithId = { id: string };
 
 export type TSetState<T> = (cb: (prev: T) => T) => void;
-export type TMapStateToProps<T = TAppProps> = (
-  state: TAppState,
-  setState: TSetState<TAppState>
-) => T;
+export type TMapStateToProps<TState = TAppState<EPage>, TProps = TAppProps> = (
+  state: TState,
+  setState: TSetState<TState>
+) => TProps;
 
 export type TPageTypeState<TPageType extends EPage> = {
   pageType: TPageType;
@@ -59,7 +59,13 @@ export type TOntologyPageState = TPageTypeState<EPage.Ontology> &
 export type TNotePageState = TPageTypeState<EPage.Note> &
   TPageState<TNoteState>;
 
-export type TAppState = TLoginPageState | TOntologyPageState | TNotePageState;
+export type TPageStateMap = {
+  [EPage.Login]: TLoginPageState;
+  [EPage.Ontology]: TOntologyPageState;
+  [EPage.Note]: TNotePageState;
+};
+
+export type TAppState<TPage extends EPage = EPage> = TPageStateMap[TPage];
 
 export type TWithNotificationProps = {
   notificationProps: TPromptProps;

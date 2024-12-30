@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hierarchical Item should open rename prompt 1`] = `
+{
+  "id": "ROOT",
+  "indent": 0,
+  "isCollapsed": false,
+  "isMenuOpen": false,
+  "menuProps": undefined,
+  "onClick": [Function],
+  "onMenuClick": [Function],
+  "promptProps": {
+    "buttonProps": {
+      "children": "Apply",
+      "hasIcon": false,
+      "onClick": [Function],
+    },
+    "cancelButtonProps": {
+      "children": "Cancel",
+      "hasIcon": false,
+      "onClick": [Function],
+    },
+    "description": "Type new text",
+    "onBackgrounClick": [Function],
+    "textProps": {
+      "isDisabled": false,
+      "onChange": [Function],
+      "placeholder": "Type new text",
+      "value": "ROOT",
+    },
+    "title": "Edit node",
+  },
+  "promptState": {
+    "text": "ROOT",
+  },
+  "successors": [],
+  "text": "ROOT",
+}
+`;

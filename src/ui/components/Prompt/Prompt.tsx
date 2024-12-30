@@ -14,7 +14,12 @@ export const Prompt: React.FC<TPromptProps> = ({
 }) => {
   return (
     <div className={"prompt-component__wrapper"} onClick={onBackgrounClick}>
-      <div className={"prompt-component__container"}>
+      <div
+        className={"prompt-component__container"}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <h2 className={"prompt-component__title"}>{title}</h2>
         {description && (
           <p className={"prompt-component__description"}>{description}</p>

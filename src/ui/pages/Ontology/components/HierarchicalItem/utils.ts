@@ -1,18 +1,30 @@
-import { TPromptProps } from "../../../../components/Prompt/types";
-import { noop } from "../../../../utils";
+import { cloneDeep, assign } from "lodash";
+import { THierarchicalItem } from "../../../../components/Item/types";
+import { EPage, TAppState, TSetState } from "../../../../types";
+import { TWithRecursiveFallback } from "../../../../utils/types";
 
-export const getInitialRenamePromptProps = (): TPromptProps => ({
-  buttonProps: {
-    hasIcon: true,
-    onClick: noop,
-    children: "Submit",
-  },
-  description: "Enter a new name",
-  textProps: {
-    onChange: noop,
-    placeholder: "Enter a new name",
-    value: "",
-    isDisabled: true,
-  },
-  title: "Rename",
-});
+export const updateNodeProperties = (
+  nodeId: string,
+  partialProps: TWithRecursiveFallback<THierarchicalItem>,
+  setState: TSetState<TAppState>
+) => {
+  setState((prevState) => {
+    if (prevState.pageType !== EPage.Ontology)
+      throw new Error("Current page is not an ontology page");
+
+    const tree = cloneDeep(prevState.pageState.tree);
+    const node = tree[nodeId];
+
+    if (!node) throw new Error(`Node with ID ${nodeId} not found`);
+
+    tree[nodeId] = assign({}, node, partialProps);
+
+    return {
+      ...prevState,
+      pageState: {
+        ...prevState.pageState,
+        tree,
+      },
+    };
+  });
+};
