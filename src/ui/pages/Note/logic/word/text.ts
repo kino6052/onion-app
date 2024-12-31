@@ -3,7 +3,9 @@ import { EPage, TAppState, TSetState } from "../../../../types";
 import { setPartial } from "../../../../utils/setPartial";
 import { TSerializedWord } from "../../types";
 
-const getWordRangeIndex = (word: TSerializedWord): number | undefined => {
+const getWordRangeIndex = (
+  word: TSerializedWord
+): number | null | undefined => {
   return word.range?.filter((v) => v !== undefined)[0];
 };
 
@@ -51,7 +53,7 @@ export const getHandleWordClick = ({
 
   const index = getWordRangeIndex(word);
 
-  if (index !== undefined) {
+  if (typeof index === "number" && i > index) {
     const open = wordTree[id].open.split(" ");
     const { newId, newWord, updatedOpen } = createNewWord(
       id,
@@ -67,7 +69,7 @@ export const getHandleWordClick = ({
           wordTree: {
             [id]: {
               open: updatedOpen,
-              range: [undefined, undefined],
+              range: [null, null],
             },
             [newId]: newWord,
           },
@@ -85,7 +87,7 @@ export const getHandleWordClick = ({
       pageState: {
         wordTree: {
           [id]: {
-            range: [i, undefined],
+            range: [i, null],
           },
         },
       },

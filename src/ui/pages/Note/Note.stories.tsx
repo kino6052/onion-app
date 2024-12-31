@@ -6,6 +6,7 @@ import { deserializeNote } from "./utils/tree";
 import { TSerializedWord } from "./types";
 import { EConstant } from "../../../constants";
 import { NotePage } from "./NotePage";
+import { mapStateToNoteProps } from ".";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -25,7 +26,7 @@ const state001 = {
 } satisfies TNotePageState;
 
 export const _001: Story = {
-  args: getMapStateToProps()(state001, () => {}),
+  args: mapStateToNoteProps(state001, () => {}),
 };
 
 const state002 = {
@@ -37,7 +38,7 @@ const state002 = {
 } satisfies TNotePageState;
 
 export const _002: Story = {
-  args: getMapStateToProps()(state002, () => {}),
+  args: mapStateToNoteProps(state002, () => {}),
 };
 
 const data003: Record<string, TSerializedWord> = {
@@ -63,7 +64,9 @@ const data003: Record<string, TSerializedWord> = {
     id: "id3",
     open: "rather delicate and fragile and yet so beautiful",
     closed: "quite a thing",
-    isCollapsed: false,
+    isCollapsed: true,
+    editedName: "test",
+    isEditing: true,
   },
 };
 
@@ -77,7 +80,7 @@ const state003 = {
 } satisfies TNotePageState;
 
 export const _003: Story = {
-  args: getMapStateToProps()(state003, () => {}),
+  args: mapStateToNoteProps(state003, () => {}),
 };
 
 const state004 = {
@@ -92,7 +95,7 @@ const state004 = {
 } satisfies TNotePageState;
 
 export const _004: Story = {
-  args: getMapStateToProps()(state004, () => {}),
+  args: mapStateToNoteProps(state004, () => {}),
 };
 
 const state005 = {
@@ -113,7 +116,7 @@ const state005 = {
 } satisfies TNotePageState;
 
 export const _005: Story = {
-  args: getMapStateToProps()(state005, () => {}),
+  args: mapStateToNoteProps(state005, () => {}),
 };
 
 const state006 = {
@@ -135,7 +138,7 @@ const state006 = {
 } satisfies TNotePageState;
 
 export const _006: Story = {
-  args: getMapStateToProps()(state006, () => {}),
+  args: mapStateToNoteProps(state006, () => {}),
 };
 
 const state007 = {
@@ -150,5 +153,18 @@ const state007 = {
 } satisfies TNotePageState;
 
 export const _007: Story = {
-  args: getMapStateToProps()(state007, () => {}),
+  args: mapStateToNoteProps(state007, () => {}),
+};
+
+const state008 = {
+  pageState: {
+    id: "note",
+    wordTree: data003,
+    isLoading: false,
+  },
+  pageType: EPage.Note,
+} satisfies TNotePageState;
+
+export const _008: Story = {
+  args: mapStateToNoteProps(state008, () => {}),
 };

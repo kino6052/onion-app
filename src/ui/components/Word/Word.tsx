@@ -18,6 +18,7 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
   promptProps,
   menuProps,
   id,
+  editProps,
 }) => {
   const [[x, y], setCoordinates] = useState([100, 100]);
   const { menuRef } = useMenuRefs();
@@ -39,11 +40,46 @@ export const Word: React.FC<React.PropsWithChildren<TWordProps>> = ({
       onClick={(e: React.MouseEvent<HTMLDivElement>) => {
         setCoordinates([e.clientX, e.clientY]);
         e.stopPropagation();
-        onClick();
       }}
     >
-      <span className="word-component__text">
-        {!isOpen && text}
+      <span
+        className="word-component__text"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        {!isOpen && !editProps && (
+          <span
+            onClick={() => {
+              onClick();
+            }}
+          >
+            {text}
+          </span>
+        )}
+        {!isOpen && editProps && (
+          <span>
+            <button
+              {...editProps.removeButtonProps}
+              className="word-component__button"
+              type="button"
+            />
+            <input
+              {...editProps.inputProps}
+              className="word-component__input"
+            />
+            <button
+              {...editProps.confirmButtonProps}
+              className="word-component__button"
+              type="button"
+            />
+            <button
+              {...editProps.rejectButtonProps}
+              className="word-component__button"
+              type="button"
+            />
+          </span>
+        )}
         {!!isOpen &&
           childrenProps.map((props, i) => {
             if (isTextComponent(props)) {

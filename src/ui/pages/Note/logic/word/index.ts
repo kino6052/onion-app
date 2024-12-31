@@ -2,9 +2,11 @@ import { EConstant } from "../../../../../constants";
 import { TTextProps } from "../../../../components/Text/types";
 import { TWordProps } from "../../../../components/Word/types";
 import { TGetUniqueId } from "../../../../dependencies/getUniqueId/types";
-import { TAppState, TNotePageState, TSetState } from "../../../../types";
+import { EPage, TAppState, TNotePageState, TSetState } from "../../../../types";
 import { noop } from "../../../../utils";
+import { setPartial } from "../../../../utils/setPartial";
 import { getDefaultMenuProps } from "../../components/Word/utils";
+import { removeNodeFromWordTree, updateWordProperties } from "../../utils";
 import { deserializeNote } from "../../utils/tree";
 import { handleMenuClick } from "../menu";
 import { getMapStateToPromptProps } from "./prompt";
@@ -43,18 +45,38 @@ export const getMapStateToWordTreeProps =
               setState,
               wordTree: _wordTree,
             }),
-          onMouseOver: noop,
+          onMouseOver: () => {
+            const [start] = wordTree.range ?? [];
+            if (typeof start === "number") {
+              updateWordProperties(
+                id,
+                {
+                  range: [start, i],
+                },
+                setState
+              );
+            }
+          },
           children: word,
           isSelected:
             wordTree.range &&
-            wordTree.range[0] !== undefined &&
-            wordTree.range[1] !== undefined &&
-            wordTree.range &&
-            i >= wordTree.range[0] &&
-            i <= wordTree.range[1],
+            ((typeof wordTree.range[0] === "number" &&
+              typeof wordTree.range[1] === "number" &&
+              i >= wordTree.range[0] &&
+              i <= wordTree.range[1]) ||
+              wordTree.range[0] === i),
         } as TTextProps;
       }),
-      onClick: noop,
+      onClick: () => {
+        updateWordProperties(
+          id,
+          {
+            editedName: closed,
+            isEditing: true,
+          },
+          setState
+        );
+      },
       onMenuClick: () => handleMenuClick(id, _wordTree, setState),
       text: closed,
       isOpen: !isCollapsed,
@@ -62,5 +84,54 @@ export const getMapStateToWordTreeProps =
         state.pageState.wordTree.promptState &&
         getMapStateToPromptProps(wordTree)(state, setState),
       menuProps: wordTree.isMenuOpen ? getDefaultMenuProps(id) : undefined,
+      editProps: !wordTree.isEditing
+        ? undefined
+        : {
+            removeButtonProps: {
+              children: "🗑️",
+              onClick: () => {
+                removeNodeFromWordTree(wordTree.id, setState);
+              },
+            },
+            rejectButtonProps: {
+              children: "❌",
+              onClick: () => {
+                updateWordProperties(
+                  wordTree.id,
+                  {
+                    isEditing: false,
+                    editedName: undefined,
+                  },
+                  setState
+                );
+              },
+            },
+            confirmButtonProps: {
+              children: "✅",
+              onClick: () => {
+                updateWordProperties(
+                  wordTree.id,
+                  {
+                    isEditing: false,
+                    editedName: undefined,
+                    closed: wordTree.editedName,
+                  },
+                  setState
+                );
+              },
+            },
+            inputProps: {
+              value: wordTree.editedName,
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                updateWordProperties(
+                  wordTree.id,
+                  {
+                    editedName: e.target.value,
+                  },
+                  setState
+                );
+              },
+            },
+          },
     } satisfies TWordProps;
   };

@@ -1,5 +1,7 @@
-import { Menu } from "../../../components/Menu";
+import { EConstant } from "../../../../constants";
+import { TMenuProps } from "../../../components/Menu/types";
 import { TGetOntology } from "../../../dependencies/getOntology/types";
+import { FC } from "../../../libs/react";
 import { EPage, TAppState, TNotePageState, TSetState } from "../../../types";
 import { noop } from "../../../utils";
 import { setPartial } from "../../../utils/setPartial";
@@ -19,6 +21,9 @@ export const handleMenuClick = (
           [id]: {
             ..._wordTree[id],
             isCollapsed: !_wordTree[id].isCollapsed,
+            range: [null, null],
+            isEditing: false,
+            editedName: undefined,
           },
         },
       },
@@ -78,7 +83,13 @@ export const handleEditClick = (
 };
 
 export const getMapStateToItemProps =
-  ({ getOntology }: { getOntology: TGetOntology }) =>
+  ({
+    getOntology,
+    MenuComponent,
+  }: {
+    getOntology: TGetOntology;
+    MenuComponent: FC<TMenuProps>;
+  }) =>
   (state: TNotePageState, setState: TSetState<TAppState>) => ({
     id: state.pageState.id,
     onClick: noop,
@@ -86,12 +97,30 @@ export const getMapStateToItemProps =
     text: "Test",
     menuProps: {
       id: "menu",
-      Component: Menu,
+      Component: MenuComponent,
       itemsProps: [
         {
           id: EMenuConstant.GoBack,
           onClick: () => handleEditClick(setState, getOntology),
           text: "Go back",
+        },
+        {
+          id: EMenuConstant.Edit,
+          onClick: () => {
+            setPartial(
+              {
+                pageState: {
+                  isMenuOpen: false,
+                  textEditPrompt: {
+                    text: state.pageState.wordTree[EConstant.Root].open ?? "",
+                  },
+                },
+              },
+              setState,
+              EPage.Note
+            );
+          },
+          text: "Edit text",
         },
       ],
       onBackgroundClick: noop,

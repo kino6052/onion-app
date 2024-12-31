@@ -23,6 +23,7 @@ import { setPartial } from "../../../../../utils/setPartial";
 import { TNoteState, TSerializedWord } from "../../../../Note/types";
 import { deserializeNote } from "../../../../Note/utils/tree";
 import { TGetUniqueId } from "../../../../../dependencies/getUniqueId/types";
+import { TGetNote } from "../../../../../dependencies/getNote/types";
 
 const handleMenuClick = (
   node: THierarchicalItem,
@@ -40,7 +41,7 @@ const handleBackgroundClick = (
 
 const buildTree =
   (dependencies: {
-    getNote: () => Promise<Record<string, TSerializedWord>>;
+    getNote: TGetNote;
     getUniqueId: () => string;
     MenuComponent: FC<TMenuProps>;
   }) =>
@@ -102,7 +103,7 @@ const buildTree =
                     EPage.Ontology
                   );
 
-                  getNote().then((data) => {
+                  getNote(node.id).then((data) => {
                     setState((prev) => ({
                       ...prev,
                       pageState: {
@@ -133,7 +134,7 @@ export const getMapStateToProps =
   }: {
     MenuComponent: FC<TMenuProps>;
     getUniqueId: TGetUniqueId;
-    getNote: () => Promise<Record<string, TSerializedWord>>;
+    getNote: TGetNote;
   }): TMapStateToProps<TAppState, THierarchicalItemProps> =>
   (state, setState) => {
     if (state.pageType !== EPage.Ontology)

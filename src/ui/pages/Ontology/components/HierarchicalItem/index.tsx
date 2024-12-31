@@ -1,18 +1,10 @@
-import { EConstant } from "../../../../../constants";
+import { uniqueId } from "lodash";
 import { Menu } from "../../../../components/Menu";
 import { getMapStateToProps } from "./logic";
-import { uniqueId } from "lodash";
+import { getNote } from "../../../../dependencies/getNote/dev";
 
 export const mapStateToHierarchicalItemProps = getMapStateToProps({
   MenuComponent: Menu,
   getUniqueId: uniqueId,
-  getNote: () =>
-    Promise.resolve({
-      [EConstant.Root]: {
-        id: EConstant.Root,
-        open: "This is text.",
-        closed: "Root",
-        isCollapsed: false,
-      },
-    }),
+  getNote: getNote,
 });

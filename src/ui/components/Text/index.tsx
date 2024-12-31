@@ -5,11 +5,16 @@ export const TextComponent: React.FC<TTextProps> = ({
   children,
   isSelected,
   onClick,
+  onMouseOver,
 }) => (
   <span
     onClick={(e) => {
       e.stopPropagation();
-      onClick(e);
+      onClick();
+    }}
+    onMouseOver={(e) => {
+      e.stopPropagation();
+      onMouseOver?.();
     }}
     className="text-component__item"
     style={{

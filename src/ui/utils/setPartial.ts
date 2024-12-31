@@ -13,8 +13,6 @@ export const setPartial = <TPage extends EPage>(
 
     const result = merge({}, prevState, state);
 
-    console.warn({ result });
-
     return result;
   });
 };

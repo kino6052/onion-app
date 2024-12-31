@@ -1,11 +1,9 @@
-import { assign, cloneDeep } from "lodash";
 import { EConstant } from "../../../constants";
 import { TWordProps } from "../../components/Word/types";
 import { EPage, TAppState, TSetState } from "../../types";
 import { noop } from "../../utils";
-import { TWithRecursiveFallback } from "../../utils/types";
+import { setPartial } from "../../utils/setPartial";
 import { TDeserializedWord, TNoteState, TSerializedWord } from "./types";
-import { deserializeNote } from "./utils/tree";
 
 export const generateTreePropsFromTree = (
   tree: TDeserializedWord
@@ -47,25 +45,56 @@ export const getInitialNoteState = (data = DEFAULT_DATA): TNoteState => {
 
 export const updateWordProperties = (
   nodeId: string,
-  partialProps: TWithRecursiveFallback<TWordProps>,
+  partialProps: Partial<TSerializedWord>,
+  setState: TSetState<TAppState>
+) => {
+  setPartial(
+    {
+      pageState: {
+        wordTree: {
+          [nodeId]: partialProps,
+        },
+      },
+    },
+    setState,
+    EPage.Note
+  );
+};
+
+export const removeNodeFromWordTree = (
+  nodeId: string,
   setState: TSetState<TAppState>
 ) => {
   setState((prevState) => {
+    if (nodeId === EConstant.Root) throw new Error("Cannot remove Root node");
+
     if (prevState.pageType !== EPage.Note)
-      throw new Error("Current page is not an ontology page");
+      throw new Error("Current page is not a note page");
 
-    const tree = cloneDeep(prevState.pageState.wordTree);
-    const node = tree[nodeId];
+    const wordTree = { ...prevState.pageState.wordTree };
 
-    if (!node) throw new Error(`Node with ID ${nodeId} not found`);
+    // Retrieve the inner text of the node being removed
+    const removedNode = wordTree[nodeId];
+    if (!removedNode) throw new Error(`Node with ID ${nodeId} not found`);
 
-    tree[nodeId] = assign({}, node, partialProps);
+    const innerText = removedNode.open;
+
+    // Remove the node itself
+    delete wordTree[nodeId];
+
+    // Replace references to the node with its inner text in other nodes
+    Object.keys(wordTree).forEach((key) => {
+      const node = wordTree[key];
+      if (node.open.includes(`{{${nodeId}}}`)) {
+        node.open = node.open.replace(`{{${nodeId}}}`, innerText).trim();
+      }
+    });
 
     return {
       ...prevState,
       pageState: {
         ...prevState.pageState,
-        tree,
+        wordTree,
       },
     };
   });

@@ -10,6 +10,7 @@ export const NotePage: React.FC<TNoteProps> = ({
   isLoading,
   wordTreeProps: { Component = Word, ...wordTreeProps },
   notificationProps,
+  editTextPrompt,
 }) => {
   return (
     <div className="note-page">
@@ -27,6 +28,7 @@ export const NotePage: React.FC<TNoteProps> = ({
       {notificationProps && (
         <Prompt {...notificationProps} isNotificationOnly />
       )}
+      {editTextPrompt && <Prompt {...editTextPrompt} />}
     </div>
   );
 };

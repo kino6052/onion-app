@@ -21,6 +21,28 @@
     line-height: 16px;
   }
 
+  &__input {
+    background: none;
+    border: none;
+    border-bottom: 1px dashed white;
+    color: white;
+    padding: 4px;
+    margin: 0;
+    min-width: fit-content;
+  }
+
+  &__button {
+    background: none;
+    border: none;
+    border: 1px dashed white;
+    padding: 4px;
+    margin: 0;
+
+    &:hover {
+      background-color: grey;
+    }
+  }
+
   &__text {
     display: inline;
     padding: 0;

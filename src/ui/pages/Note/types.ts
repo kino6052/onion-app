@@ -3,6 +3,7 @@ import {
   TItemProps,
   TWithIsMenuOpenState,
 } from "../../components/Item/types";
+import { TPromptProps } from "../../components/Prompt/types";
 import { TWordProps } from "../../components/Word/types";
 import {
   TIsLoadingState,
@@ -17,7 +18,8 @@ export type TPureNoteProps = {
   wordTreeProps: TWordProps;
 } & TIsLoadingState;
 
-export type TNoteProps = Partial<TWithNotificationProps> &
+export type TNoteProps = Partial<{ editTextPrompt: TPromptProps }> &
+  Partial<TWithNotificationProps> &
   TWithComponent<TNoteState> &
   TPureNoteProps;
 
@@ -27,14 +29,15 @@ export type TSerializedWord = {
   closed: string;
 } & Partial<TIsCollapsed> &
   Partial<TWithIsMenuOpenState> &
-  Partial<TWithSelectedRange>;
+  Partial<TWithSelectedRange> &
+  Partial<{ isEditing: boolean; editedName: string }>;
 
 export type TIsCollapsed = {
   isCollapsed: boolean;
 };
 
 export type TWithSelectedRange = {
-  range: [number | undefined, number | undefined];
+  range: [number | null | undefined, number | null | undefined];
 };
 
 export type TDeserializedWord = {
@@ -44,8 +47,13 @@ export type TDeserializedWord = {
 } & TIsCollapsed &
   Partial<TPromptState> &
   Partial<TWithIsMenuOpenState> &
-  Partial<TWithSelectedRange>;
+  Partial<TWithSelectedRange> &
+  Partial<{ isEditing: boolean; editedName: string }>;
 
 export type TNoteState = TWithId & {
   wordTree: Record<string, TSerializedWord>;
-};
+} & Partial<{
+    textEditPrompt: {
+      text: string;
+    };
+  }>;
