@@ -22,6 +22,7 @@ import { getPromptProps, menuItemRename } from "./rename";
 import { setPartial } from "../../../../../utils/setPartial";
 import { TNoteState, TSerializedWord } from "../../../../Note/types";
 import { deserializeNote } from "../../../../Note/utils/tree";
+import { TGetUniqueId } from "../../../../../dependencies/getUniqueId/types";
 
 const handleMenuClick = (
   node: THierarchicalItem,
@@ -131,7 +132,7 @@ export const getMapStateToProps =
     getNote,
   }: {
     MenuComponent: FC<TMenuProps>;
-    getUniqueId: () => string;
+    getUniqueId: TGetUniqueId;
     getNote: () => Promise<Record<string, TSerializedWord>>;
   }): TMapStateToProps<TAppState, THierarchicalItemProps> =>
   (state, setState) => {

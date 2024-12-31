@@ -1,6 +1,6 @@
 import { TButtonProps } from "../../../../components/Button/types";
+import { TLogin, TLoginResponse } from "../../../../dependencies/login/types";
 import { EPage, TAppState, TSetState } from "../../../../types";
-import { TLogin, TLoginResponse } from "../../types";
 import { TMapStateToButtonProps } from "./types";
 
 const handleLoginSuccess = (

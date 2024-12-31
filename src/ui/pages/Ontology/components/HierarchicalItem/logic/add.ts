@@ -1,10 +1,11 @@
 import { THierarchicalItem } from "../../../../../components/Item/types";
+import { TGetUniqueId } from "../../../../../dependencies/getUniqueId/types";
 import { EPage, TAppState, TSetState } from "../../../../../types";
 
 export const handleAddChild = (
   node: THierarchicalItem,
   setState: TSetState<TAppState>,
-  getUniqueId: () => string
+  getUniqueId: TGetUniqueId
 ) => {
   setState((prev) => {
     if (prev.pageType !== EPage.Ontology)
@@ -39,7 +40,7 @@ export const handleAddChild = (
 export const menuItemAdd = (
   node: THierarchicalItem,
   setState: TSetState<TAppState>,
-  getUniqueId: () => string
+  getUniqueId: TGetUniqueId
 ) => ({
   id: "add",
   text: "Add child",
