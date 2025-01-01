@@ -1,0 +1,21 @@
+@import "../../mixins";
+@import "../../constants";
+
+.ontologies-page {
+  @include background-color($background-color);
+  @include font-style($font-style);
+  @include flex-column(24px);
+  @include full-height;
+  margin: 0;
+  box-sizing: border-box;
+  @include full-width;
+  max-width: 400px;
+  min-width: 400px;
+  position: relative;
+
+  &__content {
+    @include flex-column;
+    height: 100%;
+    overflow: scroll;
+  }
+}

@@ -2,12 +2,14 @@ import { TWithIsMenuOpenState } from "./components/Item/types";
 import { TPromptProps } from "./components/Prompt/types";
 import { TLoginProps, TLoginState } from "./pages/Login/types";
 import { TNoteProps, TNoteState } from "./pages/Note/types";
+import { TOntologiesProps, TOntologiesState } from "./pages/Ontologies/types";
 import { TOntologyProps, TOntologyState } from "./pages/Ontology/types";
 
 export enum EPage {
   Login = "Login",
   Ontology = "Ontology",
   Note = "Note",
+  Ontologies = "Ontologies",
 }
 
 export type TWithId = { id: string };
@@ -43,6 +45,8 @@ export type TCoordinates = { x: number; y: number };
 export type TPromptState = {
   promptState: {
     text: string;
+    isNotificationOnly?: boolean;
+    type?: string;
   };
 };
 
@@ -58,11 +62,14 @@ export type TOntologyPageState = TPageTypeState<EPage.Ontology> &
   TPageState<TOntologyState>;
 export type TNotePageState = TPageTypeState<EPage.Note> &
   TPageState<TNoteState>;
+export type TOntologiesPageState = TPageTypeState<EPage.Ontologies> &
+  TPageState<TOntologiesState>;
 
 export type TPageStateMap = {
   [EPage.Login]: TLoginPageState;
   [EPage.Ontology]: TOntologyPageState;
   [EPage.Note]: TNotePageState;
+  [EPage.Ontologies]: TOntologiesPageState;
 };
 
 export type TAppState<TPage extends EPage = EPage> = TPageStateMap[TPage];
@@ -86,7 +93,16 @@ export type TNotePageProps = {
   pageProps: TNoteProps;
 };
 
-export type TAppProps = TLoginPageProps | TNotePageProps | TOntologyPageProps;
+export type TOntologiesPageProps = {
+  pageType: EPage.Ontologies;
+  pageProps: TOntologiesProps;
+};
+
+export type TAppProps =
+  | TLoginPageProps
+  | TNotePageProps
+  | TOntologyPageProps
+  | TOntologiesPageProps;
 
 type OmitNullish<T> = {
   [K in keyof T as T[K] extends NonNullable<T[K]> ? K : never]: T[K];

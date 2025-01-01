@@ -4,6 +4,7 @@ import { ETypographyType } from "../Typography/constants";
 import "./styles.scss";
 import { TItemProps } from "./types";
 import { useMenuRefs } from "../Menu/utils/useMenuRefs";
+import { Prompt } from "../Prompt/Prompt";
 
 export const Item: React.FC<PropsWithChildren<TItemProps>> = ({
   text,
@@ -11,6 +12,7 @@ export const Item: React.FC<PropsWithChildren<TItemProps>> = ({
   onMenuClick,
   children,
   menuProps,
+  promptProps,
 }) => {
   const { menuButtonRef, menuRef } = useMenuRefs();
 
@@ -40,6 +42,7 @@ export const Item: React.FC<PropsWithChildren<TItemProps>> = ({
             )}
           </span>
         )}
+        {promptProps && <Prompt {...promptProps} />}
       </div>
       {children}
     </div>

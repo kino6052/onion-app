@@ -21,7 +21,10 @@ export type TWithIsMenuOpenState = {
   isMenuOpen: boolean;
 };
 
-export type TItemProps = TItem & THandlers & Partial<TWithMenuProps>;
+export type TItemProps = TItem &
+  THandlers &
+  Partial<TWithMenuProps> &
+  Partial<TWithPromptProps>;
 
 export type THierarchicalItemProps = PropsWithChildren<
   TItem & { successors: THierarchicalItemProps[] } & TWithCollapsed &

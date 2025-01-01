@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { App } from "./App";
-import { mapStateToAppProps } from "./index";
+import { mapStateToAppProps } from "./root";
 import { DEFAULT_STATE } from "./pages/Login/data";
 import { TAppProps, TAppState } from "./types";
 
