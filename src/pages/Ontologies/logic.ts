@@ -46,6 +46,247 @@ const handleAddClick = (setState: TSetState<TAppState>) => {
   });
 };
 
+const handleRenameClick = (setState: TSetState<TAppState>, itemId: string) => {
+  setState((prevState) => {
+    if (prevState.pageType !== EPage.Ontologies)
+      throw new Error("Not the right page");
+
+    return {
+      ...prevState,
+      pageState: {
+        ...prevState.pageState,
+        list: prevState.pageState.list.map((item) => {
+          if (item.id !== itemId) return item;
+
+          return {
+            ...item,
+            isMenuOpen: false,
+            promptState: {
+              text: item.text,
+            },
+          };
+        }),
+      },
+    };
+  });
+};
+
+const handleRemoveClick = (setState: TSetState<TAppState>, itemId: string) => {
+  setState((prevState) => {
+    if (prevState.pageType !== EPage.Ontologies)
+      throw new Error("Not the right page");
+
+    return {
+      ...prevState,
+      pageState: {
+        ...prevState.pageState,
+        isMenuOpen: false,
+        list: prevState.pageState.list.map((item) => {
+          if (item.id !== itemId) return item;
+
+          return {
+            ...item,
+            promptState: {
+              ...item.promptState,
+              isNotificationOnly: true,
+              type: "remove",
+            },
+          };
+        }),
+      },
+    };
+  });
+};
+
+const handlePromptApplyClick = (
+  setState: TSetState<TAppState>,
+  itemId: string
+) => {
+  setState((prevState) => {
+    if (prevState.pageType !== EPage.Ontologies)
+      throw new Error("Not the right page");
+
+    return {
+      ...prevState,
+      pageState: {
+        ...prevState.pageState,
+        list: prevState.pageState.list
+          .map((item) => {
+            if (item.promptState?.type === "remove") return undefined;
+            if (item.id !== itemId) return item;
+
+            return {
+              ...item,
+              promptState: undefined,
+              text: item.promptState?.text ?? "",
+            };
+          })
+          .filter(Boolean),
+      },
+    };
+  });
+};
+
+const handlePromptCancelClick = (
+  setState: TSetState<TAppState>,
+  itemId: string
+) => {
+  setState((prevState) => {
+    if (prevState.pageType !== EPage.Ontologies)
+      throw new Error("Not the right page");
+
+    return {
+      ...prevState,
+      pageState: {
+        ...prevState.pageState,
+        list: prevState.pageState.list
+          .map((item) => {
+            if (item.id !== itemId) return item;
+
+            return {
+              ...item,
+              promptState: undefined,
+            };
+          })
+          .filter(Boolean),
+      },
+    };
+  });
+};
+
+const handlePromptChange = (
+  setState: TSetState<TAppState>,
+  itemId: string,
+  value: string
+) => {
+  setState((prevState) => {
+    if (prevState.pageType !== EPage.Ontologies)
+      throw new Error("Not the right page");
+
+    return {
+      ...prevState,
+      pageState: {
+        ...prevState.pageState,
+        list: prevState.pageState.list.map((item) => {
+          if (item.id !== itemId) return item;
+
+          return {
+            ...item,
+            promptState: {
+              text: value,
+            },
+          };
+        }),
+      },
+    };
+  });
+};
+
+const createMenuProps = (
+  setState: TSetState<TAppState>,
+  dependencies: { Menu: FC<TMenuProps> },
+  state: TOntologiesPageState
+) => ({
+  id: "menu",
+  onClick: () => handleMenuClick(setState),
+  text: "Menu",
+  menuProps: {
+    id: "menu",
+    itemsProps: [
+      {
+        id: EMenuConstant.Add,
+        onClick: () => handleAddClick(setState),
+        text: "Add",
+      },
+    ],
+    Component: dependencies.Menu,
+    onBackgroundClick: () => handleMenuClick(setState),
+    isOpen: state.pageState.isMenuOpen,
+  },
+  onMenuClick: () => handleMenuClick(setState),
+});
+
+const createItemMenuProps = (
+  setState: TSetState<TAppState>,
+  dependencies: { Menu: FC<TMenuProps> },
+  item: any
+) => ({
+  id: "menu",
+  itemsProps: [
+    {
+      id: EMenuConstant.Rename,
+      onClick: () => handleRenameClick(setState, item.id),
+      text: "Rename",
+    },
+    {
+      id: EMenuConstant.Remove,
+      onClick: () => handleRemoveClick(setState, item.id),
+      text: "Remove",
+    },
+  ],
+  Component: dependencies.Menu,
+  onBackgroundClick: () => handleMenuClick(setState),
+  isOpen: item.isMenuOpen,
+});
+
+const createItemPromptProps = (setState: TSetState<TAppState>, item: any) =>
+  !item.promptState
+    ? undefined
+    : {
+        isNotificationOnly: !!item.promptState.isNotificationOnly,
+        buttonProps: {
+          onClick: () => handlePromptApplyClick(setState, item.id),
+          children: "Apply",
+        },
+        title: item.promptState.type === "remove" ? "Remove" : "Rename",
+        textProps: {
+          isDisabled: false,
+          onChange: (value) => handlePromptChange(setState, item.id, value),
+          placeholder: "Placeholder",
+          value: item.promptState?.text ?? "",
+        },
+        cancelButtonProps: {
+          onClick: () => handlePromptCancelClick(setState, item.id),
+          children: "Cancel",
+        },
+      };
+
+const createOntologiesProps = (
+  setState: TSetState<TAppState>,
+  dependencies: { Menu: FC<TMenuProps> },
+  state: TOntologiesPageState
+) =>
+  state.pageState.list.map(
+    (item) =>
+      ({
+        ...item,
+        menuProps: createItemMenuProps(setState, dependencies, item),
+        onClick: noop,
+        onMenuClick: () => {
+          setState((prevState) => {
+            if (prevState.pageType !== EPage.Ontologies)
+              throw new Error("Not the right page");
+
+            return {
+              ...prevState,
+              pageState: {
+                ...prevState.pageState,
+                list: prevState.pageState.list.map((_item) => {
+                  if (item.id !== _item.id) return _item;
+
+                  return {
+                    ..._item,
+                    isMenuOpen: !_item.isMenuOpen,
+                  };
+                }),
+              },
+            };
+          });
+        },
+        promptProps: createItemPromptProps(setState, item),
+      }) as TItemProps
+  );
+
 export const getMapStateToOntologiesProps =
   (dependencies: {
     Menu: FC<TMenuProps>;
@@ -53,209 +294,8 @@ export const getMapStateToOntologiesProps =
   (state, setState) => ({
     pageProps: {
       isLoading: state.pageState.isLoading,
-      menuProps: {
-        id: "menu",
-        onClick: () => handleMenuClick(setState),
-        text: "Menu",
-        menuProps: {
-          id: "menu",
-          itemsProps: [
-            {
-              id: EMenuConstant.Add,
-              onClick: () => handleAddClick(setState),
-              text: "Add",
-            },
-          ],
-          Component: dependencies.Menu,
-          onBackgroundClick: () => handleMenuClick(setState),
-          isOpen: state.pageState.isMenuOpen,
-        },
-        onMenuClick: () => handleMenuClick(setState),
-      },
-      ontologiesProps: state.pageState.list.map(
-        (item) =>
-          ({
-            ...item,
-            menuProps: {
-              id: "menu",
-              itemsProps: [
-                {
-                  id: EMenuConstant.Rename,
-                  onClick: () => {
-                    setState((prevState) => {
-                      if (prevState.pageType !== EPage.Ontologies)
-                        throw new Error("Not the right page");
-
-                      return {
-                        ...prevState,
-                        pageState: {
-                          ...prevState.pageState,
-                          list: prevState.pageState.list.map((_item) => {
-                            if (item.id !== _item.id) return _item;
-
-                            return {
-                              ..._item,
-                              isMenuOpen: false,
-                              promptState: {
-                                text: _item.text,
-                              },
-                            };
-                          }),
-                        },
-                      };
-                    });
-                  },
-                  text: "Rename",
-                },
-                {
-                  id: EMenuConstant.Remove,
-                  onClick: () => {
-                    setState((prevState) => {
-                      if (prevState.pageType !== EPage.Ontologies)
-                        throw new Error("Not the right page");
-
-                      return {
-                        ...prevState,
-                        pageState: {
-                          ...prevState.pageState,
-                          isMenuOpen: false,
-                          list: prevState.pageState.list.map((_item) => {
-                            if (item.id !== _item.id) return _item;
-
-                            return {
-                              ..._item,
-                              promptState: {
-                                ...item.promptState,
-                                isNotificationOnly: true,
-                                type: "remove",
-                              },
-                            };
-                          }),
-                        },
-                      };
-                    });
-                  },
-                  text: "Remove",
-                },
-              ],
-              Component: dependencies.Menu,
-              onBackgroundClick: () => handleMenuClick(setState),
-              isOpen: item.isMenuOpen,
-            },
-            onClick: noop,
-            onMenuClick: () => {
-              setState((prevState) => {
-                if (prevState.pageType !== EPage.Ontologies)
-                  throw new Error("Not the right page");
-
-                return {
-                  ...prevState,
-                  pageState: {
-                    ...prevState.pageState,
-                    list: prevState.pageState.list.map((_item) => {
-                      if (item.id !== _item.id) return _item;
-
-                      return {
-                        ..._item,
-                        isMenuOpen: !_item.isMenuOpen,
-                      };
-                    }),
-                  },
-                };
-              });
-            },
-            promptProps: !item.promptState
-              ? undefined
-              : {
-                  isNotificationOnly: !!item.promptState.isNotificationOnly,
-                  buttonProps: {
-                    onClick: () => {
-                      setState((prevState) => {
-                        if (prevState.pageType !== EPage.Ontologies)
-                          throw new Error("Not the right page");
-
-                        return {
-                          ...prevState,
-                          pageState: {
-                            ...prevState.pageState,
-                            list: prevState.pageState.list
-                              .map((_item) => {
-                                if (_item.promptState?.type === "remove")
-                                  return undefined;
-                                if (item.id !== _item.id) return _item;
-
-                                return {
-                                  ..._item,
-                                  promptState: undefined,
-                                  text: _item.promptState?.text ?? "",
-                                };
-                              })
-                              .filter(Boolean),
-                          },
-                        };
-                      });
-                    },
-                    children: "Apply",
-                  },
-                  title:
-                    item.promptState.type === "remove" ? "Remove" : "Rename",
-                  textProps: {
-                    isDisabled: false,
-                    onChange: (value) => {
-                      setState((prevState) => {
-                        if (prevState.pageType !== EPage.Ontologies)
-                          throw new Error("Not the right page");
-
-                        return {
-                          ...prevState,
-                          pageState: {
-                            ...prevState.pageState,
-                            list: prevState.pageState.list.map((_item) => {
-                              if (item.id !== _item.id) return _item;
-
-                              return {
-                                ..._item,
-                                promptState: {
-                                  text: value,
-                                },
-                              };
-                            }),
-                          },
-                        };
-                      });
-                    },
-                    placeholder: "Placeholder",
-                    value: item.promptState?.text ?? "",
-                  },
-                  cancelButtonProps: {
-                    onClick: () => {
-                      setState((prevState) => {
-                        if (prevState.pageType !== EPage.Ontologies)
-                          throw new Error("Not the right page");
-
-                        return {
-                          ...prevState,
-                          pageState: {
-                            ...prevState.pageState,
-                            list: prevState.pageState.list
-                              .map((_item) => {
-                                if (item.id !== _item.id) return _item;
-
-                                return {
-                                  ..._item,
-                                  promptState: undefined,
-                                };
-                              })
-                              .filter(Boolean),
-                          },
-                        };
-                      });
-                    },
-                    children: "Cancel",
-                  },
-                },
-          }) as TItemProps
-      ),
+      menuProps: createMenuProps(setState, dependencies, state),
+      ontologiesProps: createOntologiesProps(setState, dependencies, state),
     },
     pageType: EPage.Ontologies,
   });
