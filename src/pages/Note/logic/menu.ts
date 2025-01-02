@@ -65,6 +65,7 @@ export const handleGoBackClick = (
     .then((tree) => {
       setState((prev) => ({
         pageState: {
+          id,
           isLoading: false,
           tree,
         },
@@ -99,7 +100,11 @@ export const getMapStateToItemProps =
         {
           id: EMenuConstant.GoBack,
           onClick: () =>
-            handleGoBackClick(state.pageState.id, setState, getOntology),
+            handleGoBackClick(
+              state.pageState.ontologyId,
+              setState,
+              getOntology
+            ),
           text: "Go back",
         },
         {
@@ -115,19 +120,22 @@ export const getMapStateToItemProps =
               EPage.Note
             );
 
-            saveNote(state.pageState.id, state.pageState.wordTree, true).then(
-              () => {
-                setPartial(
-                  {
-                    pageState: {
-                      isLoading: false,
-                    },
+            saveNote(
+              state.pageState.id,
+              state.pageState.ontologyId,
+              state.pageState.wordTree,
+              true
+            ).then(() => {
+              setPartial(
+                {
+                  pageState: {
+                    isLoading: false,
                   },
-                  setState,
-                  EPage.Note
-                );
-              }
-            );
+                },
+                setState,
+                EPage.Note
+              );
+            });
           },
           text: "Save",
         },

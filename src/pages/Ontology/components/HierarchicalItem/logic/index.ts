@@ -103,16 +103,29 @@ const buildTree =
                     EPage.Ontology
                   );
 
-                  getNote(node.id).then((data) => {
-                    setState((prev) => ({
-                      ...prev,
-                      pageState: {
-                        id: node.id,
-                        isLoading: false,
-                        wordTree: data,
-                      },
-                      pageType: EPage.Note,
-                    }));
+                  setState((prev) => {
+                    if (!prev.pageState.id) throw new Error("No ontology id");
+
+                    getNote(node.id, prev.pageState.id).then((data) => {
+                      setState((prev) => {
+                        const ontologyId = prev.pageState.id;
+
+                        if (!ontologyId) throw new Error("No ontology id");
+
+                        return {
+                          ...prev,
+                          pageState: {
+                            id: node.id,
+                            ontologyId,
+                            isLoading: false,
+                            wordTree: data,
+                          },
+                          pageType: EPage.Note,
+                        };
+                      });
+                    });
+
+                    return prev;
                   });
                 },
               },

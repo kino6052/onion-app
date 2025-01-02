@@ -56,7 +56,7 @@ export type TDeserializedWord = {
 
 export type TNoteState = TWithId & {
   wordTree: Record<string, TSerializedWord>;
-} & Partial<{
+} & { ontologyId: string } & Partial<{
     textEditPrompt: {
       text: string;
     };

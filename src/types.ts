@@ -57,7 +57,7 @@ export type TDefaultPageState = TIsLoadingState &
   Partial<TMessageState> &
   Partial<THasErrorState> &
   Partial<TWithIsMenuOpenState> &
-  Partial<TWithId>;
+  TWithId;
 
 export type TLoginPageState = TPageTypeState<EPage.Login> & TPageState<{}>;
 export type TOntologyPageState = TPageTypeState<EPage.Ontology> &

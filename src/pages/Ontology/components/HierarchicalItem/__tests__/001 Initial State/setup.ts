@@ -8,6 +8,7 @@ export const setup = () => {
   const initialState: TAppState = {
     pageType: EPage.Ontology,
     pageState: {
+      id: "id",
       isLoading: true,
       tree: getInitialOntologyTree(),
     },

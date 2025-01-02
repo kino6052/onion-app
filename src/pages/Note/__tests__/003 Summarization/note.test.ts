@@ -18,6 +18,7 @@ describe("Note Item", () => {
   "pageState": {
     "id": "test",
     "isLoading": false,
+    "ontologyId": "id",
     "wordTree": {
       "1": {
         "closed": "[summary]",

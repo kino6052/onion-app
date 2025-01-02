@@ -39,6 +39,7 @@ export const DEFAULT_DATA: Record<string, TSerializedWord> = {
 export const getInitialNoteState = (data = DEFAULT_DATA): TNoteState => {
   return {
     id: "note",
+    ontologyId: "id",
     wordTree: data,
   };
 };

@@ -21,6 +21,7 @@ describe("Hierarchical Item", () => {
     expect(stateManager.getState()).toMatchInlineSnapshot(`
 {
   "pageState": {
+    "id": "id",
     "isLoading": true,
     "tree": {
       "ROOT": {
@@ -43,6 +44,7 @@ describe("Hierarchical Item", () => {
   "pageState": {
     "id": "ROOT",
     "isLoading": false,
+    "ontologyId": "id",
     "wordTree": {
       "ROOT": {
         "closed": "Root",

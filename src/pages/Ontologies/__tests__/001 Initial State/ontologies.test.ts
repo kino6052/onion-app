@@ -15,6 +15,7 @@ describe("ontologies test", () => {
     expect(stateManager.getState()).toMatchInlineSnapshot(`
 {
   "pageState": {
+    "id": "id",
     "isLoading": false,
     "list": [],
     "message": "",

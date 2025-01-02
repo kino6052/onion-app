@@ -11,6 +11,7 @@ export const setup = () => {
   const initialState: TAppState<EPage.Ontology> = {
     pageType: EPage.Ontology,
     pageState: {
+      id: "id",
       isLoading: true,
       tree: getInitialOntologyTree(),
     },

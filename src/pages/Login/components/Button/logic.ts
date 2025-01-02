@@ -46,6 +46,7 @@ const handleLoginSuccess = (
   setState(() => ({
     pageType: EPage.Ontologies,
     pageState: {
+      id: "",
       isLoading: false,
       list: result.ontologies!,
     },

@@ -18,6 +18,7 @@ export const setup = () => {
     pageState: {
       isLoading: false,
       message: "",
+      id: "id",
     },
   };
 

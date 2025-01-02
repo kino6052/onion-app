@@ -14,6 +14,7 @@ export const setup = () => {
   const initialState: TAppState = {
     pageType: EPage.Ontologies,
     pageState: {
+      id: "id",
       isLoading: false,
       message: "",
       list: [],

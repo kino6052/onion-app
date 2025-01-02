@@ -16,6 +16,7 @@ describe("button test", () => {
     expect(stateManager.getState()).toMatchInlineSnapshot(`
 {
   "pageState": {
+    "id": "id",
     "isLoading": true,
     "message": "",
   },
@@ -29,6 +30,7 @@ describe("button test", () => {
 {
   "pageState": {
     "hasError": true,
+    "id": "id",
     "isLoading": false,
     "message": "Something went wrong",
   },

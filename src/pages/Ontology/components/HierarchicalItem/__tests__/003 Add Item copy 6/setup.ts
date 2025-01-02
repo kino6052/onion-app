@@ -12,6 +12,7 @@ export const setup = () => {
     pageType: EPage.Ontology,
     pageState: {
       isLoading: true,
+      id: "id",
       tree: getInitialOntologyTree(),
     },
   };

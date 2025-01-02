@@ -13,6 +13,7 @@ export const setup = () => {
     pageType: EPage.Note,
     pageState: {
       isLoading: true,
+      ontologyId: "id",
       wordTree: {
         [EConstant.Root]: {
           id: EConstant.Root,

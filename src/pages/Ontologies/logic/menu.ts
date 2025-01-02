@@ -82,6 +82,7 @@ export const createMenuProps = (
             dependencies.logout().then(() => {
               setState((prev) => ({
                 pageState: {
+                  id: "",
                   isLoading: false,
                 },
                 pageType: EPage.Login,

@@ -20,6 +20,7 @@ describe("Hierarchical Item", () => {
     expect(stateManager.getState()).toMatchInlineSnapshot(`
 {
   "pageState": {
+    "id": "id",
     "isLoading": true,
     "tree": {
       "ROOT": {
