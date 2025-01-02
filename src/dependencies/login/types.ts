@@ -1,8 +1,8 @@
-import { THierarchicalItem } from "../../components/Item/types";
+import { TItem } from "../../components/Item/types";
 
 export type TLoginResponse = {
   error?: string;
-  ontology?: Record<string, THierarchicalItem>;
+  ontologies?: TItem[];
 };
 
 export type TLogin = () => Promise<TLoginResponse>;

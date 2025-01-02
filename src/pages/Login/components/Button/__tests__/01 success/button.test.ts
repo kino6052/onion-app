@@ -29,17 +29,9 @@ describe("button test", () => {
 {
   "pageState": {
     "isLoading": false,
-    "tree": {
-      "ROOT": {
-        "id": "ROOT",
-        "isCollapsed": false,
-        "isMenuOpen": false,
-        "successors": [],
-        "text": "",
-      },
-    },
+    "list": [],
   },
-  "pageType": "Ontology",
+  "pageType": "Ontologies",
 }
 `);
   });

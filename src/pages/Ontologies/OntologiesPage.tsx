@@ -2,15 +2,14 @@ import { Item } from "../../components/Item/Item";
 import { Loader } from "../../components/Loader";
 import { Prompt } from "../../components/Prompt/Prompt";
 import { FC } from "../../libs/react";
-import { TOntologiesProps } from "./types";
 import "./styles.scss";
+import { TOntologiesProps } from "./types";
 
 export const OntologiesPage: FC<TOntologiesProps> = ({
   isLoading,
   menuProps,
   notificationProps,
   ontologiesProps,
-  promptProps,
 }) => {
   return (
     <div className="ontologies-page">
@@ -18,7 +17,7 @@ export const OntologiesPage: FC<TOntologiesProps> = ({
       {!isLoading && (
         <>
           <div className="ontologies-page__navigation">
-            <Item {...menuProps} text="Ontology" />
+            <Item {...menuProps} text="List of Ontologies" />
           </div>
           <div className="ontologies-page__content">
             {ontologiesProps.map((props) => (
@@ -30,7 +29,6 @@ export const OntologiesPage: FC<TOntologiesProps> = ({
       {notificationProps && (
         <Prompt {...notificationProps} isNotificationOnly />
       )}
-      {promptProps && <Prompt {...promptProps} />}
     </div>
   );
 };

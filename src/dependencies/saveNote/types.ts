@@ -1,6 +1,7 @@
 import { TSerializedWord } from "../../pages/Note/types";
 
 export type TSaveNote = (
-  note: TSerializedWord,
+  id: string,
+  note: Record<string, TSerializedWord>,
   isRemote?: boolean // should persist remotely
 ) => Promise<void>;

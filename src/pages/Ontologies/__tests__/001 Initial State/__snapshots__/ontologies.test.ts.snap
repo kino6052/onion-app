@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ontologies test should have matching initial state 1`] = `
+{
+  "pageProps": {
+    "isLoading": false,
+    "menuProps": {
+      "id": "menu",
+      "menuProps": {
+        "Component": [Function],
+        "id": "menu",
+        "isOpen": undefined,
+        "itemsProps": [
+          {
+            "id": "Add",
+            "onClick": [Function],
+            "text": "Add",
+          },
+          {
+            "id": "Logout",
+            "onClick": [Function],
+            "text": "Logout",
+          },
+        ],
+        "onBackgroundClick": [Function],
+      },
+      "onClick": [Function],
+      "onMenuClick": [Function],
+      "text": "Menu",
+    },
+    "ontologiesProps": [],
+  },
+  "pageType": "Ontologies",
+}
+`;

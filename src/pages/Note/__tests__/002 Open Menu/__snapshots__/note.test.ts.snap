@@ -18,6 +18,11 @@ exports[`Note Item should initialize 1`] = `
             "text": "Go back",
           },
           {
+            "id": "Save",
+            "onClick": [Function],
+            "text": "Save",
+          },
+          {
             "id": "Edit",
             "onClick": [Function],
             "text": "Edit text",

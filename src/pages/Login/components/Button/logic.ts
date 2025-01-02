@@ -29,7 +29,7 @@ const handleLoginSuccess = (
     return;
   }
 
-  if (!result.ontology) {
+  if (!result.ontologies) {
     setState(
       (state) =>
         ({
@@ -44,10 +44,10 @@ const handleLoginSuccess = (
   }
 
   setState(() => ({
-    pageType: EPage.Ontology,
+    pageType: EPage.Ontologies,
     pageState: {
       isLoading: false,
-      tree: result.ontology!,
+      list: result.ontologies!,
     },
   }));
 };

@@ -1,26 +1,11 @@
-import { EConstant } from "../../../../../../constants";
+import { login as _login } from "../../../../../../dependencies/login/check";
+import { TLogin } from "../../../../../../dependencies/login/types";
 import { EPage, TAppState } from "../../../../../../types";
-import { getMapStateToProps } from "../../logic";
 import { StateManager } from "../../../../../../utils/stateManager";
-import {
-  TLogin,
-  TLoginResponse,
-} from "../../../../../../dependencies/login/types";
+import { getMapStateToProps } from "../../logic";
 
 export const setup = () => {
-  const login: TLogin = jest.fn().mockImplementation(() =>
-    Promise.resolve({
-      ontology: {
-        [EConstant.Root]: {
-          id: EConstant.Root,
-          isCollapsed: false,
-          isMenuOpen: false,
-          successors: [],
-          text: "",
-        },
-      },
-    } satisfies TLoginResponse)
-  );
+  const login: TLogin = jest.fn().mockImplementation(_login);
 
   const initialState: TAppState = {
     pageType: EPage.Login,

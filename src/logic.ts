@@ -1,3 +1,4 @@
+import { mapStateToOntologiesProps } from "./pages/Ontologies";
 import {
   EPage,
   TAppProps,
@@ -24,6 +25,9 @@ export const getMapStateToProps =
 
     if (state.pageType === EPage.Ontology)
       return mapStateToOntologyProps(state, setState);
+
+    if (state.pageType === EPage.Ontologies)
+      return mapStateToOntologiesProps(state, setState);
 
     if (state.pageType === EPage.Note)
       return mapStateToNoteProps(state, setState);

@@ -15,6 +15,7 @@ export enum EPage {
 export type TWithId = { id: string };
 
 export type TSetState<T> = (cb: (prev: T) => T) => void;
+
 export type TMapStateToProps<TState = TAppState<EPage>, TProps = TAppProps> = (
   state: TState,
   setState: TSetState<TAppState>
@@ -55,7 +56,8 @@ export type TPageState<T> = { pageState: TDefaultPageState & T };
 export type TDefaultPageState = TIsLoadingState &
   Partial<TMessageState> &
   Partial<THasErrorState> &
-  Partial<TWithIsMenuOpenState>;
+  Partial<TWithIsMenuOpenState> &
+  Partial<TWithId>;
 
 export type TLoginPageState = TPageTypeState<EPage.Login> & TPageState<{}>;
 export type TOntologyPageState = TPageTypeState<EPage.Ontology> &

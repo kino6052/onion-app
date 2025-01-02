@@ -5,7 +5,8 @@ import { FC } from "../../../libs/react";
 import { EPage, TAppState, TNotePageState, TSetState } from "../../../types";
 import { noop } from "../../../utils";
 import { setPartial } from "../../../utils/setPartial";
-import { EMenuConstant } from "../components/Word/types";
+import { EMenuConstant } from "../../../components/Menu/constants";
+import { TNoteDependencies } from "../types";
 
 export const handleMenuClick = (
   id: string,
@@ -45,7 +46,8 @@ export const handleItemMenuClick = (setState: TSetState<TAppState>) => {
   );
 };
 
-export const handleEditClick = (
+export const handleGoBackClick = (
+  id: string,
   setState: TSetState<TAppState>,
   getOntology: TGetOntology
 ) => {
@@ -58,7 +60,8 @@ export const handleEditClick = (
     setState,
     EPage.Note
   );
-  getOntology()
+
+  getOntology(id)
     .then((tree) => {
       setState((prev) => ({
         pageState: {
@@ -83,13 +86,7 @@ export const handleEditClick = (
 };
 
 export const getMapStateToItemProps =
-  ({
-    getOntology,
-    MenuComponent,
-  }: {
-    getOntology: TGetOntology;
-    MenuComponent: FC<TMenuProps>;
-  }) =>
+  ({ getOntology, MenuComponent, saveNote }: TNoteDependencies) =>
   (state: TNotePageState, setState: TSetState<TAppState>) => ({
     id: state.pageState.id,
     onClick: noop,
@@ -101,8 +98,38 @@ export const getMapStateToItemProps =
       itemsProps: [
         {
           id: EMenuConstant.GoBack,
-          onClick: () => handleEditClick(setState, getOntology),
+          onClick: () =>
+            handleGoBackClick(state.pageState.id, setState, getOntology),
           text: "Go back",
+        },
+        {
+          id: EMenuConstant.Save,
+          onClick: () => {
+            setPartial(
+              {
+                pageState: {
+                  isLoading: true,
+                },
+              },
+              setState,
+              EPage.Note
+            );
+
+            saveNote(state.pageState.id, state.pageState.wordTree, true).then(
+              () => {
+                setPartial(
+                  {
+                    pageState: {
+                      isLoading: false,
+                    },
+                  },
+                  setState,
+                  EPage.Note
+                );
+              }
+            );
+          },
+          text: "Save",
         },
         {
           id: EMenuConstant.Edit,

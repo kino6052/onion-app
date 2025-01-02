@@ -3,6 +3,12 @@ import {
   TItemProps,
   TWithPromptProps,
 } from "../../components/Item/types";
+import { TMenuProps } from "../../components/Menu/types";
+import { TGetOntology } from "../../dependencies/getOntology/types";
+import { TGetUniqueId } from "../../dependencies/getUniqueId/types";
+import { TLogout } from "../../dependencies/logout/types";
+import { TSaveOntology } from "../../dependencies/saveOntology/types";
+import { FC } from "../../libs/react";
 import {
   TIsLoadingState,
   TMessageState,
@@ -22,4 +28,12 @@ export type TOntologiesProps = TWithComponent<TOntologiesPurePropsBase> &
 
 export type TOntologiesState = {
   list: (TItem & Partial<{ isMenuOpen: boolean }> & Partial<TPromptState>)[];
+};
+
+export type TOntologiesDependencies = {
+  Menu: FC<TMenuProps>;
+  logout: TLogout;
+  getOntology: TGetOntology;
+  getUniqueId: TGetUniqueId;
+  saveOntology: TSaveOntology;
 };

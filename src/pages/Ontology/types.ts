@@ -4,12 +4,11 @@ import {
   TItemProps,
 } from "../../components/Item/types";
 import {
-  EPage,
-  TPageTypeState,
+  TIsLoadingState,
+  TMessageState,
   TWithComponent,
   TWithNotificationProps,
 } from "../../types";
-import { TIsLoadingState, TMessageState } from "../../types";
 
 export type TOntologyPurePropsBase = Partial<TWithNotificationProps> &
   TIsLoadingState &

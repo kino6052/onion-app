@@ -1,18 +1,24 @@
 import { HierarchicalItem } from "../../components/Item";
 import { THierarchicalItemProps } from "../../components/Item/types";
+import { EMenuConstant } from "../../components/Menu/constants";
 import { Menu } from "../../components/Menu/Menu";
+import { getOntologies } from "../../dependencies/getOntologies/dev";
+import { TSaveOntology } from "../../dependencies/saveOntology/types";
 import { EPage, TAppProps, TAppState, TMapStateToProps } from "../../types";
 import { getUpdateState, noop } from "../../utils";
+import { setPartial } from "../../utils/setPartial";
 import { TOntologyProps } from "./types";
 
 export const getMapStateToProps =
   ({
     mapStateToHierarchicalItemProps,
+    saveOntology,
   }: {
     mapStateToHierarchicalItemProps: TMapStateToProps<
       TAppState,
       THierarchicalItemProps
     >;
+    saveOntology: TSaveOntology;
   }) =>
   (
     state: TAppState<EPage.Ontology>,
@@ -45,7 +51,17 @@ export const getMapStateToProps =
         menuProps: {
           id: "menu",
           onClick: noop,
-          onMenuClick: noop,
+          onMenuClick: () => {
+            setPartial(
+              {
+                pageState: {
+                  isMenuOpen: !state.pageState.isMenuOpen,
+                },
+              },
+              setState,
+              EPage.Ontology
+            );
+          },
           text: "Text",
           menuProps: {
             isOpen: state.pageState.isMenuOpen,
@@ -53,13 +69,79 @@ export const getMapStateToProps =
             id: "menu",
             itemsProps: [
               {
-                id: "ontology",
-                text: "Ontology",
-                onClick: noop,
+                id: EMenuConstant.Save,
+                text: "Save",
+                onClick: () => {
+                  if (!state.pageState.id) throw new Error("No id provided");
+
+                  setPartial(
+                    {
+                      pageState: {
+                        isLoading: true,
+                      },
+                    },
+                    setState,
+                    EPage.Ontology
+                  );
+
+                  saveOntology(
+                    state.pageState.id,
+                    state.pageState.tree,
+                    true
+                  ).then(() => {
+                    setPartial(
+                      {
+                        pageState: {
+                          isLoading: false,
+                        },
+                      },
+                      setState,
+                      EPage.Ontology
+                    );
+                  });
+                },
+                onMenuClick: noop,
+              },
+              {
+                id: EMenuConstant.GoBack,
+                text: "Go Back",
+                onClick: () => {
+                  if (!state.pageState.id) throw new Error("No id provided");
+
+                  setPartial(
+                    {
+                      pageState: {
+                        isLoading: true,
+                      },
+                    },
+                    setState,
+                    EPage.Ontology
+                  );
+
+                  getOntologies().then((ontologies) => {
+                    setState(() => ({
+                      pageState: {
+                        list: ontologies,
+                        isLoading: false,
+                      },
+                      pageType: EPage.Ontologies,
+                    }));
+                  });
+                },
                 onMenuClick: noop,
               },
             ],
-            onBackgroundClick: noop,
+            onBackgroundClick: () => {
+              setPartial(
+                {
+                  pageState: {
+                    isMenuOpen: false,
+                  },
+                },
+                setState,
+                EPage.Ontology
+              );
+            },
           },
         },
       },

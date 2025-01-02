@@ -1,5 +1,5 @@
-import { EMenuConstant } from "./types";
 import { TItemProps } from "../../../../components/Item/types";
+import { EMenuConstant } from "../../../../components/Menu/constants";
 import { TPromptProps } from "../../../../components/Prompt/types";
 import { noop } from "../../../../utils";
 

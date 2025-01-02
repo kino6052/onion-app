@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
+import { Menu } from "../../components/Menu/Menu";
+import { getOntology } from "../../dependencies/getOntology/dev";
+import { logout } from "../../dependencies/logout/dev";
 import { EPage, TAppProps, TAppState } from "../../types";
 import { getMapStateToOntologiesProps } from "./logic";
 import { OntologiesPage } from "./OntologiesPage";
 import { TOntologiesProps } from "./types";
-import { Menu } from "../../components/Menu/Menu";
-import { StateManager } from "../../utils/stateManager";
-import { useState } from "react";
+import { uniqueId } from "lodash";
 
 const state001 = {
   pageType: EPage.Ontologies,
@@ -33,10 +35,7 @@ const meta = {
   title: "Pages/Ontologies",
   component: ({}) => {
     const [state, setState] = useState(state001);
-    const props = getMapStateToOntologiesProps({
-      Menu,
-    })(state, setState);
-    return <OntologiesPage {...(props.pageProps as TOntologiesProps)} />;
+    return <OntologiesPage {...({} as TOntologiesProps)} />;
   },
 } satisfies Meta<React.FC<{ props: TAppProps; state: TAppState<EPage> }>>;
 
@@ -48,6 +47,9 @@ export const _001Initial: Story = {
     state: state001,
     props: getMapStateToOntologiesProps({
       Menu,
+      logout,
+      getOntology,
+      getUniqueId: uniqueId,
     })(state001, () => {}),
   },
 };

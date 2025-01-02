@@ -6,6 +6,7 @@ import { getComposeActions } from "../../../../utils/composeActions";
 import { StateManager } from "../../../../utils/stateManager";
 import { getMapStateToProps } from "../../logic";
 import { getMapStateToItemProps } from "../../logic/menu";
+import { saveNote } from "../../../../dependencies/saveNote/check";
 
 export const setup = () => {
   const initialState: TAppState = {
@@ -35,6 +36,7 @@ export const setup = () => {
     mapStateToItemProps: getMapStateToItemProps({
       getOntology: () => Promise.resolve({}),
       MenuComponent: (() => ({})) as unknown as FC<TMenuProps>,
+      saveNote: saveNote,
     }),
   });
 
