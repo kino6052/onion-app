@@ -4,6 +4,7 @@ import { getOntology } from "../../dependencies/getOntology/dev";
 import { logout } from "../../dependencies/logout/dev";
 import { getMapStateToOntologiesProps } from "./logic";
 import { saveOntology } from "../../dependencies/saveOntology/dev";
+import { removeOntology } from "../../dependencies/removeOntology/dev";
 
 export const mapStateToOntologiesProps = getMapStateToOntologiesProps({
   Menu,
@@ -11,4 +12,5 @@ export const mapStateToOntologiesProps = getMapStateToOntologiesProps({
   getOntology,
   getUniqueId: uniqueId,
   saveOntology,
+  removeOntology,
 });

@@ -1,10 +1,13 @@
-import { EConstant } from "../../constants";
-import { ontologies } from "./data";
 import { TGetOntologies } from "./types";
 
 export const getOntologies: TGetOntologies = async () => {
-  return Object.entries(ontologies).map(([id, o]) => ({
-    id,
-    text: o[EConstant.Root].text,
-  }));
+  const response = await fetch("http://localhost:3000/ontologies");
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch ontologies");
+  }
+
+  const ontologies = await response.json();
+
+  return ontologies;
 };

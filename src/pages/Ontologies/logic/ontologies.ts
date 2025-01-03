@@ -9,6 +9,7 @@ import {
   TOntologyPageState,
   TSetState,
 } from "../../../types";
+import { setPartial } from "../../../utils/setPartial";
 import { TOntologiesDependencies } from "../types";
 
 const handleRenameClick = (setState: TSetState<TAppState>, itemId: string) => {
@@ -92,31 +93,48 @@ const handleBackgroundClick = (
 
 const handlePromptApplyClick = (
   setState: TSetState<TAppState>,
-  itemId: string
+  itemId: string,
+  dependencies: TOntologiesDependencies
 ) => {
-  setState((prevState) => {
-    if (prevState.pageType !== EPage.Ontologies)
-      throw new Error("Not the right page");
+  dependencies
+    .removeOntology(itemId)
+    .then(() => {
+      setState((prevState) => {
+        if (prevState.pageType !== EPage.Ontologies)
+          throw new Error("Not the right page");
 
-    return {
-      ...prevState,
-      pageState: {
-        ...prevState.pageState,
-        list: prevState.pageState.list
-          .map((item) => {
-            if (item.promptState?.type === "remove") return undefined;
-            if (item.id !== itemId) return item;
+        return {
+          ...prevState,
+          pageState: {
+            ...prevState.pageState,
+            list: prevState.pageState.list
+              .map((item) => {
+                if (item.promptState?.type === "remove") return undefined;
+                if (item.id !== itemId) return item;
 
-            return {
-              ...item,
-              promptState: undefined,
-              text: item.promptState?.text ?? "",
-            };
-          })
-          .filter(Boolean) as TItem[],
-      },
-    };
-  });
+                return {
+                  ...item,
+                  promptState: undefined,
+                  text: item.promptState?.text ?? "",
+                };
+              })
+              .filter(Boolean) as TItem[],
+          },
+        };
+      });
+    })
+    .catch((error) => {
+      setPartial(
+        {
+          pageState: {
+            hasError: true,
+            message: error.message,
+          },
+        },
+        setState,
+        EPage.Ontologies
+      );
+    });
 };
 
 const handlePromptCancelClick = (
@@ -197,13 +215,18 @@ const createItemMenuProps = (
   isOpen: item.isMenuOpen,
 });
 
-const createItemPromptProps = (setState: TSetState<TAppState>, item: any) =>
+const createItemPromptProps = (
+  setState: TSetState<TAppState>,
+  item: any,
+  dependencies: TOntologiesDependencies
+) =>
   !item.promptState
     ? undefined
     : {
         isNotificationOnly: !!item.promptState.isNotificationOnly,
         buttonProps: {
-          onClick: () => handlePromptApplyClick(setState, item.id),
+          onClick: () =>
+            handlePromptApplyClick(setState, item.id, dependencies),
           children: "Apply",
         },
         title: item.promptState.type === "remove" ? "Remove" : "Rename",
@@ -271,6 +294,6 @@ export const createOntologiesProps = (
           });
         },
         onMenuClick: () => onOntologyMenuClick(setState, item.id),
-        promptProps: createItemPromptProps(setState, item),
+        promptProps: createItemPromptProps(setState, item, dependencies),
       }) as TItemProps
   );
