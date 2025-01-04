@@ -1,0 +1,6 @@
+# FILE: /my-bun-project/my-bun-project/bunfig.toml
+name = "my-bun-project"
+version = "0.1.0"
+entry = "src/index.ts"
+dependencies = []
+devDependencies = []
