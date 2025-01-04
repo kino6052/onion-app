@@ -1,7 +1,3 @@
-import { TItem, TItemProps } from "../../../components/Item/types";
-import { EMenuConstant } from "../../../components/Menu/constants";
-import { TMenuProps } from "../../../components/Menu/types";
-import { FC } from "../../../libs/react";
 import {
   EPage,
   TAppState,
@@ -9,14 +5,14 @@ import {
   TOntologyPageState,
   TSetState,
 } from "../../../../types";
-import { setPartial } from "../../../utils/setPartial";
-import { TExtendedItem, TOntologiesDependencies } from "../types";
-import { setIsLoading } from "../../../utils/utils";
+import { TItemProps } from "../../../components/Item/types";
+import { EMenuConstant } from "../../../components/Menu/constants";
+import { TMenuProps } from "../../../components/Menu/types";
+import { FC } from "../../../libs/react";
+import { TOntologiesDependencies } from "../types";
 import { handlePromptApplyClick } from "./prompt";
 
 const handleRenameClick = (setState: TSetState<TAppState>, itemId: string) => {
-  setIsLoading(true, setState, EPage.Ontologies);
-
   setState((prevState) => {
     if (prevState.pageType !== EPage.Ontologies)
       throw new Error("Not the right page");

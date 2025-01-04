@@ -74,26 +74,30 @@ export const handlePromptApplyClick = (
     return;
   }
 
-  handleSave(dependencies, item.id, setState, item).then(() => {
-    setState((prevState) => {
-      if (prevState.pageType !== EPage.Ontologies)
-        throw new Error("Not the right page");
+  handleSave(dependencies, item.id, setState, item)
+    .then(() => {
+      setState((prevState) => {
+        if (prevState.pageType !== EPage.Ontologies)
+          throw new Error("Not the right page");
 
-      return {
-        ...prevState,
-        pageState: {
-          ...prevState.pageState,
-          list: prevState.pageState.list.map((_item) =>
-            _item.id === item.id
-              ? {
-                  ..._item,
-                  promptState: undefined,
-                  text: item.promptState?.text ?? "",
-                }
-              : _item
-          ),
-        },
-      };
+        return {
+          ...prevState,
+          pageState: {
+            ...prevState.pageState,
+            list: prevState.pageState.list.map((_item) =>
+              _item.id === item.id
+                ? {
+                    ..._item,
+                    promptState: undefined,
+                    text: item.promptState?.text ?? "",
+                  }
+                : _item
+            ),
+          },
+        };
+      });
+    })
+    .finally(() => {
+      setIsLoading(false, setState, EPage.Ontologies);
     });
-  });
 };
