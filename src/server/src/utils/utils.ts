@@ -1,9 +1,10 @@
-import { Octokit } from "octokit";
 import { NAME_MAPPING_FILE } from "../constants";
-import { octokit } from "./octokit";
 import { createInitialCommit } from "./branch";
 import { getFileContent, updateFileContent } from "./file";
-const OWNER = "kino6052";
+import { octokit } from "./octokit";
+
+export const cleanUpId = (id: string, prefix: string) =>
+  id.replace(new RegExp(`(${prefix})+`, "g"), "");
 
 export async function ensureRepositoryExists(repoName: string) {
   try {

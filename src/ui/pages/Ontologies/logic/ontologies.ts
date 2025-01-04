@@ -9,6 +9,8 @@ import { TItemProps } from "../../../components/Item/types";
 import { EMenuConstant } from "../../../components/Menu/constants";
 import { TMenuProps } from "../../../components/Menu/types";
 import { FC } from "../../../libs/react";
+import { setPartial } from "../../../utils/setPartial";
+import { setIsLoading } from "../../../utils/utils";
 import { TOntologiesDependencies } from "../types";
 import { handlePromptApplyClick } from "./prompt";
 
@@ -232,7 +234,10 @@ export const createOntologiesProps = (
         ...item,
         menuProps: createItemMenuProps(setState, dependencies, item),
         onClick: () => {
+          setIsLoading(true, setState, EPage.Ontologies);
+
           dependencies.getOntology(item.id).then((result) => {
+            console.warn({ result });
             if (!result.map) throw new Error("No ontology content");
 
             setState(
@@ -242,6 +247,7 @@ export const createOntologiesProps = (
                     id: item.id,
                     isLoading: false,
                     tree: result.map!,
+                    name: result.name,
                   },
                   pageType: EPage.Ontology,
                 }) satisfies TOntologyPageState

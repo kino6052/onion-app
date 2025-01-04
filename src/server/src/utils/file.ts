@@ -213,6 +213,23 @@ export async function createNewFile(
     const {
       data: { login },
     } = await octokit.rest.users.getAuthenticated();
+    let fileSha: string | undefined = undefined;
+
+    try {
+      const { data: fileData } = await octokit.rest.repos.getContent({
+        owner: login,
+        repo: repoName,
+        path: filePath,
+        ref: branchName,
+      });
+
+      fileSha = Array.isArray(fileData) ? fileData[0].sha : fileData.sha;
+    } catch (error) {
+      if (error.status !== 404) {
+        throw error;
+      }
+    }
+
     await octokit.rest.repos.createOrUpdateFileContents({
       owner: login,
       repo: repoName,
@@ -220,6 +237,7 @@ export async function createNewFile(
       message: commitMessage,
       content: encodedContent,
       branch: branchName,
+      sha: fileSha,
     });
 
     console.log(`File "${filePath}" created in branch "${branchName}".`);

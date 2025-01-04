@@ -100,24 +100,38 @@ const buildTree =
                   setState((prev) => {
                     if (!prev.pageState.id) throw new Error("No ontology id");
 
-                    getNote(node.id, prev.pageState.id).then((data) => {
-                      setState((prev) => {
-                        const ontologyId = prev.pageState.id;
+                    getNote(node.id, prev.pageState.id)
+                      .then((data) => {
+                        setState((prev) => {
+                          const ontologyId = prev.pageState.id;
 
-                        if (!ontologyId) throw new Error("No ontology id");
+                          if (!ontologyId) throw new Error("No ontology id");
 
-                        return {
-                          ...prev,
-                          pageState: {
-                            id: node.id,
-                            ontologyId,
-                            isLoading: false,
-                            wordTree: data,
+                          return {
+                            ...prev,
+                            pageState: {
+                              id: node.id,
+                              ontologyId,
+                              isLoading: false,
+                              wordTree: data,
+                            },
+                            pageType: EPage.Note,
+                          };
+                        });
+                      })
+                      .catch((error) => {
+                        setPartial(
+                          {
+                            pageState: {
+                              hasError: true,
+                              message: error.message,
+                              isLoading: false,
+                            },
                           },
-                          pageType: EPage.Note,
-                        };
+                          setState,
+                          EPage.Ontology
+                        );
                       });
-                    });
 
                     return prev;
                   });

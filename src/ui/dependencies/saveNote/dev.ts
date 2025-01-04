@@ -1,9 +1,16 @@
-import { wait } from "../../../utils";
-import { notes } from "../getNote/data";
+import { ENDPOINT } from "../common/constants";
 import { TSaveNote } from "./types";
 
 export const saveNote: TSaveNote = async (id, ontologyId, note, isRemote) => {
-  await wait(1000);
+  const response = await fetch(`${ENDPOINT}/note`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id, note }),
+  });
 
-  notes[ontologyId][id] = note;
+  if (!response.ok) {
+    throw new Error("Failed to save note");
+  }
 };

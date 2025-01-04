@@ -1,24 +1,17 @@
-import { EConstant } from "../../../constants";
-import { wait } from "../../../utils";
-import { notes } from "./data";
+import { TSerializedWord } from "../../pages/Note/types";
+import { ENDPOINT } from "../common/constants";
 import { TGetNote } from "./types";
 
 export const getNote: TGetNote = async (id: string, ontologyId: string) => {
-  await wait(1000);
+  const response = await fetch(`${ENDPOINT}/notes/${id}`);
 
-  const note = notes[ontologyId]?.[id];
-
-  if (!note) {
-    notes[ontologyId] = {
-      [id]: {
-        [EConstant.Root]: {
-          id: EConstant.Root,
-          closed: EConstant.Root,
-          open: "Go to the menu and add your text",
-        },
-      },
-    };
+  if (!response.ok) {
+    throw new Error("Failed to fetch ontology");
   }
 
-  return notes[ontologyId][id];
+  const tree: Record<string, TSerializedWord> = await response.json();
+
+  if (!tree) throw new Error("No ontology found");
+
+  return tree;
 };

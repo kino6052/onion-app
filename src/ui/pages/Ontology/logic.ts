@@ -37,11 +37,33 @@ export const getMapStateToProps =
         notificationProps: state.pageState.hasError
           ? {
               buttonProps: {
-                onClick: noop,
+                onClick: () => {
+                  setPartial(
+                    {
+                      pageState: {
+                        hasError: false,
+                        message: undefined,
+                      },
+                    },
+                    setState,
+                    EPage.Ontology
+                  );
+                },
                 children: "OK",
               },
               description: state.pageState.message ?? "An error occurred",
-              onBackgrounClick: noop,
+              onBackgrounClick: () => {
+                setPartial(
+                  {
+                    pageState: {
+                      hasError: false,
+                      message: undefined,
+                    },
+                  },
+                  setState,
+                  EPage.Ontology
+                );
+              },
               title: "Error",
               isNotificationOnly: true,
             }
@@ -62,7 +84,7 @@ export const getMapStateToProps =
               EPage.Ontology
             );
           },
-          text: "Text",
+          text: state.pageState.name ?? "Ontology",
           menuProps: {
             isOpen: state.pageState.isMenuOpen,
             Component: Menu,
@@ -86,7 +108,10 @@ export const getMapStateToProps =
 
                   saveOntology(
                     state.pageState.id,
-                    state.pageState.tree,
+                    {
+                      name: state.pageState.name ?? "New Ontology",
+                      map: state.pageState.tree,
+                    },
                     true
                   ).then(() => {
                     setPartial(
@@ -123,6 +148,7 @@ export const getMapStateToProps =
                       pageState: {
                         list: ontologies,
                         isLoading: false,
+                        id: state.pageState.id,
                       },
                       pageType: EPage.Ontologies,
                     }));

@@ -17,7 +17,7 @@ export const OntologyPage: React.FC<TOntologyProps> = ({
       {!isLoading && (
         <>
           <div className="ontology-page__navigation">
-            <Item {...menuProps} text="Ontology" />
+            <Item {...menuProps} />
           </div>
           <div className="ontology-page__content">
             <ItemComponent {...hierarchicalItemProps} />

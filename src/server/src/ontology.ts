@@ -8,7 +8,7 @@ import {
   getFileContentById,
   getFilesStartingWith,
 } from "./utils/file";
-import { addNameMapping } from "./utils/utils";
+import { addNameMapping, cleanUpId } from "./utils/utils";
 
 router.on("GET", "/ontologies", async () => {
   const ontologies = await getFilesStartingWith(
@@ -37,7 +37,7 @@ router.on("GET", "/ontologies", async () => {
 
   const ontologiesData = ontologies?.filter(Boolean).map((o) => {
     return {
-      id: o,
+      id: o?.replace("ontology-", "") ?? "",
       text: (o && nameMap?.[o]) ?? "New Ontology",
     };
   });
@@ -47,9 +47,30 @@ router.on("GET", "/ontologies", async () => {
   });
 });
 
-router.on("GET", "/ontology/:id", async (req, { id }) => {
+router.on("GET", "/ontology/:id", async (req, { id: _id }) => {
+  const id = `ontology-${cleanUpId(_id, "ontology-")}`;
   const fileContent = await getFileContentById(REPO_NAME, BRANCH_NAME, id);
-  return new Response(fileContent?.toString(), {
+
+  const content = fileContent?.toString() ?? "{}";
+
+  const json = JSON.parse(content);
+
+  const _nameMap = await getFileContentById(
+    REPO_NAME,
+    BRANCH_NAME,
+    NAME_MAPPING_FILE
+  );
+
+  const nameMap: Record<string, unknown> = JSON.parse(
+    _nameMap?.toString() ?? "{}"
+  );
+
+  const response: TOntology = {
+    name: (nameMap[id] as string) ?? "New Ontology",
+    map: json,
+  };
+
+  return new Response(JSON.stringify(response), {
     headers: { "Content-Type": "application/json" },
   });
 });
@@ -62,13 +83,10 @@ router.on("DELETE", "/ontology/:id", async (req, { id }) => {
   });
 });
 
-const cleanUpId = (id: string) =>
-  id.replace(new RegExp("(ontology-)+", "g"), "");
-
 router.on("POST", "/ontology", async (req) => {
   const newOntology: { id: string; ontology: TOntology } = await req.json();
 
-  const id = cleanUpId(newOntology.id);
+  const id = cleanUpId(newOntology.id, "ontology-");
 
   if (!id) {
     throw new Error("No id provided");
@@ -79,7 +97,7 @@ router.on("POST", "/ontology", async (req) => {
       REPO_NAME,
       BRANCH_NAME,
       `ontology-${id}`,
-      JSON.stringify(newOntology),
+      JSON.stringify(newOntology.ontology.map),
       "Add new ontology"
     );
   }
