@@ -1,0 +1,24 @@
+{
+  "name": "my-bun-project",
+  "version": "1.0.0",
+  "description": "A Bun project example",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "bun --env-file=./.env src/index.ts",
+    "build": "bun build src/index.ts"
+  },
+  "dependencies": {
+    "bun": "^1.1.42",
+    "octokit": "^4.0.3",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.14",
+    "@types/node": "^22.10.3",
+    "@types/uuid": "^10.0.0",
+    "cross-env": "^7.0.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
