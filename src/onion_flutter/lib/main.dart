@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:onion_flutter/item_component.dart';
+import 'package:onion_flutter/ontologies_page.dart';
+import 'package:onion_flutter/prompt.dart';
 import 'custom_button.dart';
 import 'login_page.dart';
 
@@ -41,15 +44,46 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: LoginPage(
-        message: 'You have pushed the button $_counter times!',
-        onLoginPressed: _incrementCounter,
-      ),
+    Widget login = LoginPage(
+      message: 'You have pushed the button $_counter times!',
+      onLoginPressed: _incrementCounter,
     );
+
+    Widget ontologiesPage = OntologiesPage(
+        isLoading: false,
+        menuProps: ItemComponentProps(
+            text: 'test',
+            onClick: () {},
+            onMenuClick: () {},
+            isMenuOpen: false),
+        ontologiesProps: [
+          ItemComponentProps(
+              text: 'test',
+              onClick: () {},
+              onMenuClick: () {},
+              isMenuOpen: false),
+          ItemComponentProps(
+              text: 'test',
+              onClick: () {},
+              onMenuClick: () {},
+              isMenuOpen: false),
+          ItemComponentProps(
+              text: 'test',
+              onClick: () {},
+              onMenuClick: () {},
+              isMenuOpen: false)
+        ],
+        notificationProps: PromptProps(
+          title: 'title',
+          onButtonPressed: () {},
+          description: 'description',
+        ));
+
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(widget.title),
+        ),
+        body: ontologiesPage);
   }
 }
