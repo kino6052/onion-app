@@ -5,5 +5,6 @@ export const DEFAULT_STATE = {
   pageState: {
     isLoading: false,
     message: "",
+    id: "",
   },
 } satisfies TAppState;

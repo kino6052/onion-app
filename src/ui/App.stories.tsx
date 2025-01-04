@@ -12,7 +12,7 @@ const meta = {
     const [state, setState] = useState<TAppState>(DEFAULT_STATE);
 
     const props = mapStateToAppProps(state, (cb) => {
-      setState(cb(state));
+      setState(cb);
     });
 
     return <App {...props} />;
