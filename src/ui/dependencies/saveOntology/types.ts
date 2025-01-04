@@ -1,7 +1,7 @@
-import { THierarchicalItem } from "../../components/Item/types";
+import { TOntology } from "../../pages/Ontologies/types";
 
 export type TSaveOntology = (
   id: string,
-  ontology: Record<string, THierarchicalItem>,
+  ontology: TOntology,
   isRemote?: boolean
 ) => Promise<void>;

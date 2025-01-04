@@ -7,6 +7,7 @@ class Router {
   private routes: { method: string; path: RegExp; handler: Handler }[] = [];
 
   on(method: string, path: string, handler: Handler) {
+    console.warn({ method, path });
     const pathRegex = new RegExp(
       `^${path.replace(/:(\w+)/g, "(?<$1>[^/]+)").replace(/\*/g, ".*")}$`
     );
@@ -14,6 +15,7 @@ class Router {
   }
 
   async handle(req: Request): Promise<Response> {
+    console.warn({ req: req.body });
     const url = new URL(req.url);
     for (const route of this.routes) {
       const match = url.pathname.match(route.path);

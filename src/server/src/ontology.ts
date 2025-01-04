@@ -1,4 +1,4 @@
-import { TItem } from "../../ui/components/Item/types";
+import { TOntology } from "../../ui/pages/Ontologies/types";
 import { BRANCH_NAME, NAME_MAPPING_FILE, REPO_NAME } from "./constants";
 import { router } from "./router";
 import {
@@ -25,15 +25,17 @@ router.on("GET", "/ontologies", async () => {
     "Initial name mapping"
   );
 
-  const nameMap = await getFileContentById(
+  const _nameMap = await getFileContentById(
     REPO_NAME,
     BRANCH_NAME,
     NAME_MAPPING_FILE
   );
 
-  console.warn({ nameMap });
+  const nameMap: Record<string, unknown> = JSON.parse(
+    _nameMap?.toString() ?? "{}"
+  );
 
-  const ontologiesData = ontologies?.map((o) => {
+  const ontologiesData = ontologies?.filter(Boolean).map((o) => {
     return {
       id: o,
       text: (o && nameMap?.[o]) ?? "New Ontology",
@@ -53,7 +55,6 @@ router.on("GET", "/ontology/:id", async (req, { id }) => {
 });
 
 router.on("DELETE", "/ontology/:id", async (req, { id }) => {
-  console.warn("DELETE", id);
   await deleteFileByName(REPO_NAME, BRANCH_NAME, id, `Delete ontology ${id}`);
 
   return new Response(JSON.stringify({ success: true }), {
@@ -61,26 +62,33 @@ router.on("DELETE", "/ontology/:id", async (req, { id }) => {
   });
 });
 
-router.on("POST", "/ontology", async (req) => {
-  const newOntology: TItem = await req.json();
+const cleanUpId = (id: string) =>
+  id.replace(new RegExp("(ontology-)+", "g"), "");
 
-  if (!newOntology.id) {
+router.on("POST", "/ontology", async (req) => {
+  const newOntology: { id: string; ontology: TOntology } = await req.json();
+
+  const id = cleanUpId(newOntology.id);
+
+  if (!id) {
     throw new Error("No id provided");
   }
 
-  await createNewFile(
-    REPO_NAME,
-    BRANCH_NAME,
-    `ontology-${newOntology.id}`,
-    JSON.stringify(newOntology),
-    "Add new ontology"
-  );
+  if (newOntology.ontology.map) {
+    await createNewFile(
+      REPO_NAME,
+      BRANCH_NAME,
+      `ontology-${id}`,
+      JSON.stringify(newOntology),
+      "Add new ontology"
+    );
+  }
 
   await addNameMapping(
     REPO_NAME,
     BRANCH_NAME,
-    newOntology.id,
-    newOntology.text ?? "New Ontology"
+    `ontology-${id}`,
+    newOntology.ontology.name ?? "New Ontology"
   );
 
   return new Response(JSON.stringify({ success: true }), {

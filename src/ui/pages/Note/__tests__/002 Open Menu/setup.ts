@@ -35,7 +35,10 @@ export const setup = () => {
       return `${counter}`;
     },
     mapStateToItemProps: getMapStateToItemProps({
-      getOntology: () => Promise.resolve({}),
+      getOntology: () =>
+        Promise.resolve({
+          name: "Ontology",
+        }),
       MenuComponent: (() => ({})) as unknown as FC<TMenuProps>,
       saveNote: saveNote,
     }),

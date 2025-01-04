@@ -10,9 +10,13 @@ import {
   TSetState,
 } from "../../../../types";
 import { setPartial } from "../../../utils/setPartial";
-import { TOntologiesDependencies } from "../types";
+import { TExtendedItem, TOntologiesDependencies } from "../types";
+import { setIsLoading } from "../../../utils/utils";
+import { handlePromptApplyClick } from "./prompt";
 
 const handleRenameClick = (setState: TSetState<TAppState>, itemId: string) => {
+  setIsLoading(true, setState, EPage.Ontologies);
+
   setState((prevState) => {
     if (prevState.pageType !== EPage.Ontologies)
       throw new Error("Not the right page");
@@ -89,52 +93,6 @@ const handleBackgroundClick = (
       },
     };
   });
-};
-
-const handlePromptApplyClick = (
-  setState: TSetState<TAppState>,
-  itemId: string,
-  dependencies: TOntologiesDependencies
-) => {
-  dependencies
-    .removeOntology(itemId)
-    .then(() => {
-      setState((prevState) => {
-        if (prevState.pageType !== EPage.Ontologies)
-          throw new Error("Not the right page");
-
-        return {
-          ...prevState,
-          pageState: {
-            ...prevState.pageState,
-            list: prevState.pageState.list
-              .map((item) => {
-                if (item.promptState?.type === "remove") return undefined;
-                if (item.id !== itemId) return item;
-
-                return {
-                  ...item,
-                  promptState: undefined,
-                  text: item.promptState?.text ?? "",
-                };
-              })
-              .filter(Boolean) as TItem[],
-          },
-        };
-      });
-    })
-    .catch((error) => {
-      setPartial(
-        {
-          pageState: {
-            hasError: true,
-            message: error.message,
-          },
-        },
-        setState,
-        EPage.Ontologies
-      );
-    });
 };
 
 const handlePromptCancelClick = (
@@ -225,8 +183,7 @@ const createItemPromptProps = (
     : {
         isNotificationOnly: !!item.promptState.isNotificationOnly,
         buttonProps: {
-          onClick: () =>
-            handlePromptApplyClick(setState, item.id, dependencies),
+          onClick: () => handlePromptApplyClick(setState, item, dependencies),
           children: "Apply",
         },
         title: item.promptState.type === "remove" ? "Remove" : "Rename",
@@ -280,13 +237,15 @@ export const createOntologiesProps = (
         menuProps: createItemMenuProps(setState, dependencies, item),
         onClick: () => {
           dependencies.getOntology(item.id).then((result) => {
+            if (!result.map) throw new Error("No ontology content");
+
             setState(
               () =>
                 ({
                   pageState: {
                     id: item.id,
                     isLoading: false,
-                    tree: result,
+                    tree: result.map!,
                   },
                   pageType: EPage.Ontology,
                 }) satisfies TOntologyPageState

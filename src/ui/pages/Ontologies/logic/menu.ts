@@ -7,6 +7,7 @@ import {
   TSetState,
 } from "../../../../types";
 import { TOntologiesDependencies } from "../types";
+import { setIsLoading } from "../../../utils/utils";
 
 export const handleMenuClick = (setState: TSetState<TAppState>) => {
   setState((prevState) => {
@@ -32,14 +33,19 @@ export const handleAddClick = (
     text: "New Ontology",
   };
 
+  setIsLoading(true, setState, EPage.Ontologies);
+
   dependencies
     .saveOntology(newOntology.id, {
-      [EConstant.Root]: {
-        id: EConstant.Root,
-        isCollapsed: false,
-        isMenuOpen: false,
-        successors: [],
-        text: "New Ontology",
+      name: newOntology.text,
+      map: {
+        [EConstant.Root]: {
+          id: EConstant.Root,
+          isCollapsed: false,
+          isMenuOpen: false,
+          successors: [],
+          text: "New Ontology",
+        },
       },
     })
     .then(() => {
@@ -51,11 +57,21 @@ export const handleAddClick = (
           ...prevState,
           pageState: {
             ...prevState.pageState,
-            list: [...prevState.pageState.list, newOntology],
+            isLoading: false,
+            list: [
+              ...prevState.pageState.list,
+              {
+                id: newOntology.id,
+                text: newOntology.text,
+              },
+            ],
             isMenuOpen: false,
           },
         };
       });
+    })
+    .catch(() => {
+      setIsLoading(false, setState, EPage.Ontologies);
     });
 };
 

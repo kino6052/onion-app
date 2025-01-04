@@ -1,29 +1,23 @@
-import { cloneDeep } from "lodash";
 import { FC } from "react";
 import { EConstant } from "../../../../../../constants";
+import {
+  EPage,
+  TAppState,
+  TMapStateToProps,
+  TSetState,
+} from "../../../../../../types";
 import {
   THierarchicalItem,
   THierarchicalItemProps,
 } from "../../../../../components/Item/types";
 import { TMenuProps } from "../../../../../components/Menu/types";
-import {
-  EPage,
-  TAppProps,
-  TAppState,
-  TMapStateToProps,
-  TNotePageState,
-  TSetState,
-} from "../../../../../../types";
-import { noop } from "../../../../../../utils";
+import { TGetNote } from "../../../../../dependencies/getNote/types";
+import { TGetUniqueId } from "../../../../../dependencies/getUniqueId/types";
+import { setPartial } from "../../../../../utils/setPartial";
+import { updateNodeProperties } from "../utils";
 import { menuItemAdd } from "./add";
 import { menuItemRemove } from "./remove";
-import { updateNodeProperties } from "../utils";
 import { getPromptProps, menuItemRename } from "./rename";
-import { setPartial } from "../../../../../utils/setPartial";
-import { TNoteState, TSerializedWord } from "../../../../Note/types";
-import { deserializeNote } from "../../../../Note/utils/tree";
-import { TGetUniqueId } from "../../../../../dependencies/getUniqueId/types";
-import { TGetNote } from "../../../../../dependencies/getNote/types";
 
 const handleMenuClick = (
   node: THierarchicalItem,

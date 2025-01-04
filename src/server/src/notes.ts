@@ -39,7 +39,6 @@ router.on("POST", "/notes/:id", async (req, params) => {
 });
 
 router.on("GET", "/notes/:id", async (req, { id }) => {
-  console.warn({ id });
   const fileContent = await getFileContentById(
     "ontology-repo",
     "new-branch",

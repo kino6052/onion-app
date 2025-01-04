@@ -7,7 +7,9 @@ import { EPage, TAppProps, TAppState } from "../../../types";
 import { getMapStateToOntologiesProps } from "./logic";
 import { OntologiesPage } from "./OntologiesPage";
 import { TOntologiesProps } from "./types";
-import { uniqueId } from "lodash";
+import { uniqueId } from "../../libs/lodash";
+import { removeOntology } from "../../dependencies/removeOntology/dev";
+import { saveOntology } from "../../dependencies/saveOntology/dev";
 
 const state001 = {
   pageType: EPage.Ontologies,
@@ -50,6 +52,8 @@ export const _001Initial: Story = {
       logout,
       getOntology,
       getUniqueId: uniqueId,
+      removeOntology,
+      saveOntology,
     })(state001, () => {}),
   },
 };

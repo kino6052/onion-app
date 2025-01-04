@@ -63,11 +63,13 @@ export const handleGoBackClick = (
 
   getOntology(id)
     .then((tree) => {
+      if (!tree.map) throw new Error("Ontology not found");
+
       setState((prev) => ({
         pageState: {
           id,
           isLoading: false,
-          tree,
+          tree: tree.map!,
         },
         pageType: EPage.Ontology,
       }));

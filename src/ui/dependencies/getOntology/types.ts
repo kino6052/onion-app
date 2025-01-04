@@ -1,5 +1,3 @@
-import { THierarchicalItem } from "../../components/Item/types";
+import { TOntology } from "../../pages/Ontologies/types";
 
-export type TGetOntology = (
-  id: string
-) => Promise<Record<string, THierarchicalItem>>;
+export type TGetOntology = (id: string) => Promise<TOntology>;

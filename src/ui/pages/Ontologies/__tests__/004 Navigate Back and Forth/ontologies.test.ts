@@ -59,22 +59,28 @@ describe("ontologies test", () => {
     expect(ontologies).toMatchInlineSnapshot(`
 {
   "1": {
-    "ROOT": {
-      "id": "ROOT",
-      "isCollapsed": false,
-      "isMenuOpen": false,
-      "successors": [],
-      "text": "New Ontology",
+    "map": {
+      "ROOT": {
+        "id": "ROOT",
+        "isCollapsed": false,
+        "isMenuOpen": false,
+        "successors": [],
+        "text": "New Ontology",
+      },
     },
+    "name": "New Ontology",
   },
   "2": {
-    "ROOT": {
-      "id": "ROOT",
-      "isCollapsed": false,
-      "isMenuOpen": false,
-      "successors": [],
-      "text": "New Ontology",
+    "map": {
+      "ROOT": {
+        "id": "ROOT",
+        "isCollapsed": false,
+        "isMenuOpen": false,
+        "successors": [],
+        "text": "New Ontology",
+      },
     },
+    "name": "New Ontology",
   },
 }
 `);

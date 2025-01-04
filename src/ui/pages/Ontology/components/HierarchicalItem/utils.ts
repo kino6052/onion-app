@@ -1,4 +1,4 @@
-import { cloneDeep, assign } from "lodash";
+import { cloneDeep, assign } from "../../../../libs/lodash";
 import { THierarchicalItem } from "../../../../components/Item/types";
 import { EPage, TAppState, TSetState } from "../../../../../types";
 import { TWithRecursiveFallback } from "../../../../utils/types";

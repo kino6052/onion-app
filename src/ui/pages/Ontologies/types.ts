@@ -1,7 +1,14 @@
 import {
+  TIsLoadingState,
+  TMessageState,
+  TPromptState,
+  TWithComponent,
+  TWithNotificationProps,
+} from "../../../types";
+import {
+  THierarchicalItem,
   TItem,
   TItemProps,
-  TWithPromptProps,
 } from "../../components/Item/types";
 import { TMenuProps } from "../../components/Menu/types";
 import { TGetOntology } from "../../dependencies/getOntology/types";
@@ -10,13 +17,6 @@ import { TLogout } from "../../dependencies/logout/types";
 import { TRemoveOntology } from "../../dependencies/removeOntology/types";
 import { TSaveOntology } from "../../dependencies/saveOntology/types";
 import { FC } from "../../libs/react";
-import {
-  TIsLoadingState,
-  TMessageState,
-  TPromptState,
-  TWithComponent,
-  TWithNotificationProps,
-} from "../../../types";
 
 export type TOntologiesPurePropsBase = Partial<TWithNotificationProps> &
   TIsLoadingState &
@@ -27,8 +27,12 @@ export type TOntologiesPurePropsBase = Partial<TWithNotificationProps> &
 export type TOntologiesProps = TWithComponent<TOntologiesPurePropsBase> &
   TOntologiesPurePropsBase;
 
+export type TExtendedItem = TItem &
+  Partial<{ isMenuOpen: boolean }> &
+  Partial<TPromptState>;
+
 export type TOntologiesState = {
-  list: (TItem & Partial<{ isMenuOpen: boolean }> & Partial<TPromptState>)[];
+  list: TExtendedItem[];
 };
 
 export type TOntologiesDependencies = {
@@ -38,4 +42,9 @@ export type TOntologiesDependencies = {
   getUniqueId: TGetUniqueId;
   saveOntology: TSaveOntology;
   removeOntology: TRemoveOntology;
+};
+
+export type TOntology = {
+  name: string;
+  map?: Record<string, THierarchicalItem>;
 };

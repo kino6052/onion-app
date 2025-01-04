@@ -1,3 +1,3 @@
-import { THierarchicalItem } from "../../components/Item/types";
+import { TOntology } from "../../pages/Ontologies/types";
 
-export const ontologies: Record<string, Record<string, THierarchicalItem>> = {};
+export const ontologies: Record<string, TOntology> = {};
