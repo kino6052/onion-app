@@ -8,21 +8,7 @@ import {
 } from "./ui/pages/Ontologies/types";
 import { TOntologyProps, TOntologyState } from "./ui/pages/Ontology/types";
 
-export enum EPage {
-  Login = "Login",
-  Ontology = "Ontology",
-  Note = "Note",
-  Ontologies = "Ontologies",
-}
-
 export type TWithId = { id: string };
-
-export type TSetState<T> = (cb: (prev: T) => T) => void;
-
-export type TMapStateToProps<TState = TAppState<EPage>, TProps = TAppProps> = (
-  state: TState,
-  setState: TSetState<TAppState>
-) => TProps;
 
 export type TPageTypeState<TPageType extends EPage> = {
   pageType: TPageType;
@@ -54,12 +40,28 @@ export type TPromptState = {
   };
 };
 
+export enum EPage {
+  Login = "Login",
+  Ontology = "Ontology",
+  Note = "Note",
+  Ontologies = "Ontologies",
+}
+
+export type TSetState<T> = (cb: (prev: T) => T) => void;
+
+export type TMapStateToProps<TState = TAppState<EPage>, TProps = TAppProps> = (
+  state: TState,
+  setState: TSetState<TAppState>
+) => TProps;
+
 export type TPageState<T> = { pageState: TDefaultPageState & T };
 
 export type TDefaultPageState = TIsLoadingState &
   Partial<TMessageState> &
   Partial<THasErrorState> &
   Partial<TWithIsMenuOpenState> & { name?: string } & TWithId;
+
+export type TAppState<TPage extends EPage = EPage> = TPageStateMap[TPage];
 
 export type TLoginPageState = TPageTypeState<EPage.Login> & TPageState<{}>;
 export type TOntologyPageState = TPageTypeState<EPage.Ontology> &
@@ -75,8 +77,6 @@ export type TPageStateMap = {
   [EPage.Note]: TNotePageState;
   [EPage.Ontologies]: TOntologiesPageState;
 };
-
-export type TAppState<TPage extends EPage = EPage> = TPageStateMap[TPage];
 
 export type TWithNotificationProps = {
   notificationProps: TPromptProps;
