@@ -1,109 +1,83 @@
 import 'package:flutter/material.dart';
+import 'menu_component.dart';
 
-// Define the interface
 class ItemComponentProps {
   final String text;
   final VoidCallback onClick;
-  final VoidCallback? onMenuClick;
-  final Widget? menuComponent;
   final bool isMenuOpen;
-  final Widget? promptComponent;
-  final Widget? child;
+  final Widget? menuComponent;
 
   ItemComponentProps({
     required this.text,
     required this.onClick,
-    this.onMenuClick,
+    required this.isMenuOpen,
     this.menuComponent,
-    this.isMenuOpen = false,
-    this.promptComponent,
-    this.child,
   });
 }
 
-class ItemComponent extends StatelessWidget implements ItemComponentProps {
-  @override
-  final String text;
-  @override
-  final VoidCallback onClick;
-  @override
-  final VoidCallback? onMenuClick;
-  @override
-  final Widget? menuComponent;
-  @override
-  final bool isMenuOpen;
-  @override
-  final Widget? promptComponent;
-  @override
-  final Widget? child;
+class ItemComponent extends StatefulWidget {
+  final ItemComponentProps props;
 
-  const ItemComponent({
-    Key? key,
-    required this.text,
-    required this.onClick,
-    this.onMenuClick,
-    this.menuComponent,
-    this.isMenuOpen = false,
-    this.promptComponent,
-    this.child,
-  }) : super(key: key);
+  const ItemComponent({Key? key, required this.props}) : super(key: key);
+
+  @override
+  _ItemComponentState createState() => _ItemComponentState();
+}
+
+class _ItemComponentState extends State<ItemComponent> {
+  OverlayEntry? _overlayEntry;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.props.isMenuOpen && widget.props.menuComponent != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showMenu();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _hideMenu();
+    super.dispose();
+  }
+
+  void _showMenu() {
+    _overlayEntry = _createOverlayEntry();
+    Overlay.of(context)?.insert(_overlayEntry!);
+    print("Overlay inserted");
+  }
+
+  void _hideMenu() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+    print("Overlay removed");
+  }
+
+  OverlayEntry _createOverlayEntry() {
+    return OverlayEntry(
+      builder: (context) => Positioned(
+        top: 100.0, // Adjust this value to position the menu vertically
+        left: 100.0, // Adjust this value to position the menu horizontally
+        child: widget.props.menuComponent ?? SizedBox.shrink(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        GestureDetector(
-          onTap: () {
-            onClick();
-          },
-          child: Container(
-            padding: EdgeInsets.all(12.0),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, style: BorderStyle.solid),
-              color: Color(0xFF333333),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 24.0,
-                  height: 24.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white),
-                  ),
-                  child: Icon(Icons.circle, size: 24.0, color: Colors.white),
-                ),
-                SizedBox(width: 12.0),
-                Expanded(
-                  child: Text(
-                    text,
-                    style: TextStyle(fontSize: 16.0, color: Colors.white),
-                  ),
-                ),
-                if (menuComponent != null)
-                  GestureDetector(
-                    onTap: () {
-                      onMenuClick?.call();
-                    },
-                    child: Container(
-                      width: 24.0,
-                      height: 24.0,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
-                      ),
-                      child: menuComponent,
-                    ),
-                  ),
-                if (promptComponent != null) promptComponent!,
-              ],
-            ),
-          ),
+    final theme = Theme.of(context);
+
+    return GestureDetector(
+      onTap: widget.props.onClick,
+      child: Container(
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          widget.props.text,
+          style: theme.textTheme.bodyMedium,
         ),
-        if (child != null) child!,
-      ],
+      ),
     );
   }
 }

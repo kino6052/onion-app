@@ -6,10 +6,10 @@ class LoginPage extends StatelessWidget {
   final VoidCallback onLoginPressed;
 
   const LoginPage({
-    Key? key,
+    super.key,
     required this.message,
     required this.onLoginPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

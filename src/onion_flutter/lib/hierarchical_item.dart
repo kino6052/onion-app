@@ -24,27 +24,10 @@ class HierarchicalItemProps {
       this.Component});
 }
 
-class HierarchicalItem extends StatelessWidget {
-  final String text;
-  final VoidCallback onClick;
-  final VoidCallback? onMenuClick;
-  final int? indent;
-  final bool isCollapsed;
-  final Widget? menuComponent;
-  final Widget? promptComponent;
-  final List<HierarchicalItemProps>? successors;
+class HierarchicalItemComponent extends StatelessWidget {
+  final HierarchicalItemProps props;
 
-  const HierarchicalItem({
-    Key? key,
-    required this.text,
-    required this.onClick,
-    this.onMenuClick,
-    this.indent,
-    this.isCollapsed = false,
-    this.menuComponent,
-    this.promptComponent,
-    this.successors,
-  }) : super(key: key);
+  const HierarchicalItemComponent({super.key, required this.props});
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +35,9 @@ class HierarchicalItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
-          padding: EdgeInsets.only(left: (indent ?? 0) * 12.0),
+          padding: EdgeInsets.only(left: (props.indent ?? 0) * 12.0),
           decoration: BoxDecoration(
-            border: indent != null
+            border: props.indent != null
                 ? Border(
                     left: BorderSide(
                         color: Colors.white, style: BorderStyle.solid))
@@ -62,10 +45,10 @@ class HierarchicalItem extends StatelessWidget {
           ),
           child: Column(
             children: [
-              if (menuComponent != null) menuComponent!,
+              if (props.menuComponent != null) props.menuComponent!,
               GestureDetector(
                 onTap: () {
-                  onClick();
+                  props.onClick();
                 },
                 child: Container(
                   padding: EdgeInsets.all(12.0),
@@ -78,7 +61,7 @@ class HierarchicalItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      if (menuComponent != null)
+                      if (props.menuComponent != null)
                         Container(
                           width: 24.0,
                           height: 24.0,
@@ -90,14 +73,14 @@ class HierarchicalItem extends StatelessWidget {
                       SizedBox(width: 12.0),
                       Expanded(
                         child: Text(
-                          text + (isCollapsed ? " (...)" : ""),
+                          props.text + (props.isCollapsed ? " (...)" : ""),
                           style: TextStyle(fontSize: 16.0, color: Colors.white),
                         ),
                       ),
-                      if (menuComponent != null)
+                      if (props.menuComponent != null)
                         GestureDetector(
                           onTap: () {
-                            onMenuClick?.call();
+                            props.onMenuClick?.call();
                           },
                           child: Container(
                             width: 24.0,
@@ -111,21 +94,15 @@ class HierarchicalItem extends StatelessWidget {
                   ),
                 ),
               ),
-              if (!isCollapsed && successors != null)
-                ...successors!.map((successorProps) => HierarchicalItem(
-                      text: successorProps.text,
-                      onClick: successorProps.onClick,
-                      onMenuClick: successorProps.onMenuClick,
-                      indent: successorProps.indent,
-                      isCollapsed: successorProps.isCollapsed,
-                      menuComponent: successorProps.menuComponent,
-                      promptComponent: successorProps.promptComponent,
-                      successors: successorProps.successors,
-                    )),
+              if (!props.isCollapsed && props.successors != null)
+                ...props.successors!
+                    .map((successorProps) => HierarchicalItemComponent(
+                          props: successorProps,
+                        )),
             ],
           ),
         ),
-        if (promptComponent != null) promptComponent!,
+        if (props.promptComponent != null) props.promptComponent!,
       ],
     );
   }

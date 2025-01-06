@@ -18,18 +18,12 @@ class OntologyPageProps {
 }
 
 class OntologyPage extends StatelessWidget {
-  final HierarchicalItemProps hierarchicalItemProps;
-  final ItemComponentProps menuProps;
-  final bool isLoading;
-  final PromptProps? notificationProps;
+  final OntologyPageProps props;
 
   const OntologyPage({
-    Key? key,
-    required this.hierarchicalItemProps,
-    required this.menuProps,
-    this.isLoading = false,
-    this.notificationProps,
-  }) : super(key: key);
+    super.key,
+    required this.props,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +34,7 @@ class OntologyPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (isLoading)
+            if (props.isLoading)
               Center(child: CircularProgressIndicator())
             else ...[
               Container(
@@ -50,38 +44,33 @@ class OntologyPage extends StatelessWidget {
                       Border.all(color: Colors.white, style: BorderStyle.solid),
                   color: Color(0xFF333333),
                 ),
-                child: ItemComponent(
-                  text: menuProps.text,
-                  onClick: menuProps.onClick,
-                  onMenuClick: menuProps.onMenuClick,
-                  menuComponent: menuProps.menuComponent,
-                  isMenuOpen: menuProps.isMenuOpen,
-                  promptComponent: menuProps.promptComponent,
-                  child: menuProps.child,
-                ),
+                child: ItemComponent(props: props.menuProps),
               ),
               SizedBox(height: 16.0),
               Expanded(
-                child: HierarchicalItem(
-                  text: hierarchicalItemProps.text,
-                  onClick: hierarchicalItemProps.onClick,
-                  onMenuClick: hierarchicalItemProps.onMenuClick,
-                  indent: hierarchicalItemProps.indent,
-                  isCollapsed: hierarchicalItemProps.isCollapsed,
-                  menuComponent: hierarchicalItemProps.menuComponent,
-                  promptComponent: hierarchicalItemProps.promptComponent,
-                  successors: hierarchicalItemProps.successors,
+                child: HierarchicalItemComponent(
+                  props: HierarchicalItemProps(
+                    text: props.hierarchicalItemProps.text,
+                    onClick: props.hierarchicalItemProps.onClick,
+                    onMenuClick: props.hierarchicalItemProps.onMenuClick,
+                    indent: props.hierarchicalItemProps.indent,
+                    isCollapsed: props.hierarchicalItemProps.isCollapsed,
+                    menuComponent: props.hierarchicalItemProps.menuComponent,
+                    promptComponent:
+                        props.hierarchicalItemProps.promptComponent,
+                    successors: props.hierarchicalItemProps.successors,
+                  ),
                 ),
               ),
             ],
-            if (notificationProps != null)
+            if (props.notificationProps != null)
               Prompt(
-                title: notificationProps!.title,
-                textController: notificationProps!.textController,
-                onButtonPressed: notificationProps!.onButtonPressed,
-                description: notificationProps!.description,
-                onCancelPressed: notificationProps!.onCancelPressed,
-                onBackgroundClick: notificationProps!.onBackgroundClick,
+                title: props.notificationProps!.title,
+                textController: props.notificationProps!.textController,
+                onButtonPressed: props.notificationProps!.onButtonPressed,
+                description: props.notificationProps!.description,
+                onCancelPressed: props.notificationProps!.onCancelPressed,
+                onBackgroundClick: props.notificationProps!.onBackgroundClick,
                 isNotificationOnly: true,
               ),
           ],

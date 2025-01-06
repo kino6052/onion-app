@@ -21,12 +21,12 @@ class TextComponent extends StatelessWidget {
   final VoidCallback? onMouseOver;
 
   const TextComponent({
-    Key? key,
+    super.key,
     required this.children,
     required this.isSelected,
     required this.onClick,
     this.onMouseOver,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -23,12 +23,12 @@ class OntologiesPage extends StatelessWidget {
   final List<ItemComponentProps> ontologiesProps;
 
   const OntologiesPage({
-    Key? key,
+    super.key,
     required this.isLoading,
     required this.menuProps,
     this.notificationProps,
     required this.ontologiesProps,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -49,15 +49,7 @@ class OntologiesPage extends StatelessWidget {
                       Border.all(color: Colors.white, style: BorderStyle.solid),
                   color: Color(0xFF333333),
                 ),
-                child: ItemComponent(
-                  text: "List of Ontologies",
-                  onClick: menuProps.onClick,
-                  onMenuClick: menuProps.onMenuClick,
-                  menuComponent: menuProps.menuComponent,
-                  isMenuOpen: menuProps.isMenuOpen,
-                  promptComponent: menuProps.promptComponent,
-                  child: menuProps.child,
-                ),
+                child: ItemComponent(props: menuProps),
               ),
               SizedBox(height: 16.0),
               Expanded(
@@ -67,15 +59,7 @@ class OntologiesPage extends StatelessWidget {
                     final props = ontologiesProps[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: ItemComponent(
-                        text: props.text,
-                        onClick: props.onClick,
-                        onMenuClick: props.onMenuClick,
-                        menuComponent: props.menuComponent,
-                        isMenuOpen: props.isMenuOpen,
-                        promptComponent: props.promptComponent,
-                        child: props.child,
-                      ),
+                      child: ItemComponent(props: props),
                     );
                   },
                 ),

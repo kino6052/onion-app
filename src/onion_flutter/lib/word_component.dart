@@ -46,14 +46,14 @@ class EditProps {
 class Word extends StatefulWidget {
   final WordProps props;
 
-  const Word({Key? key, required this.props}) : super(key: key);
+  const Word({super.key, required this.props});
 
   @override
   _WordState createState() => _WordState();
 }
 
 class _WordState extends State<Word> {
-  Offset _menuPosition = Offset(100, 100);
+  final Offset _menuPosition = Offset(100, 100);
 
   @override
   Widget build(BuildContext context) {

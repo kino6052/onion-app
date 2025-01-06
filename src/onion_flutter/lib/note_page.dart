@@ -28,13 +28,13 @@ class NotePage extends StatelessWidget {
   final PromptProps? editTextPrompt;
 
   const NotePage({
-    Key? key,
+    super.key,
     required this.itemProps,
     this.isLoading = false,
     required this.wordTreeProps,
     this.notificationProps,
     this.editTextPrompt,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +55,7 @@ class NotePage extends StatelessWidget {
                       Border.all(color: Colors.white, style: BorderStyle.solid),
                   color: Color(0xFF333333),
                 ),
-                child: ItemComponent(
-                  text: itemProps.text,
-                  onClick: itemProps.onClick,
-                  onMenuClick: itemProps.onMenuClick,
-                  menuComponent: itemProps.menuComponent,
-                  isMenuOpen: itemProps.isMenuOpen,
-                  promptComponent: itemProps.promptComponent,
-                  child: itemProps.child,
-                ),
+                child: ItemComponent(props: itemProps),
               ),
               SizedBox(height: 16.0),
               Expanded(
