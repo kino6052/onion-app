@@ -8,6 +8,7 @@ import 'package:onion_flutter/note_page.dart';
 import 'package:onion_flutter/ontologies_page.dart';
 import 'package:onion_flutter/ontology_page.dart';
 import 'package:onion_flutter/prompt.dart';
+import 'package:onion_flutter/utils.dart';
 import 'package:onion_flutter/word_component.dart';
 import 'login_page.dart';
 import "types.dart";
@@ -128,68 +129,9 @@ class _MyHomePageState extends State<MyHomePage> {
       name: 'test',
       tree: hierarchicalItems);
 
-  HierarchicalItemProps mapHierarchyItemToProps(
-      HierarchicalItem item, int indent) {
-    return HierarchicalItemProps(
-      text: item.name,
-      indent: indent,
-      onClick: () {
-        setState(() {
-          state.tree[item.id]?.collapsed =
-              !(state.tree[item.id]?.collapsed ?? false);
-        });
-      },
-      isCollapsed: item.collapsed,
-      successors: item.successors.map((id) {
-        return mapHierarchyItemToProps(hierarchicalItems[id]!, indent + 1);
-      }).toList(),
-    );
-  }
-
-  OntologyPageProps mapStateToProps(OntologyState state) {
-    return OntologyPageProps(
-      hierarchicalItemProps: mapHierarchyItemToProps(state.tree['ROOT']!, 0),
-      menuProps: ItemComponentProps(
-        text: state.message ?? 'menu',
-        onClick: () {
-          setState(() {
-            state = state.copyWith(isMenuOpen: true);
-          });
-        },
-        isMenuOpen: state.isMenuOpen ?? false,
-        menuComponent: Menu(
-          props: MenuProps(
-            itemsProps: [
-              ItemComponentProps(
-                isMenuOpen: false,
-                onClick: () {
-                  setState(() {
-                    setState(() {
-                      state.message = (Random().nextInt(100) + 1).toString();
-                    });
-                  });
-                },
-                text: "option1",
-              ),
-              ItemComponentProps(
-                isMenuOpen: false,
-                onClick: () {
-                  print("Hey2!");
-                },
-                text: "option2",
-              ),
-            ],
-            onBackgroundClick: () {},
-          ),
-        ),
-      ),
-      isLoading: state.isLoading,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    Widget ontologyPage = OntologyPage(props: mapStateToProps(state));
+    Widget ontologyPage = OntologyPage(props: mapStateToProps(state, setState));
 
     return Scaffold(
       appBar: AppBar(
