@@ -3,7 +3,7 @@ import { TWordProps } from "../../../components/Word/types";
 import { isTextComponent } from "../../../components/Word/utils";
 import { templateParser } from "../../../../utils";
 import { TDeserializedWord, TSerializedWord } from "../types";
-import { isArray } from "../../../libs/lodash";
+import { isArray } from "../../../../libs/lodash";
 
 /** Generates word tree from from the serialized data like
  * {

@@ -1,7 +1,7 @@
 import {
   TLogin,
   TLoginResponse,
-} from "../../../../../../dependencies/login/types";
+} from "../../../../../../../dependencies/login/types";
 import { EPage, TAppState } from "../../../../../../../types";
 import { StateManager } from "../../../../../../utils/stateManager";
 import { getMapStateToProps } from "../../logic";

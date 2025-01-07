@@ -1,7 +1,7 @@
 import { TTextProps } from "../../../../components/Text/types";
 import { TWordProps } from "../../../../components/Word/types";
 import { EConstant } from "../../../../../constants";
-import { TGetUniqueId } from "../../../../dependencies/getUniqueId/types";
+import { TGetUniqueId } from "../../../../../dependencies/getUniqueId/types";
 import { TAppState, TNotePageState, TSetState } from "../../../../../types";
 import { getDefaultMenuProps } from "../../components/Word/utils";
 import { removeNodeFromWordTree, updateWordProperties } from "../../utils";

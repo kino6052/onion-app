@@ -1,7 +1,7 @@
 import { Item } from "../../components/Item/Item";
 import { Loader } from "../../components/Loader";
 import { Prompt } from "../../components/Prompt/Prompt";
-import { FC } from "../../libs/react";
+import { FC } from "../../../libs/react";
 import "./styles.scss";
 import { TOntologiesProps } from "./types";
 

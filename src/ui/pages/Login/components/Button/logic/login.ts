@@ -3,7 +3,7 @@ import {
   login as _login,
 } from "../../../../../../domain/login/login.useCase";
 import { TAppState, TSetState } from "../../../../../../types";
-import { TLogin } from "../../../../../dependencies/login/types";
+import { TLogin } from "../../../../../../dependencies/login/types";
 import { setIsLoading } from "../../../../../utils/utils";
 
 export const handleClick = (login: TLogin, setState: TSetState<TAppState>) => {

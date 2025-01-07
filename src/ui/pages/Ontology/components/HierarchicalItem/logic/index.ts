@@ -11,8 +11,8 @@ import {
   THierarchicalItemProps,
 } from "../../../../../components/Item/types";
 import { TMenuProps } from "../../../../../components/Menu/types";
-import { TGetNote } from "../../../../../dependencies/getNote/types";
-import { TGetUniqueId } from "../../../../../dependencies/getUniqueId/types";
+import { TGetNote } from "../../../../../../dependencies/getNote/types";
+import { TGetUniqueId } from "../../../../../../dependencies/getUniqueId/types";
 import { setPartial } from "../../../../../utils/setPartial";
 import { updateNodeProperties } from "../utils";
 import { menuItemAdd } from "./add";

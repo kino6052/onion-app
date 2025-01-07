@@ -1,5 +1,5 @@
 import { TButtonProps } from "../../components/Button/types";
-import { FC } from "../../libs/react";
+import { FC } from "../../../libs/react";
 import { THasErrorState, TIsLoadingState, TMessageState } from "../../../types";
 
 export type TLoginProps = {

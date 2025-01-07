@@ -1,4 +1,4 @@
-import { merge } from "../libs/lodash";
+import { merge } from "../../libs/lodash";
 import { EPage, TAppState, TSetState } from "../../types";
 import { TWithRecursiveFallback } from "./types";
 

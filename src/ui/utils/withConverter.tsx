@@ -1,4 +1,4 @@
-import { FC } from "../libs/react";
+import { FC } from "../../libs/react";
 
 /**
  * HOC for converting incoming data to new format

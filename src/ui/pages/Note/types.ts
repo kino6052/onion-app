@@ -6,9 +6,9 @@ import {
 import { TMenuProps } from "../../components/Menu/types";
 import { TPromptProps } from "../../components/Prompt/types";
 import { TWordProps } from "../../components/Word/types";
-import { TGetOntology } from "../../dependencies/getOntology/types";
-import { TSaveNote } from "../../dependencies/saveNote/types";
-import { FC } from "../../libs/react";
+import { TGetOntology } from "../../../dependencies/getOntology/types";
+import { TSaveNote } from "../../../dependencies/saveNote/types";
+import { FC } from "../../../libs/react";
 import {
   TIsLoadingState,
   TPromptState,

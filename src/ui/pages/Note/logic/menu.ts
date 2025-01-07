@@ -1,7 +1,7 @@
 import { EConstant } from "../../../../constants";
 import { TMenuProps } from "../../../components/Menu/types";
-import { TGetOntology } from "../../../dependencies/getOntology/types";
-import { FC } from "../../../libs/react";
+import { TGetOntology } from "../../../../dependencies/getOntology/types";
+import { FC } from "../../../../libs/react";
 import { EPage, TAppState, TNotePageState, TSetState } from "../../../../types";
 import { noop } from "../../../../utils";
 import { setPartial } from "../../../utils/setPartial";

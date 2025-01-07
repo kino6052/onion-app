@@ -1,6 +1,6 @@
 import { produce } from "immer";
 import { EPage, TAppState, TSetState } from "../../types";
-import { TLoginResponse } from "../../ui/dependencies/login/types";
+import { TLoginResponse } from "../../dependencies/login/types";
 import { TOntologiesState } from "../../ui/pages/Ontologies/types";
 
 /**

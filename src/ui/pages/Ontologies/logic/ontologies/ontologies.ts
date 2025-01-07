@@ -16,7 +16,7 @@ import {
 import { TItemProps } from "../../../../components/Item/types";
 import { EMenuConstant } from "../../../../components/Menu/constants";
 import { TMenuProps } from "../../../../components/Menu/types";
-import { FC } from "../../../../libs/react";
+import { FC } from "../../../../../libs/react";
 import { TExtendedItem, TOntologiesDependencies } from "../../types";
 
 const createItemMenuProps = (

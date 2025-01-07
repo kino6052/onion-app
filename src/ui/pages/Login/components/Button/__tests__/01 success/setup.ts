@@ -1,5 +1,5 @@
-import { login as _login } from "../../../../../../dependencies/login/check";
-import { TLogin } from "../../../../../../dependencies/login/types";
+import { login as _login } from "../../../../../../../dependencies/login/check";
+import { TLogin } from "../../../../../../../dependencies/login/types";
 import { EPage, TAppState } from "../../../../../../../types";
 import { StateManager } from "../../../../../../utils/stateManager";
 import { getMapStateToProps } from "../../logic";

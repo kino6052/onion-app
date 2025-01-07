@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "../../libs/react";
+import { PropsWithChildren } from "../../../libs/react";
 
 export type TIsSelected = { isSelected: boolean };
 

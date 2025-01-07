@@ -11,12 +11,12 @@ import {
   TItemProps,
 } from "../../components/Item/types";
 import { TMenuProps } from "../../components/Menu/types";
-import { TGetOntology } from "../../dependencies/getOntology/types";
-import { TGetUniqueId } from "../../dependencies/getUniqueId/types";
-import { TLogout } from "../../dependencies/logout/types";
-import { TRemoveOntology } from "../../dependencies/removeOntology/types";
-import { TSaveOntology } from "../../dependencies/saveOntology/types";
-import { FC } from "../../libs/react";
+import { TGetOntology } from "../../../dependencies/getOntology/types";
+import { TGetUniqueId } from "../../../dependencies/getUniqueId/types";
+import { TLogout } from "../../../dependencies/logout/types";
+import { TRemoveOntology } from "../../../dependencies/removeOntology/types";
+import { TSaveOntology } from "../../../dependencies/saveOntology/types";
+import { FC } from "../../../libs/react";
 
 export type TOntologiesPurePropsBase = Partial<TWithNotificationProps> &
   TIsLoadingState &

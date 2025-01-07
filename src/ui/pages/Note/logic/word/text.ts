@@ -1,4 +1,4 @@
-import { TGetUniqueId } from "../../../../dependencies/getUniqueId/types";
+import { TGetUniqueId } from "../../../../../dependencies/getUniqueId/types";
 import { EPage, TAppState, TSetState } from "../../../../../types";
 import { setPartial } from "../../../../utils/setPartial";
 import { TSerializedWord } from "../../types";

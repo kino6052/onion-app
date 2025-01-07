@@ -1,6 +1,6 @@
 import { EConstant } from "../../../../constants";
 import { TItemProps } from "../../../components/Item/types";
-import { TGetUniqueId } from "../../../dependencies/getUniqueId/types";
+import { TGetUniqueId } from "../../../../dependencies/getUniqueId/types";
 import {
   EPage,
   TAppState,

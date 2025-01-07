@@ -1,4 +1,4 @@
-import { TSerializedWord } from "../../pages/Note/types";
+import { TSerializedWord } from "../../ui/pages/Note/types";
 
 export type TGetNote = (
   id: string,

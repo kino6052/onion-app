@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Menu } from "../../components/Menu/Menu";
-import { getOntology } from "../../dependencies/getOntology/dev";
-import { logout } from "../../dependencies/logout/dev";
+import { getOntology } from "../../../dependencies/getOntology/dev";
+import { logout } from "../../../dependencies/logout/dev";
 import { EPage, TAppProps, TAppState } from "../../../types";
 import { getMapStateToOntologiesProps } from "./logic";
 import { OntologiesPage } from "./OntologiesPage";
 import { TOntologiesProps } from "./types";
-import { uniqueId } from "../../libs/lodash";
-import { removeOntology } from "../../dependencies/removeOntology/dev";
-import { saveOntology } from "../../dependencies/saveOntology/dev";
+import { uniqueId } from "../../../libs/lodash";
+import { removeOntology } from "../../../dependencies/removeOntology/dev";
+import { saveOntology } from "../../../dependencies/saveOntology/dev";
 
 const state001 = {
   pageType: EPage.Ontologies,

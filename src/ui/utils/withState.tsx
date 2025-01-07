@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from "../libs/react";
-import { BehaviorSubject, tap } from "../libs/rxjs";
+import { FC, useEffect, useState } from "../../libs/react";
+import { BehaviorSubject, tap } from "../../libs/rxjs";
 
 export function withState<TProps extends Record<string, unknown>>(
   subject: BehaviorSubject<TProps>

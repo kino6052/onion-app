@@ -1,4 +1,4 @@
-import { TItem } from "../../components/Item/types";
+import { TItem } from "../../ui/components/Item/types";
 
 export type TLoginResponse = {
   error?: string;

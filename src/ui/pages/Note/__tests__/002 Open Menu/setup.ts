@@ -1,12 +1,12 @@
 import { EConstant } from "../../../../../constants";
 import { TMenuProps } from "../../../../components/Menu/types";
-import { FC } from "../../../../libs/react";
+import { FC } from "../../../../../libs/react";
 import { EPage, TAppState } from "../../../../../types";
 import { getComposeActions } from "../../../../utils/composeActions";
 import { StateManager } from "../../../../utils/stateManager";
 import { getMapStateToProps } from "../../logic";
 import { getMapStateToItemProps } from "../../logic/menu";
-import { saveNote } from "../../../../dependencies/saveNote/check";
+import { saveNote } from "../../../../../dependencies/saveNote/check";
 
 export const setup = () => {
   const initialState: TAppState = {

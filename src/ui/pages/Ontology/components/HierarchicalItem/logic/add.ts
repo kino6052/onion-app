@@ -1,5 +1,5 @@
 import { THierarchicalItem } from "../../../../../components/Item/types";
-import { TGetUniqueId } from "../../../../../dependencies/getUniqueId/types";
+import { TGetUniqueId } from "../../../../../../dependencies/getUniqueId/types";
 import { EPage, TAppState, TSetState } from "../../../../../../types";
 
 export const handleAddChild = (

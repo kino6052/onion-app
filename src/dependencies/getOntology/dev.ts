@@ -1,4 +1,4 @@
-import { TOntology } from "../../pages/Ontologies/types";
+import { TOntology } from "../../ui/pages/Ontologies/types";
 import { ENDPOINT } from "../common/constants";
 import { TGetOntology } from "./types";
 

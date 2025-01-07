@@ -1,6 +1,6 @@
 import { TAppState, TSetState } from "../../../../../../types";
 import { TButtonProps } from "../../../../../components/Button/types";
-import { TLogin } from "../../../../../dependencies/login/types";
+import { TLogin } from "../../../../../../dependencies/login/types";
 import { TMapStateToButtonProps } from "../types";
 import { handleClick } from "./login";
 
