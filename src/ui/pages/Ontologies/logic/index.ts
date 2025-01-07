@@ -1,7 +1,3 @@
-import { TMenuProps } from "../../../components/Menu/types";
-import { TGetOntology } from "../../../dependencies/getOntology/types";
-import { TLogout } from "../../../dependencies/logout/types";
-import { FC } from "../../../libs/react";
 import {
   EPage,
   TMapStateToProps,
@@ -9,8 +5,8 @@ import {
   TOntologiesPageState,
 } from "../../../../types";
 import { TOntologiesDependencies } from "../types";
-import { createMenuProps } from "./menu";
-import { createOntologiesProps } from "./ontologies";
+import { mapStateToMenuProps } from "./menu";
+import { mapStateToOntologiesProps } from "./ontologies/ontologies";
 
 export const getMapStateToOntologiesProps =
   (
@@ -19,8 +15,8 @@ export const getMapStateToOntologiesProps =
   (state, setState) => ({
     pageProps: {
       isLoading: state.pageState.isLoading,
-      menuProps: createMenuProps(setState, dependencies, state),
-      ontologiesProps: createOntologiesProps(setState, dependencies, state),
+      menuProps: mapStateToMenuProps(setState, dependencies, state),
+      ontologiesProps: mapStateToOntologiesProps(setState, dependencies, state),
     },
     pageType: EPage.Ontologies,
   });

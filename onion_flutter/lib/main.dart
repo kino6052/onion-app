@@ -81,21 +81,14 @@ class OntologyState extends TDefaultPageState {
   final Map<String, HierarchicalItem> tree;
 
   OntologyState({
-    required String id,
-    required bool isLoading,
-    required bool hasError,
-    required bool isMenuOpen,
-    required String message,
-    required String name,
+    required super.id,
+    required super.isLoading,
+    required super.hasError,
+    required super.isMenuOpen,
+    required super.message,
+    required super.name,
     required this.tree,
-  }) : super(
-          id: id,
-          isLoading: isLoading,
-          hasError: hasError,
-          isMenuOpen: isMenuOpen,
-          message: message,
-          name: name,
-        );
+  });
 
   @override
   OntologyState copyWith({

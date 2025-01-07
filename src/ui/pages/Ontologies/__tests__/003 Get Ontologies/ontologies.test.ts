@@ -29,6 +29,7 @@ describe("ontologies test", () => {
   "pageState": {
     "id": "1",
     "isLoading": false,
+    "name": "New Ontology",
     "tree": {
       "ROOT": {
         "id": "ROOT",

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:onion_flutter/hierarchical_item.dart';
 import 'package:onion_flutter/item_component.dart';
 import 'package:onion_flutter/menu_component.dart';

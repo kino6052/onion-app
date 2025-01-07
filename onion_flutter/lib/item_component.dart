@@ -18,7 +18,7 @@ class ItemComponentProps {
 class ItemComponent extends StatefulWidget {
   final ItemComponentProps props;
 
-  const ItemComponent({Key? key, required this.props}) : super(key: key);
+  const ItemComponent({super.key, required this.props});
 
   @override
   _ItemComponentState createState() => _ItemComponentState();
@@ -45,7 +45,7 @@ class _ItemComponentState extends State<ItemComponent> {
 
   void _showMenu() {
     _overlayEntry = _createOverlayEntry();
-    Overlay.of(context)?.insert(_overlayEntry!);
+    Overlay.of(context).insert(_overlayEntry!);
     print("Overlay inserted");
   }
 

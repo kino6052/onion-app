@@ -29,6 +29,7 @@ describe("button test", () => {
     expect(stateManager.getState()).toMatchInlineSnapshot(`
 {
   "pageState": {
+    "hasError": true,
     "id": "id",
     "isLoading": false,
     "message": "Error",

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'item_component.dart';
-import 'loader.dart'; // Assuming you have a Loader component
+// Assuming you have a Loader component
 import 'prompt.dart';
 import 'word_component.dart';
 

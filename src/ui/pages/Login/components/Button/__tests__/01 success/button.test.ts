@@ -29,9 +29,11 @@ describe("button test", () => {
     expect(stateManager.getState()).toMatchInlineSnapshot(`
 {
   "pageState": {
-    "id": "",
+    "hasError": false,
+    "id": "id",
     "isLoading": false,
     "list": [],
+    "message": "",
   },
   "pageType": "Ontologies",
 }

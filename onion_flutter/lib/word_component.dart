@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onion_flutter/menu_component.dart';
 import 'prompt.dart';
-import 'text_component.dart';
 
 class WordProps {
   final VoidCallback onClick;
