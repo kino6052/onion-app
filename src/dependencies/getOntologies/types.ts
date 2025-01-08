@@ -1,3 +1,3 @@
-import { TItem } from "../../ui/components/Item/types";
+import { TItem } from "../../components/Item/types";
 
 export type TGetOntologies = () => Promise<TItem[]>;

@@ -1,4 +1,4 @@
-import { TSerializedWord } from "../../ui/pages/Note/types";
+import { TSerializedWord } from "../../pages/Note/types";
 import { ENDPOINT } from "../common/constants";
 import { TGetNote } from "./types";
 

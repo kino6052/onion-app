@@ -1,12 +1,9 @@
-import { TWithIsMenuOpenState } from "./ui/components/Item/types";
-import { TPromptProps } from "./ui/components/Prompt/types";
-import { TLoginProps, TLoginState } from "./ui/pages/Login/types";
-import { TNoteProps, TNoteState } from "./ui/pages/Note/types";
-import {
-  TOntologiesProps,
-  TOntologiesState,
-} from "./ui/pages/Ontologies/types";
-import { TOntologyProps, TOntologyState } from "./ui/pages/Ontology/types";
+import { TWithIsMenuOpenState } from "./components/Item/types";
+import { TPromptProps } from "./components/Prompt/types";
+import { TLoginProps, TLoginState } from "./pages/Login/types";
+import { TNoteProps, TNoteState } from "./pages/Note/types";
+import { TOntologiesProps, TOntologiesState } from "./pages/Ontologies/types";
+import { TOntologyProps, TOntologyState } from "./pages/Ontology/types";
 
 export type TWithId = { id: string };
 
