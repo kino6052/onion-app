@@ -1,13 +1,10 @@
 import { produce } from "immer";
-import { TAppState, TSetState } from "../../../types";
-import {
-  TExtendedItem,
-  TOntologiesDependencies,
-} from "../../../ui/pages/Ontologies/types";
-import { withLoadingLogic } from "../../utlis";
-import { removeOntology } from "./removeOntology";
-import { assertIsOntologiesPage } from "../utils";
-import { saveOntology } from "./saveOntology";
+import { TAppState, TSetState } from "../../../../../../../types";
+import { TExtendedItem, TOntologiesDependencies } from "../../../../types";
+import { withLoadingLogic } from "../../../../../../logic/utlis.domain";
+import { removeOntology } from "../../logic/removeOntology.case";
+import { assertIsOntologiesPage } from "../../../../logic/domain/utils.domain";
+import { saveOntology } from "../../logic/saveOntology.case";
 
 export const removeOntologyFromList = (
   setState: TSetState<TAppState>,

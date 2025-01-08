@@ -1,9 +1,13 @@
-import { logout } from "../../../../domain/login/logout.useCase";
-import { openMenu } from "../../../../domain/menu";
-import { createNewOntology } from "../../../../domain/ontologies/useCases/createOntology";
-import { TAppState, TOntologiesPageState, TSetState } from "../../../../types";
-import { EMenuConstant } from "../../../components/Menu/constants";
-import { TOntologiesDependencies } from "../types";
+import { logout } from "../../../../../logic/logout.useCase";
+import {
+  TAppState,
+  TOntologiesPageState,
+  TSetState,
+} from "../../../../../../types";
+import { EMenuConstant } from "../../../../../components/Menu/constants";
+import { openMenu } from "../../../../../components/Menu/menu.domain";
+import { createNewOntology } from "../../Item/logic/createOntology.case";
+import { TOntologiesDependencies } from "../../../types";
 
 export const mapStateToMenuProps = (
   setState: TSetState<TAppState>,

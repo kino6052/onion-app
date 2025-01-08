@@ -1,9 +1,9 @@
 import { produce } from "immer";
-import { TAppState, TSetState } from "../../../types";
-import { TOntologiesDependencies } from "../../../ui/pages/Ontologies/types";
-import { assertIsOntologiesPage } from "../utils";
-import { EConstant } from "../../../constants";
-import { withLoadingLogic } from "../../utlis";
+import { TAppState, TSetState } from "../../../../../../types";
+import { TOntologiesDependencies } from "../../../types";
+import { assertIsOntologiesPage } from "../../../logic/domain/utils.domain";
+import { EConstant } from "../../../../../../constants";
+import { withLoadingLogic } from "../../../../../logic/utlis.domain";
 
 export const createNewOntology = (
   setState: TSetState<TAppState>,

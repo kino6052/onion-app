@@ -1,9 +1,6 @@
-import { TAppState, TSetState } from "../../../types";
-import {
-  TExtendedItem,
-  TOntologiesDependencies,
-} from "../../../ui/pages/Ontologies/types";
-import { withLoadingLogic } from "../../utlis";
+import { TAppState, TSetState } from "../../../../../../types";
+import { TExtendedItem, TOntologiesDependencies } from "../../../types";
+import { withLoadingLogic } from "../../../../../logic/utlis.domain";
 
 export const saveOntology = (
   dependencies: TOntologiesDependencies,

@@ -1,10 +1,7 @@
 import { produce } from "immer";
-import { EPage, TAppState, TSetState } from "../../../types";
-import {
-  TExtendedItem,
-  TOntologiesDependencies,
-} from "../../../ui/pages/Ontologies/types";
-import { setIsLoading } from "../../../ui/utils/utils";
+import { EPage, TAppState, TSetState } from "../../../../../types";
+import { TExtendedItem, TOntologiesDependencies } from "../../types";
+import { setIsLoading } from "../../../../utils/utils";
 
 export const getOntologies = (
   item: TExtendedItem,

@@ -1,5 +1,5 @@
 import { produce } from "immer";
-import { EPage, TAppState, TSetState } from "../types";
+import { EPage, TAppState, TSetState } from "../../types";
 
 export const withLoadingLogic =
   (setState: TSetState<TAppState>) =>

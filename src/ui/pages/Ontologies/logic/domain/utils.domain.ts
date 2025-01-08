@@ -1,4 +1,4 @@
-import { EPage, TAppState } from "../../types";
+import { EPage, TAppState } from "../../../../../types";
 
 export function assertIsOntologiesPage(
   state: TAppState

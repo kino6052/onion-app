@@ -5,8 +5,8 @@ import {
   TOntologiesPageState,
 } from "../../../../types";
 import { TOntologiesDependencies } from "../types";
-import { mapStateToMenuProps } from "./menu";
-import { mapStateToOntologiesProps } from "./ontologies/ontologies";
+import { mapStateToOntologiesProps } from "../components/Item/logic";
+import { mapStateToMenuProps } from "../components/Menu/logic";
 
 export const getMapStateToOntologiesProps =
   (

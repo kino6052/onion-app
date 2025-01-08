@@ -1,16 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:onion_flutter/hierarchical_item.dart';
-import 'package:onion_flutter/item_component.dart';
-import 'package:onion_flutter/menu_component.dart';
-import 'package:onion_flutter/note_page.dart';
-import 'package:onion_flutter/ontologies_page.dart';
 import 'package:onion_flutter/ontology_page.dart';
-import 'package:onion_flutter/prompt.dart';
 import 'package:onion_flutter/utils.dart';
-import 'package:onion_flutter/word_component.dart';
-import 'login_page.dart';
 import "types.dart";
 
 void main() {

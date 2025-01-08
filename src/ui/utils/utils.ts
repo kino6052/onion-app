@@ -1,1 +1,1 @@
-export { setIsLoading } from "../../domain/utlis";
+export { setIsLoading } from "../logic/utlis.domain";

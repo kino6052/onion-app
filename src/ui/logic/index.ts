@@ -1,11 +1,11 @@
-import { mapStateToOntologiesProps } from "./pages/Ontologies";
+import { mapStateToOntologiesProps } from "../pages/Ontologies";
 import {
   EPage,
   TAppProps,
   TAppState,
   TMapStateToProps,
   TSetState,
-} from "../types";
+} from "../../types";
 
 export const getMapStateToProps =
   (dependencies: {

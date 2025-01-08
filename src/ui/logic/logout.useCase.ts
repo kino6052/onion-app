@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import { EPage, TAppState, TSetState } from "../../types";
-import { TOntologiesDependencies } from "../../ui/pages/Ontologies/types";
-import { withLoadingLogic } from "../utlis";
+import { TOntologiesDependencies } from "../pages/Ontologies/types";
+import { withLoadingLogic } from "./utlis.domain";
 
 export const logout = (
   setState: TSetState<TAppState>,

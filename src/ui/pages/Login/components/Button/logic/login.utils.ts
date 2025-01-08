@@ -1,7 +1,7 @@
 import { produce } from "immer";
-import { EPage, TAppState, TSetState } from "../../types";
-import { TLoginResponse } from "../../dependencies/login/types";
-import { TOntologiesState } from "../../ui/pages/Ontologies/types";
+import { EPage, TAppState, TSetState } from "../../../../../../types";
+import { TLoginResponse } from "../../../../../../dependencies/login/types";
+import { TOntologiesState } from "../../../../Ontologies/types";
 
 /**
  * Handles the successful login response and updates the application state accordingly.
@@ -15,7 +15,7 @@ import { TOntologiesState } from "../../ui/pages/Ontologies/types";
  * - If no ontologies are found in the result, updates the state with an appropriate message and sets the error flag.
  * - If the login is successful and ontologies are found, updates the state to reflect the ontologies page with the list of ontologies.
  */
-export const login = (
+export const processLoginResult = (
   result: TLoginResponse,
   setState: TSetState<TAppState>
 ) => {

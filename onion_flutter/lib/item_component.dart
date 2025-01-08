@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'menu_component.dart';
 
 class ItemComponentProps {
   final String text;

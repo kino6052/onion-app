@@ -2,7 +2,7 @@ import { TAppState, TSetState } from "../../../../../../types";
 import { TButtonProps } from "../../../../../components/Button/types";
 import { TLogin } from "../../../../../../dependencies/login/types";
 import { TMapStateToButtonProps } from "../types";
-import { handleClick } from "./login";
+import { tryLogingIn } from "./login.case";
 
 export const getMapStateToProps =
   (dependencies: {
@@ -15,7 +15,7 @@ export const getMapStateToProps =
     return {
       hasIcon: false,
       isDisabled: state.pageState.isLoading,
-      onClick: () => handleClick(login, setState),
+      onClick: () => tryLogingIn(login, setState),
       children: state.pageState.isLoading ? "Loading..." : "Login",
       ButtonComponent,
     };
