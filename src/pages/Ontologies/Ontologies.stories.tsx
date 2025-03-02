@@ -14,6 +14,7 @@ import { saveOntology } from "../../dependencies/saveOntology/dev";
 const state001 = {
   pageType: EPage.Ontologies,
   pageState: {
+    id: "ROOT",
     isLoading: false,
     list: [
       {

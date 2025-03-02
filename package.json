@@ -20,8 +20,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-scripts": "5.0.1",
-    "rxjs": "^7.8.1",
-    "sass": "^1.77.8"
+    "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "1.8.0",
@@ -37,16 +36,22 @@
     "@types/lodash": "^4.17.7",
     "@types/react": "18.2.38",
     "@types/react-dom": "18.2.15",
+    "@vitejs/plugin-react": "^4.2.1",
+    "css-loader": "^7.1.2",
     "prop-types": "15.8.1",
+    "sass": "^1.77.8",
+    "sass-loader": "^16.0.5",
     "storybook": "^8.2.9",
+    "style-loader": "^4.0.0",
     "ts-jest": "latest",
     "ts-node": "^10.9.2",
     "typescript": "5.5.4",
+    "vite": "^5.1.4",
     "webpack": "5.94.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "vite",
+    "build": "vite build",
     "test": "jest",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",

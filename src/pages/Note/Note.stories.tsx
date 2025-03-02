@@ -1,18 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { getInitialNoteState } from "./utils";
-import { getMapStateToProps } from "./logic";
-import { EPage, TNotePageProps, TNotePageState } from "../../types";
-import { deserializeNote } from "./utils/tree";
-import { TSerializedWord } from "./types";
-import { EConstant } from "../../constants";
-import { NotePage } from "./NotePage";
 import { mapStateToNoteProps } from ".";
+import { EConstant } from "../../constants";
+import { EPage, TNotePageProps, TNotePageState } from "../../types";
+import { NotePage } from "./NotePage";
+import { TSerializedWord } from "./types";
+import { getInitialNoteState } from "./utils";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: "Pages/Note",
   component: ({ pageProps }: TNotePageProps) => <NotePage {...pageProps} />,
-} satisfies Meta<typeof NotePage>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -73,6 +71,7 @@ const data003: Record<string, TSerializedWord> = {
 const state003 = {
   pageState: {
     id: "note",
+    ontologyId: "ROOT",
     wordTree: data003,
     isLoading: false,
   },
@@ -86,6 +85,7 @@ export const _003: Story = {
 const state004 = {
   pageState: {
     id: "note",
+    ontologyId: "ROOT",
     wordTree: {
       ...data003,
     },
@@ -101,6 +101,7 @@ export const _004: Story = {
 const state005 = {
   pageState: {
     id: "note",
+    ontologyId: "ROOT",
     wordTree: {
       ...data003,
       [EConstant.Root]: {
@@ -122,6 +123,7 @@ export const _005: Story = {
 const state006 = {
   pageState: {
     id: "note",
+    ontologyId: "ROOT",
     wordTree: {
       ...data003,
       [EConstant.Root]: {
@@ -144,6 +146,7 @@ export const _006: Story = {
 const state007 = {
   pageState: {
     id: "note",
+    ontologyId: "ROOT",
     wordTree: data003,
     isLoading: false,
     hasError: true,
@@ -159,6 +162,7 @@ export const _007: Story = {
 const state008 = {
   pageState: {
     id: "note",
+    ontologyId: "ROOT",
     wordTree: data003,
     isLoading: false,
   },

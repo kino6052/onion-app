@@ -5,6 +5,7 @@ import { getMapStateToProps } from "./logic";
 import { TOntologyProps } from "./types";
 import { mapStateToHierarchicalItemProps } from "./components/HierarchicalItem";
 import { OntologyPage } from "./OntologyPage";
+import { saveOntology } from "../../dependencies/saveOntology/check";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -20,6 +21,7 @@ type Story = StoryObj<typeof meta>;
 const state001 = {
   pageType: EPage.Ontology,
   pageState: {
+    id: "ROOT",
     isLoading: false,
     tree: {
       [EConstant.Root]: {
@@ -38,6 +40,7 @@ export const _001Initial: Story = {
     state: state001,
     props: getMapStateToProps({
       mapStateToHierarchicalItemProps,
+      saveOntology,
     })(state001, () => {}),
   },
 };
@@ -45,6 +48,7 @@ export const _001Initial: Story = {
 const state002 = {
   pageType: EPage.Ontology,
   pageState: {
+    id: "ROOT",
     isLoading: true,
     tree: {
       [EConstant.Root]: {
@@ -56,13 +60,14 @@ const state002 = {
       },
     },
   },
-} satisfies TAppState;
+} satisfies TAppState<EPage.Ontology>;
 
 export const _002Loading: Story = {
   args: {
     state: state002,
     props: getMapStateToProps({
       mapStateToHierarchicalItemProps,
+      saveOntology,
     })(state002, () => {}),
   },
 };
@@ -70,6 +75,7 @@ export const _002Loading: Story = {
 const state003 = {
   pageType: EPage.Ontology,
   pageState: {
+    id: "ROOT",
     isLoading: false,
     tree: {
       [EConstant.Root]: {
@@ -109,13 +115,14 @@ const state003 = {
       },
     },
   },
-} satisfies TAppState;
+} satisfies TAppState<EPage.Ontology>;
 
 export const _003Tree: Story = {
   args: {
     state: state003,
     props: getMapStateToProps({
       mapStateToHierarchicalItemProps,
+      saveOntology,
     })(state003, () => {}),
   },
 };
@@ -123,8 +130,8 @@ export const _003Tree: Story = {
 const state004 = {
   pageType: EPage.Ontology,
   pageState: {
+    id: "ROOT",
     isLoading: false,
-
     tree: {
       ROOT: {
         id: "ROOT",
@@ -133,7 +140,6 @@ const state004 = {
         successors: ["001", "002"],
         text: "ROOT",
       },
-
       "001": {
         id: "001",
         isCollapsed: true,
@@ -141,7 +147,6 @@ const state004 = {
         successors: ["0011", "0012"],
         text: "001",
       },
-
       "002": {
         id: "002",
         isCollapsed: false,
@@ -149,7 +154,6 @@ const state004 = {
         successors: [],
         text: "002",
       },
-
       "0011": {
         id: "0011",
         isCollapsed: false,
@@ -157,7 +161,6 @@ const state004 = {
         successors: [],
         text: "0011",
       },
-
       "0012": {
         id: "0012",
         isCollapsed: false,
@@ -167,13 +170,14 @@ const state004 = {
       },
     },
   },
-} satisfies TAppState;
+} satisfies TAppState<EPage.Ontology>;
 
 export const _004Collapsed: Story = {
   args: {
     state: state004,
     props: getMapStateToProps({
       mapStateToHierarchicalItemProps,
+      saveOntology,
     })(state004, () => {}),
   },
 };
@@ -181,6 +185,7 @@ export const _004Collapsed: Story = {
 const state005 = {
   pageType: EPage.Ontology,
   pageState: {
+    id: "ROOT",
     isLoading: false,
     tree: {
       [EConstant.Root]: {
@@ -191,16 +196,16 @@ const state005 = {
         text: EConstant.Root,
       },
     },
-
     isMenuOpen: true,
   },
-} satisfies TAppState;
+} satisfies TAppState<EPage.Ontology>;
 
 export const _005Initial: Story = {
   args: {
     state: state005,
     props: getMapStateToProps({
       mapStateToHierarchicalItemProps,
+      saveOntology,
     })(state005, () => {}),
   },
 };
@@ -208,6 +213,7 @@ export const _005Initial: Story = {
 const state006 = {
   pageType: EPage.Ontology,
   pageState: {
+    id: "ROOT",
     isLoading: false,
     tree: {
       [EConstant.Root]: {
@@ -218,16 +224,16 @@ const state006 = {
         text: EConstant.Root,
       },
     },
-
     isMenuOpen: false,
   },
-} satisfies TAppState;
+} satisfies TAppState<EPage.Ontology>;
 
 export const _006Initial: Story = {
   args: {
     state: state006,
     props: getMapStateToProps({
       mapStateToHierarchicalItemProps,
+      saveOntology,
     })(state006, () => {}),
   },
 };
@@ -235,6 +241,7 @@ export const _006Initial: Story = {
 const state007 = {
   pageType: EPage.Ontology,
   pageState: {
+    id: "ROOT",
     isLoading: false,
     tree: {
       [EConstant.Root]: {
@@ -248,16 +255,16 @@ const state007 = {
         },
       },
     },
-
     isMenuOpen: false,
   },
-} satisfies TAppState;
+} satisfies TAppState<EPage.Ontology>;
 
 export const _007Initial: Story = {
   args: {
     state: state007,
     props: getMapStateToProps({
       mapStateToHierarchicalItemProps,
+      saveOntology,
     })(state007, () => {}),
   },
 };
@@ -265,6 +272,7 @@ export const _007Initial: Story = {
 const state008 = {
   pageType: EPage.Ontology,
   pageState: {
+    id: "ROOT",
     isLoading: false,
     tree: {
       [EConstant.Root]: {
@@ -278,18 +286,18 @@ const state008 = {
         },
       },
     },
-
     hasError: true,
     message: "Ooops",
     isMenuOpen: false,
   },
-} satisfies TAppState;
+} satisfies TAppState<EPage.Ontology>;
 
 export const _008Initial: Story = {
   args: {
     state: state008,
     props: getMapStateToProps({
       mapStateToHierarchicalItemProps,
+      saveOntology,
     })(state008, () => {}),
   },
 };

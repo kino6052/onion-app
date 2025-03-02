@@ -38,6 +38,7 @@ export const _001Initial: Story = {
 const state002 = {
   pageType: EPage.Login,
   pageState: {
+    id: "ROOT",
     isLoading: true,
   },
 } satisfies TAppState;
@@ -54,6 +55,7 @@ export const _002Loading: Story = {
 const state003 = {
   pageType: EPage.Login,
   pageState: {
+    id: "ROOT",
     isLoading: false,
     message: "Error",
   },
