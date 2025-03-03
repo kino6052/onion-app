@@ -1,4 +1,4 @@
-import { TOntology } from "../../src/ui/pages/Ontologies/types";
+import { TOntology } from "../../src/pages/Ontologies/types";
 import { BRANCH_NAME, NAME_MAPPING_FILE, REPO_NAME } from "./constants";
 import { router } from "./router";
 import {
@@ -10,12 +10,10 @@ import {
 } from "./utils/file";
 import { addNameMapping, cleanUpId } from "./utils/utils";
 
+const PREFIX = "ontology-";
+
 router.on("GET", "/ontologies", async () => {
-  const ontologies = await getFilesStartingWith(
-    REPO_NAME,
-    BRANCH_NAME,
-    "ontology-"
-  );
+  const ontologies = await getFilesStartingWith(REPO_NAME, BRANCH_NAME, PREFIX);
 
   await ensureFileExists(
     REPO_NAME,
@@ -48,7 +46,7 @@ router.on("GET", "/ontologies", async () => {
 });
 
 router.on("GET", "/ontology/:id", async (req, { id: _id }) => {
-  const id = `ontology-${cleanUpId(_id, "ontology-")}`;
+  const id = `${PREFIX}${cleanUpId(_id, PREFIX)}`;
   const fileContent = await getFileContentById(REPO_NAME, BRANCH_NAME, id);
 
   const content = fileContent?.toString() ?? "{}";
@@ -86,7 +84,7 @@ router.on("DELETE", "/ontology/:id", async (req, { id }) => {
 router.on("POST", "/ontology", async (req) => {
   const newOntology: { id: string; ontology: TOntology } = await req.json();
 
-  const id = cleanUpId(newOntology.id, "ontology-");
+  const id = cleanUpId(newOntology.id, PREFIX);
 
   if (!id) {
     throw new Error("No id provided");
@@ -96,7 +94,7 @@ router.on("POST", "/ontology", async (req) => {
     await createNewFile(
       REPO_NAME,
       BRANCH_NAME,
-      `ontology-${id}`,
+      `${PREFIX}${id}`,
       JSON.stringify(newOntology.ontology.map),
       "Add new ontology"
     );
@@ -105,7 +103,7 @@ router.on("POST", "/ontology", async (req) => {
   await addNameMapping(
     REPO_NAME,
     BRANCH_NAME,
-    `ontology-${id}`,
+    `${PREFIX}${id}`,
     newOntology.ontology.name ?? "New Ontology"
   );
 

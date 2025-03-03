@@ -1,4 +1,4 @@
-import { TSerializedWord } from "../../src/ui/pages/Note/types";
+import { TSerializedWord } from "../../src/pages/Note/types";
 import { EConstant } from "../../src/constants";
 import { BRANCH_NAME, REPO_NAME } from "./constants";
 import { router } from "./router";
@@ -9,12 +9,10 @@ import {
 } from "./utils/file";
 import { cleanUpId } from "./utils/utils";
 
+const PREFIX = "note-";
+
 router.on("GET", "/notes", async (req) => {
-  const notes = await getFilesStartingWith(
-    "ontology-repo",
-    "new-branch",
-    "note-"
-  );
+  const notes = await getFilesStartingWith(REPO_NAME, BRANCH_NAME, PREFIX);
   return new Response(JSON.stringify(notes), {
     headers: { "Content-Type": "application/json" },
   });
@@ -24,7 +22,7 @@ router.on("POST", "/note", async (req) => {
   const newNote: { id: string; note: Record<string, TSerializedWord> } =
     await req.json();
 
-  const id = cleanUpId(newNote.id, "note-");
+  const id = cleanUpId(newNote.id, PREFIX);
 
   if (!id) {
     throw new Error("No id provided");
@@ -35,7 +33,7 @@ router.on("POST", "/note", async (req) => {
   await createNewFile(
     REPO_NAME,
     BRANCH_NAME,
-    `note-${id}`,
+    `${PREFIX}${id}`,
     JSON.stringify(newNote.note),
     `Add new note ${id}`
   );
@@ -46,12 +44,12 @@ router.on("POST", "/note", async (req) => {
 });
 
 router.on("GET", "/notes/:id", async (req, { id: _id }) => {
-  const id = `note-${cleanUpId(_id, "note-")}`;
+  const id = `${PREFIX}${cleanUpId(_id, PREFIX)}`;
 
   let fileContentString;
 
   fileContentString = (
-    await getFileContentById("ontology-repo", "new-branch", id)
+    await getFileContentById(REPO_NAME, BRANCH_NAME, id)
   )?.toString();
 
   if (!fileContentString) {
