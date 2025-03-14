@@ -1,7 +1,11 @@
+@import "../../styles/mixins.scss";
+@import "../../styles/constants.scss";
+
 .text-component {
+  @include font-style($font-style);
   &__item {
     &:hover {
       background-color: darkcyan !important;
-    }
+    }    
   }
 }

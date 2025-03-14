@@ -1,22 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
-import { EPage } from "./types";
+import { EPage, TAppState } from "./types";
+import { mapStateToAppProps } from "./root";
+import { DEFAULT_STATE } from "./pages/Login/data";
 
 const rootElement = document.getElementById("root")!;
 const root = ReactDOM.createRoot(rootElement);
 
+const Component = () => {
+  const [state, setState] = useState<TAppState>(DEFAULT_STATE);
+
+  const props = mapStateToAppProps(state, (cb) => {
+    setState(cb);
+  });
+
+  return <App {...props} />;
+};
+
 root.render(
   <React.StrictMode>
-    <App
-      pageProps={{
-        buttonProps: {
-          onClick: () => {
-            console.log("clicked");
-          },
-        },
-      }}
-      pageType={EPage.Login}
-    />
+    <Component />
   </React.StrictMode>
 );

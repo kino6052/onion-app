@@ -17,7 +17,7 @@
 }
 
 @mixin full-height {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 @mixin reset-margins-padding {
@@ -32,4 +32,6 @@
 @mixin font-style($family, $color: $font-color) {
   font-family: $family;
   color: $color;
+  font-size: 1.2rem;
+  line-height: 2.37rem;
 }
