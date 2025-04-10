@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
-import { EPage, TAppState } from "./types";
+import { getStateManager } from "./dependencies/state/dev";
 import { mapStateToAppProps } from "./root";
-import { DEFAULT_STATE } from "./pages/Login/data";
+import { TAppState, TSetState } from "./types";
 
 const rootElement = document.getElementById("root")!;
 const root = ReactDOM.createRoot(rootElement);
 
+const useSharedState = () => {
+  const [state, setState] = useState<TAppState>(getStateManager().getState());
+
+  useEffect(() => {
+    const subscription = getStateManager().subscribe((state) => {
+      setState(state);
+    });
+
+    return subscription;
+  }, []);
+
+  return [state, setState] as [TAppState, TSetState<TAppState>];
+};
+
 const Component = () => {
-  const [state, setState] = useState<TAppState>(DEFAULT_STATE);
+  const [state, setState] = useSharedState();
 
   const props = mapStateToAppProps(state, (cb) => {
     setState(cb);
