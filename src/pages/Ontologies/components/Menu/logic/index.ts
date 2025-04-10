@@ -1,4 +1,4 @@
-import { logout } from "../../../../../logic/logout.useCase";
+import { logout } from "../../../../../dependencies/logout/logout.useCase";
 import {
   TAppState,
   TOntologiesPageState,
@@ -16,7 +16,7 @@ export const mapStateToMenuProps = (
 ) => {
   return {
     id: "menu",
-    onClick: () => {},
+    onClick: () => { },
     text: "Menu",
     menuProps: {
       id: "menu",

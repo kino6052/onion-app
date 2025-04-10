@@ -1,5 +1,5 @@
-import { EConstant } from "../../constants";
-import { wait } from "../../utils";
+import { EConstant } from "../../../../constants";
+import { wait } from "../../../../utils";
 import { notes } from "./data";
 import { TGetNote } from "./types";
 

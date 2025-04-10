@@ -1,6 +1,6 @@
-import { TLogin } from "../../../../../dependencies/login/types";
-import { withLoadingLogic } from "../../../../../logic/utlis.domain";
-import { TAppState, TSetState } from "../../../../../types";
+import { TLogin } from "../../../../../../dependencies/login/types";
+import { withLoadingLogic } from "../../../../../../logic/utlis.domain";
+import { TAppState, TSetState } from "../../../../../../types";
 import { processLoginResult as _login, reportLoginError } from "./login.utils";
 
 export const tryLogingIn = (login: TLogin, setState: TSetState<TAppState>) => {

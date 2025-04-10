@@ -1,7 +1,7 @@
 import { produce } from "immer";
-import { EPage, TAppState, TSetState } from "../../../../../types";
-import { TLoginResponse } from "../../../../../dependencies/login/types";
-import { TOntologiesState } from "../../../../Ontologies/types";
+import { EPage, TAppState, TSetState } from "../../../../../../types";
+import { TLoginResponse } from "../../../../../../dependencies/login/types";
+import { TOntologiesState } from "../../../../../../pages/Ontologies/types";
 
 /**
  * Handles the successful login response and updates the application state accordingly.

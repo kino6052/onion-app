@@ -1,4 +1,4 @@
-import { TOntology } from "../../pages/Ontologies/types";
+import { TOntology } from "../../../../pages/Ontologies/types";
 
 export type TSaveOntology = (
   id: string,

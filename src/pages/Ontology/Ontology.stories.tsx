@@ -5,7 +5,7 @@ import { getMapStateToProps } from "./logic";
 import { TOntologyProps } from "./types";
 import { mapStateToHierarchicalItemProps } from "./components/HierarchicalItem";
 import { OntologyPage } from "./OntologyPage";
-import { saveOntology } from "../../dependencies/saveOntology/check";
+import { saveOntology } from "../../dependencies/hierarchy/ontology/saveOntology/check";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {

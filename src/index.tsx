@@ -25,9 +25,7 @@ const useSharedState = () => {
 const Component = () => {
   const [state, setState] = useSharedState();
 
-  const props = mapStateToAppProps(state, (cb) => {
-    setState(cb);
-  });
+  const props = mapStateToAppProps(state, setState);
 
   return <App {...props} />;
 };

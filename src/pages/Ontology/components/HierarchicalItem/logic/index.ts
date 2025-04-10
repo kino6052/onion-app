@@ -11,7 +11,7 @@ import {
   THierarchicalItemProps,
 } from "../../../../../components/Item/types";
 import { TMenuProps } from "../../../../../components/Menu/types";
-import { TGetNote } from "../../../../../dependencies/getNote/types";
+import { TGetNote } from "../../../../../dependencies/hierarchy/note/getNote/types";
 import { TGetUniqueId } from "../../../../../dependencies/getUniqueId/types";
 import { setPartial } from "../../../../../utils/setPartial";
 import { updateNodeProperties } from "../utils";
@@ -39,45 +39,45 @@ const buildTree =
     getUniqueId: () => string;
     MenuComponent: FC<TMenuProps>;
   }) =>
-  (
-    node: THierarchicalItem,
-    parent: THierarchicalItem | undefined,
-    nodeMap: Record<string, THierarchicalItem>,
-    setState: TSetState<TAppState>,
+    (
+      node: THierarchicalItem,
+      parent: THierarchicalItem | undefined,
+      nodeMap: Record<string, THierarchicalItem>,
+      setState: TSetState<TAppState>,
 
-    indent: number = 0
-  ): THierarchicalItemProps => {
-    const { MenuComponent, getUniqueId, getNote } = dependencies;
-    const successors = node.successors.map((id) => {
-      const successor = nodeMap[id];
-      if (!successor) {
-        throw new Error(`Node ${id} not found`);
-      }
-      return buildTree(dependencies)(
-        successor,
-        node,
-        nodeMap,
-        setState,
-        indent + 1
-      );
-    });
-
-    return {
-      ...node,
-      indent,
-      successors,
-      onClick: () => {
-        updateNodeProperties(
-          node.id,
-          {
-            isCollapsed: !node.isCollapsed,
-          },
-          setState
+      indent: number = 0
+    ): THierarchicalItemProps => {
+      const { MenuComponent, getUniqueId, getNote } = dependencies;
+      const successors = node.successors.map((id) => {
+        const successor = nodeMap[id];
+        if (!successor) {
+          throw new Error(`Node ${id} not found`);
+        }
+        return buildTree(dependencies)(
+          successor,
+          node,
+          nodeMap,
+          setState,
+          indent + 1
         );
-      },
-      onMenuClick: () => handleMenuClick(node, setState),
-      menuProps: node.isMenuOpen
-        ? {
+      });
+
+      return {
+        ...node,
+        indent,
+        successors,
+        onClick: () => {
+          updateNodeProperties(
+            node.id,
+            {
+              isCollapsed: !node.isCollapsed,
+            },
+            setState
+          );
+        },
+        onMenuClick: () => handleMenuClick(node, setState),
+        menuProps: node.isMenuOpen
+          ? {
             id: "menu",
             Component: MenuComponent,
             itemsProps: [
@@ -142,10 +142,10 @@ const buildTree =
             onBackgroundClick: () => handleBackgroundClick(node, setState),
             isOpen: node.isMenuOpen,
           }
-        : undefined,
-      promptProps: node.promptState && getPromptProps(node, setState),
+          : undefined,
+        promptProps: node.promptState && getPromptProps(node, setState),
+      };
     };
-  };
 
 export const getMapStateToProps =
   ({
@@ -157,18 +157,18 @@ export const getMapStateToProps =
     getUniqueId: TGetUniqueId;
     getNote: TGetNote;
   }): TMapStateToProps<TAppState, THierarchicalItemProps> =>
-  (state, setState) => {
-    if (state.pageType !== EPage.Ontology)
-      throw new Error("Expected an ontology page");
+    (state, setState) => {
+      if (state.pageType !== EPage.Ontology)
+        throw new Error("Expected an ontology page");
 
-    const nodeMap = state.pageState.tree;
-    const root = nodeMap[EConstant.Root];
+      const nodeMap = state.pageState.tree;
+      const root = nodeMap[EConstant.Root];
 
-    if (!root) throw new Error("No root");
+      if (!root) throw new Error("No root");
 
-    return buildTree({
-      getNote,
-      getUniqueId,
-      MenuComponent,
-    })(root, undefined, nodeMap, setState);
-  };
+      return buildTree({
+        getNote,
+        getUniqueId,
+        MenuComponent,
+      })(root, undefined, nodeMap, setState);
+    };

@@ -1,4 +1,4 @@
-import { ENDPOINT } from "../common/constants";
+import { ENDPOINT } from "../../common/constants";
 import { TGetOntologies } from "./types";
 
 export const getOntologies: TGetOntologies = async () => {

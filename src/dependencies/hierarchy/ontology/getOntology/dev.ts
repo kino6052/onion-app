@@ -1,5 +1,5 @@
-import { TOntology } from "../../pages/Ontologies/types";
-import { ENDPOINT } from "../common/constants";
+import { TOntology } from "../../../../pages/Ontologies/types";
+import { ENDPOINT } from "../../../common/constants";
 import { TGetOntology } from "./types";
 
 export const getOntology: TGetOntology = async (id: string) => {

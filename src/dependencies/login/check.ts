@@ -1,4 +1,4 @@
-import { getOntologies } from "../getOntologies/check";
+import { getOntologies } from "../hierarchy/getOntologies/check";
 import { TLogin } from "./types";
 
 export const login: TLogin = async () => ({

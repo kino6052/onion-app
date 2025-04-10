@@ -1,4 +1,4 @@
-import { ontologies } from "../getOntologies/data";
+import { ontologies } from "../../getOntologies/data";
 import { TSaveOntology } from "./types";
 
 export const saveOntology: TSaveOntology = async (id, ontology, isRemote) => {

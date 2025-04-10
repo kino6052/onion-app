@@ -1,4 +1,4 @@
-import { ENDPOINT } from "../common/constants";
+import { ENDPOINT } from "../../../common/constants";
 import { TSaveNote } from "./types";
 
 export const saveNote: TSaveNote = async (id, ontologyId, note, isRemote) => {

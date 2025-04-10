@@ -1,5 +1,5 @@
-import { TSerializedWord } from "../../pages/Note/types";
-import { ENDPOINT } from "../common/constants";
+import { TSerializedWord } from "../../../../pages/Note/types";
+import { ENDPOINT } from "../../../common/constants";
 import { TGetNote } from "./types";
 
 export const getNote: TGetNote = async (id: string, ontologyId: string) => {

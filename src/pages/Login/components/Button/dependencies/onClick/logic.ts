@@ -1,6 +1,6 @@
 import { TLogin } from "../../../../../../dependencies/login/types";
 import { TSetState, TAppState } from "../../../../../../types";
-import { tryLogingIn } from "../../logic/login.case";
+import { tryLogingIn } from "./login.case";
 
 export const getOnClick = ({
   login,

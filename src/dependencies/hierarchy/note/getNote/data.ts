@@ -1,4 +1,4 @@
-import { TSerializedWord } from "../../pages/Note/types";
+import { TSerializedWord } from "../../../../pages/Note/types";
 
 export const notes: Record<
   string,

@@ -9,7 +9,7 @@ import { OntologiesPage } from "./OntologiesPage";
 import { TOntologiesProps } from "./types";
 import { uniqueId } from "../../libs/lodash";
 import { removeOntology } from "../../dependencies/removeOntology/dev";
-import { saveOntology } from "../../dependencies/saveOntology/dev";
+import { saveOntology } from "../../dependencies/hierarchy/ontology/saveOntology/dev";
 
 const state001 = {
   pageType: EPage.Ontologies,

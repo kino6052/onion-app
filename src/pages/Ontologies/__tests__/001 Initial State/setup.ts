@@ -6,7 +6,7 @@ import { FC } from "../../../../libs/react";
 import { EPage, TAppState, TOntologiesPageState } from "../../../../types";
 import { StateManager } from "../../../../utils/stateManager";
 import { getMapStateToOntologiesProps } from "../../logic";
-import { saveOntology } from "../../../../dependencies/saveOntology/check";
+import { saveOntology } from "../../../../dependencies/hierarchy/ontology/saveOntology/check";
 import { removeOntology } from "../../../../dependencies/removeOntology/check";
 
 export const setup = () => {

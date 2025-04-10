@@ -1,4 +1,4 @@
-import { ENDPOINT } from "../common/constants";
+import { ENDPOINT } from "../../../common/constants";
 import { TSaveOntology } from "./types";
 
 export const saveOntology: TSaveOntology = async (id, ontology) => {
