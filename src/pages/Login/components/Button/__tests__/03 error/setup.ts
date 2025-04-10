@@ -4,7 +4,7 @@ import { StateManager } from "../../../../../../utils/stateManager";
 import { TLogin } from "../../../../../../dependencies/login/types";
 
 export const setup = () => {
-  const login: TLogin = jest.fn().mockImplementation(() => Promise.reject());
+  const onClick: TLogin = jest.fn().mockImplementation(() => Promise.reject());
 
   const initialState: TAppState = {
     pageType: EPage.Login,
@@ -18,8 +18,8 @@ export const setup = () => {
   const stateManager = new StateManager<TAppState>(initialState);
 
   const mapStateToButtonProps = getMapStateToProps({
-    login,
+    onClick,
   });
 
-  return { login, stateManager, mapStateToButtonProps };
+  return { onClick, stateManager, mapStateToButtonProps };
 };

@@ -1,5 +1,6 @@
-import { EConstant } from "../../../constants";
 import { TItemProps } from "../../../components/Item/types";
+import { EConstant } from "../../../constants";
+import { TGetUniqueId } from "../../../dependencies/getUniqueId/types";
 import {
   EPage,
   TAppState,
@@ -11,9 +12,7 @@ import {
 import { noop } from "../../../utils";
 import { setPartial } from "../../../utils/setPartial";
 import { TNoteProps } from "../types";
-import { getMapStateToItemProps } from "./menu";
 import { getMapStateToWordTreeProps } from "./word";
-import { TGetUniqueId } from "../../../dependencies/getUniqueId/types";
 
 const mapStateToNotificationProps = (state: TNotePageState) =>
   state.pageState.hasError

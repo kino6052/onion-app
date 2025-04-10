@@ -1,4 +1,4 @@
-import { ontologies } from "../getOntologies/data";
+import { ontologies } from "../../getOntologies/data";
 import { TGetOntology } from "./types";
 
 export const getOntology: TGetOntology = async (id: string) => {

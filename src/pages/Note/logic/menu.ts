@@ -1,12 +1,10 @@
 import { EConstant } from "../../../constants";
-import { TMenuProps } from "../../../components/Menu/types";
-import { TGetOntology } from "../../../dependencies/getOntology/types";
-import { FC } from "../../../libs/react";
 import { EPage, TAppState, TNotePageState, TSetState } from "../../../types";
 import { noop } from "../../../utils";
 import { setPartial } from "../../../utils/setPartial";
 import { EMenuConstant } from "../../../components/Menu/constants";
 import { TNoteDependencies } from "../types";
+import { TGetOntology } from "../../../dependencies/hierarchy/ontology/getOntology/types";
 
 export const handleMenuClick = (
   id: string,
@@ -90,77 +88,77 @@ export const handleGoBackClick = (
 
 export const getMapStateToItemProps =
   ({ getOntology, MenuComponent, saveNote }: TNoteDependencies) =>
-  (state: TNotePageState, setState: TSetState<TAppState>) => ({
-    id: state.pageState.id,
-    onClick: noop,
-    onMenuClick: () => handleItemMenuClick(setState),
-    text: "Test",
-    menuProps: {
-      id: "menu",
-      Component: MenuComponent,
-      itemsProps: [
-        {
-          id: EMenuConstant.GoBack,
-          onClick: () =>
-            handleGoBackClick(
-              state.pageState.ontologyId,
-              setState,
-              getOntology
-            ),
-          text: "Go back",
-        },
-        {
-          id: EMenuConstant.Save,
-          onClick: () => {
-            setPartial(
-              {
-                pageState: {
-                  isLoading: true,
-                },
-              },
-              setState,
-              EPage.Note
-            );
-
-            saveNote(
-              state.pageState.id,
-              state.pageState.ontologyId,
-              state.pageState.wordTree,
-              true
-            ).then(() => {
+    (state: TNotePageState, setState: TSetState<TAppState>) => ({
+      id: state.pageState.id,
+      onClick: noop,
+      onMenuClick: () => handleItemMenuClick(setState),
+      text: "Test",
+      menuProps: {
+        id: "menu",
+        Component: MenuComponent,
+        itemsProps: [
+          {
+            id: EMenuConstant.GoBack,
+            onClick: () =>
+              handleGoBackClick(
+                state.pageState.ontologyId,
+                setState,
+                getOntology
+              ),
+            text: "Go back",
+          },
+          {
+            id: EMenuConstant.Save,
+            onClick: () => {
               setPartial(
                 {
                   pageState: {
-                    isLoading: false,
+                    isLoading: true,
                   },
                 },
                 setState,
                 EPage.Note
               );
-            });
+
+              saveNote(
+                state.pageState.id,
+                state.pageState.ontologyId,
+                state.pageState.wordTree,
+                true
+              ).then(() => {
+                setPartial(
+                  {
+                    pageState: {
+                      isLoading: false,
+                    },
+                  },
+                  setState,
+                  EPage.Note
+                );
+              });
+            },
+            text: "Save",
           },
-          text: "Save",
-        },
-        {
-          id: EMenuConstant.Edit,
-          onClick: () => {
-            setPartial(
-              {
-                pageState: {
-                  isMenuOpen: false,
-                  textEditPrompt: {
-                    text: state.pageState.wordTree[EConstant.Root].open ?? "",
+          {
+            id: EMenuConstant.Edit,
+            onClick: () => {
+              setPartial(
+                {
+                  pageState: {
+                    isMenuOpen: false,
+                    textEditPrompt: {
+                      text: state.pageState.wordTree[EConstant.Root].open ?? "",
+                    },
                   },
                 },
-              },
-              setState,
-              EPage.Note
-            );
+                setState,
+                EPage.Note
+              );
+            },
+            text: "Edit text",
           },
-          text: "Edit text",
-        },
-      ],
-      onBackgroundClick: noop,
-      isOpen: state.pageState.isMenuOpen,
-    },
-  });
+        ],
+        onBackgroundClick: noop,
+        isOpen: state.pageState.isMenuOpen,
+      },
+    });

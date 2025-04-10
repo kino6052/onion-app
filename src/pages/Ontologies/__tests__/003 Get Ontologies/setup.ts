@@ -1,6 +1,5 @@
 import { uniqueId } from "lodash";
 import { TMenuProps } from "../../../../components/Menu/types";
-import { getOntology } from "../../../../dependencies/getOntology/check";
 import { ontologies } from "../../../../dependencies/hierarchy/getOntologies/data";
 import { logout } from "../../../../dependencies/logout/check";
 import { FC } from "../../../../libs/react";
@@ -10,7 +9,8 @@ import { getMapStateToOntologiesProps } from "../../logic";
 import { getComposeActions } from "../../../../utils/composeActions";
 import { saveOntology } from "../../../../dependencies/hierarchy/ontology/saveOntology/check";
 import { getOntologies } from "../../../../dependencies/hierarchy/getOntologies/check";
-import { removeOntology } from "../../../../dependencies/removeOntology/check";
+import { removeOntology } from "../../../../dependencies/hierarchy/ontology/removeOntology/check";
+import { getOntology } from "../../../../dependencies/hierarchy/ontology/getOntology/check";
 
 export const setup = () => {
   const initialState: TAppState = {

@@ -6,7 +6,7 @@ import { getComposeActions } from "../../../../utils/composeActions";
 import { StateManager } from "../../../../utils/stateManager";
 import { getMapStateToProps } from "../../logic";
 import { getMapStateToItemProps } from "../../logic/menu";
-import { saveNote } from "../../../../dependencies/saveNote/check";
+import { saveNote } from "../../../../dependencies/hierarchy/note/saveNote/check";
 
 export const setup = () => {
   const initialState: TAppState = {

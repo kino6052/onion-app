@@ -1,13 +1,13 @@
 import { uniqueId } from "lodash";
 import { TMenuProps } from "../../../../components/Menu/types";
-import { getOntology } from "../../../../dependencies/getOntology/check";
+import { getOntology } from "../../../../dependencies/hierarchy/ontology/getOntology/check";
 import { logout } from "../../../../dependencies/logout/check";
 import { FC } from "../../../../libs/react";
 import { EPage, TAppState, TOntologiesPageState } from "../../../../types";
 import { StateManager } from "../../../../utils/stateManager";
 import { getMapStateToOntologiesProps } from "../../logic";
 import { saveOntology } from "../../../../dependencies/hierarchy/ontology/saveOntology/check";
-import { removeOntology } from "../../../../dependencies/removeOntology/check";
+import { removeOntology } from "../../../../dependencies/hierarchy/ontology/removeOntology/check";
 
 export const setup = () => {
   const initialState: TAppState = {

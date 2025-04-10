@@ -5,7 +5,7 @@ import { StateManager } from "../../../../../../utils/stateManager";
 import { getMapStateToProps } from "../../logic";
 
 export const setup = () => {
-  const login: TLogin = jest.fn().mockImplementation(_login);
+  const onClick: TLogin = jest.fn().mockImplementation(_login);
 
   const initialState: TAppState = {
     pageType: EPage.Login,
@@ -19,8 +19,8 @@ export const setup = () => {
   const stateManager = new StateManager<TAppState>(initialState);
 
   const mapStateToButtonProps = getMapStateToProps({
-    login,
+    onClick,
   });
 
-  return { login, stateManager, mapStateToButtonProps };
+  return { onClick, stateManager, mapStateToButtonProps };
 };

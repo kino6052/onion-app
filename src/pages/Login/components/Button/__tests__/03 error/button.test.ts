@@ -2,7 +2,7 @@ import { setup } from "./setup";
 
 describe("button test", () => {
   it("should produce error", async () => {
-    const { login, mapStateToButtonProps, stateManager } = setup();
+    const { onClick, mapStateToButtonProps, stateManager } = setup();
 
     const props = mapStateToButtonProps(
       stateManager.getState(),
@@ -11,7 +11,7 @@ describe("button test", () => {
 
     props.onClick();
 
-    expect(login).toHaveBeenCalledTimes(1);
+    expect(onClick).toHaveBeenCalledTimes(1);
 
     expect(stateManager.getState()).toMatchInlineSnapshot(`
 {
