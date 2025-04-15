@@ -9,6 +9,7 @@ import { saveOntology } from "../../../../dependencies/hierarchy/ontology/saveOn
 import { removeOntology } from "../../../../dependencies/hierarchy/ontology/removeOntology/check";
 import { getOntology } from "../../../../dependencies/hierarchy/ontology/getOntology/check";
 import { logout } from "../../../../dependencies/logout/check";
+import { ontologies } from "../../../../dependencies/hierarchy/getOntologies/data";
 
 export const setup = () => {
   const initialState: TAppState = {
